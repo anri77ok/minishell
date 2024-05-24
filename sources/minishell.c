@@ -4,12 +4,17 @@
 
 int	main(void)
 {
-	//t_token	*token_list;
+	t_token	*tokens;
 	char	*cmd_line;
 
-	//token_list = NULL;
+	tokens = NULL;
 	while (1)
 	{
-		cmd_line = readline("MINISHELL HOP:");
+		cmd_line = readline("MINISHELL:");
+		if (cmd_line && *cmd_line)
+		{
+			tokenization(cmd_line, &tokens);
+			//print_tokens(tokens);
+		}
 	}
-}
+} 
