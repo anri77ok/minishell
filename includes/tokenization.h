@@ -55,4 +55,6 @@ struct s_token
 	t_token			*prev;
 };
 
+void tokenization(char *cmd_line, t_token **tokens);
+
 #endif

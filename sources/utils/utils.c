@@ -25,8 +25,11 @@ int	ft_is_operator(char *s, int i)
 
 int	ft_isspace(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n'
-		|| c == '\v' || c == '\f' || c == '\r');
+	if (c == ' ' || c == '\t' || c == '\n'
+		|| c == '\v' || c == '\f' || c == '\r')
+		return (1);
+	else
+		return (0);
 }
 
 void	print_token_list(t_token *token_list)
