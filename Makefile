@@ -27,8 +27,7 @@ SRCS_DIR = sources/
 OBJS_DIR = objects/
 
 # Source file names
-SRCS_NAME = minishell.c \
-
+SRCS_NAME = minishell.c tokenization/tokenization.c utils/utils.c
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)
