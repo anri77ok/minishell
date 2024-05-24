@@ -56,7 +56,7 @@ struct s_token
 };
 
 void tokenization(char *cmd_line, t_token **tokens);
-size_t skip_whitespaces(char *line);
+size_t skip_whitespaces(char *line, size_t i);
 t_token *create_new_token(char *value);
 
 #endif
