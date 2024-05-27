@@ -56,7 +56,11 @@ struct s_token
 };
 
 void tokenization(char *cmd_line, t_token **tokens);
-size_t skip_whitespaces(char *line, size_t i);
+int skip_whitespaces(char *line, int i);
 t_token *create_new_token(char *value);
+int is_quote(char *cmd_line, int i);
+char	*str_type(int token_type);
+t_token_type set_token_type(char *value, int i);
+void	tokens_types(t_token *tokens);
 
 #endif

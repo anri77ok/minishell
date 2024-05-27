@@ -1,6 +1,5 @@
 #include "tokenization.h"
 #include "utils.h"
-// TEXAPOXEL HEADER FILE-I MEJ!!!
 
 int	ft_isalpha(int c)
 {
@@ -38,12 +37,8 @@ void	print_token_list(t_token *token_list)
 		return ;
 	while (token_list)
 	{
-		printf("\033[0;030m(%d)\033[0;032m[%s]\033[0m",
-			token_list->type, token_list->value);
-		if (token_list && token_list->next)
-			printf("\033[0;036m -> \033[0m");
-		else
-			printf("\n");
+		printf("\033[0;035m token -> \033[0;034m%s \033[0;031m | \033[0;032m       value -> \033[0;033m(%s)\033[0m\n",
+			str_type(token_list->type), token_list->value);
 		token_list = token_list->next;
 	}
 }
@@ -87,4 +82,48 @@ size_t	ft_strlen(const char *s)
 	while (s[len])
 		len++;
 	return (len);
+}
+
+char	*str_type(int token_type)
+{
+	if (token_type == 0)
+		return ("WORD          ");
+	else if (token_type == 1)
+		return ("S_PIPE        ");
+	else if (token_type == 2)
+		return ("D_PIPE        ");
+	else if (token_type == 3)
+		return ("S_AND         ");
+	else if (token_type == 4)
+		return ("D_AND         ");
+	else if (token_type == 5)
+		return ("D_QUOTE       ");
+	else if (token_type == 6)
+		return ("S_QUOTE       ");
+	else if (token_type == 7)
+		return ("IN_REDIR      ");
+	else if (token_type == 8)
+		return ("OUT_REDIR     ");
+	else if (token_type == 9)
+		return ("HERE_DOC      ");
+	else if (token_type == 10)
+		return ("APPEND_REDIR  ");
+	else if (token_type == 11)
+		return ("ERROR         ");
+	else if (token_type == 12)
+		return ("NONE          ");
+	else if (token_type == 13)
+		return ("FILEIN        ");
+	else if (token_type == 14)
+		return ("LIMITER       ");
+	else if (token_type == 15)
+		return ("FILEOUT       ");
+	else if (token_type == 16)
+		return ("APPEND_FILEOUT");
+	else if (token_type == 17)
+		return ("OPEN_PAR      ");
+	else if (token_type == 18)
+		return ("CLOSE_PAR     ");
+	else
+		return ("\033[0;031mTOKEN_TYPE_NOT_FOUND");
 }

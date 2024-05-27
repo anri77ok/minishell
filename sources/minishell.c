@@ -14,7 +14,7 @@ int	main(void)
 		if (cmd_line && *cmd_line)
 		{
 			tokenization(cmd_line, &tokens);
-			//print_tokens(tokens);
+			print_token_list(tokens);
 		}
 	}
 } 
