@@ -13,6 +13,8 @@ void	tokens_types(t_token *tokens)
 	while (current)
 	{
         current->type = set_token_type(current->value, 0);
+		if (current->type == ERROR)
+			printf("hop\n");
         if (current->prev != NULL && current->type == WORD
             && ft_is_operator(current->prev->value, 0) > 0)
         {
@@ -29,33 +31,47 @@ void	tokens_types(t_token *tokens)
 	}
 }
 
+int syntx_err(char *value, int i)
+{
+	if (value[i] != '\0')
+		return(1);
+	return(0);
+}
+
 t_token_type set_token_type(char *value, int i)
 {
 	if (!value || i < 0)
 		return (ERROR);
 	if (value[i] == '|')
 	{
-		if (value[i + 1] && value[i] == value[i + 1])
-			return (D_PIPE);
+		if (syntx_err(value, i + 1) == 1)
+			return (ERROR);
 		return (S_PIPE);
 	}
 	else if (value[i] == '&')
 	{
-		if (value[i + 1] && value[i] == value[i + 1])
-			return (D_AND);
+		if (syntx_err(value, i + 1) == 1)
+			return (ERROR);
 		return (S_AND);
 	}
 	else if (value[i] == '>')
     {
-        if (value[i + 1] && value[i] == value[i + 1])
+        if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
             return (APPEND_REDIR);
-        return (OUT_REDIR);
+        if (syntx_err(value, i + 1) == 1)
+			return (ERROR);
+		return (OUT_REDIR);
     }
     else if (value[i] == '<')
     {
-        if (value[i + 1] && value[i] == value[i + 1])
+        if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
             return (HERE_DOC);
-        return (IN_REDIR);
+		if (syntx_err(value, i + 1) == 1)
+		{
+			//printf();
+			return (ERROR);
+		}
+		return (IN_REDIR);
     }
     return (WORD);
 }

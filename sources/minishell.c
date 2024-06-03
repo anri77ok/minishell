@@ -16,5 +16,7 @@ int	main(void)
 			tokenization(cmd_line, &tokens);
 			print_token_list(tokens);
 		}
+		ft_token_list_clear(&tokens);
+		free(cmd_line);
 	}
 } 

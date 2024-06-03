@@ -127,3 +127,21 @@ char	*str_type(int token_type)
 	else
 		return ("\033[0;031mTOKEN_TYPE_NOT_FOUND");
 }
+
+void	ft_token_list_clear(t_token **lst)
+{
+	t_token	*tmp;
+	t_token	*last;
+
+	if (!lst)
+		return ;
+	last = *lst;
+	while (last)
+	{
+		tmp = last->next;
+		free(last->value);
+		free(last);
+		last = tmp;
+	}
+	*lst = NULL;
+}
