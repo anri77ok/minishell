@@ -74,19 +74,20 @@ void spliting(t_token **tokens, char *str)
 		printf("%d, %d\n", i, k);
 		if (i > k)
 		{
-			pice = ft_substr(str, k, i);
+			pice = ft_substr(str, k, i, true);
 			new_token = create_new_token(pice);
 			add_to_list(tokens, new_token);
 			k = i;
 		}
 		else if (i < k)
 		{
-			pice = ft_substr(str, i, k);
+			pice = ft_substr(str, i, k, true);
 			new_token = create_new_token(pice);
 			add_to_list(tokens, new_token);
-			i = k;
+			i = k - ft_is_operator(str, k);;
 		}
 	}
+
 }
 
 void tokenization(char *cmd_line, t_token **tokens)
@@ -94,21 +95,46 @@ void tokenization(char *cmd_line, t_token **tokens)
 	int i;
 	int j;
 	char *line;
+	t_token	*new_token;
+	bool quote = false;
 
 	i = skip_whitespaces(cmd_line, 0);
 	j = i;
 	while (cmd_line[j])
 	{
 		if (cmd_line[j] == 34)
+		{
 			j = is_quote(cmd_line, j);
+			quote = true;
+		}
 		else
+		{
 			while (cmd_line[j] && ft_isspace(cmd_line[j]) == 0)
-				j++;
-		line = ft_substr(cmd_line, i, j - i);
-		spliting(tokens, line);
+			{
+				if (cmd_line[j] == 34)
+				{
+					j = is_quote(cmd_line, j);
+					quote = true;
+				}
+				else
+					j++;
+			}
+		}
+		if (quote == true)
+		{
+			line = ft_substr(cmd_line, i, j - i, false);
+			new_token = create_new_token(line);
+			add_to_list(tokens, new_token);
+		}
+		else
+		{
+			line = ft_substr(cmd_line, i, j - i, false);
+			spliting(tokens, line);
+		}
 		tokens_types(*tokens);
 		j = skip_whitespaces(cmd_line, j);
 		i = j;
-		free(line);
+		if (quote == false)
+			free(line);
 	}
 }

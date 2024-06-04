@@ -43,7 +43,7 @@ void	print_token_list(t_token *token_list)
 	}
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len, bool is_op)
 {
 	size_t	i;
 	size_t	j;
@@ -51,6 +51,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (s == NULL)
 		return ("");
+	if (is_op == true)
+		len = len - start;
 	if (len <= ft_strlen(s))
 		str = (char *) malloc(sizeof(char) * (len + 1));
 	else

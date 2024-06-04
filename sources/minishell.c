@@ -18,5 +18,6 @@ int	main(void)
 		}
 		ft_token_list_clear(&tokens);
 		free(cmd_line);
+		system("leaks minishell");
 	}
 } 

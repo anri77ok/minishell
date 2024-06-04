@@ -3,8 +3,9 @@
 
 # include "minishell.h"
 # include "tokenization.h"
+# include <stdbool.h>
 
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_substr(char const *s, unsigned int start, size_t len, bool is_op);
 int	ft_isspace(char c);
 int	ft_is_operator(char *s, int i);
 int	ft_isalpha(int c);
