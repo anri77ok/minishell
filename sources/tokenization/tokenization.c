@@ -44,12 +44,20 @@ void	add_to_list(t_token **list_of_tokens, t_token *new_token)
 
 int is_quote(char *cmd_line, int i)
 {
-	if (cmd_line[i] == 34)
+	if (cmd_line[i] == 34 || cmd_line[i] == 39)
 		i++;
 	else
 		return (-1);
-	while (cmd_line[i] && cmd_line[i] != 34)
-		i++;
+	if (cmd_line[i - 1] == 34)
+	{
+		while (cmd_line[i] && cmd_line[i] != 34)
+			i++;
+	}
+	else if (cmd_line[i - 1] == 39)
+	{
+		while (cmd_line[i] && cmd_line[i] != 39)
+			i++;
+	}
 	if (cmd_line[i] == '\0')
 		return (-1);
 	else
@@ -102,7 +110,7 @@ void tokenization(char *cmd_line, t_token **tokens)
 	j = i;
 	while (cmd_line[j])
 	{
-		if (cmd_line[j] == 34)
+		if (cmd_line[j] == 34 || cmd_line[j] == 39)
 		{
 			j = is_quote(cmd_line, j);
 			quote = true;
@@ -111,7 +119,7 @@ void tokenization(char *cmd_line, t_token **tokens)
 		{
 			while (cmd_line[j] && ft_isspace(cmd_line[j]) == 0)
 			{
-				if (cmd_line[j] == 34)
+				if (cmd_line[j] == 34 || cmd_line[j] == 39)
 				{
 					j = is_quote(cmd_line, j);
 					quote = true;
