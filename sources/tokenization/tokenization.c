@@ -69,17 +69,14 @@ void spliting(t_token **tokens, char *str)
 {
 	t_token	*new_token;
 	int i = 0;
-	int j = 0;
 	int k = 0;
 	char *pice;
 	while (str[i])
 	{
 		while (str[i] && ft_is_operator(str, i) == 0)
 			i++;
-		j = i;
 		while (str[k] && ft_is_operator(str, k) != 0)
 			k = k + ft_is_operator(str, k);
-		printf("%d, %d\n", i, k);
 		if (i > k)
 		{
 			pice = ft_substr(str, k, i, true);
