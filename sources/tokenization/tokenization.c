@@ -107,23 +107,15 @@ void tokenization(char *cmd_line, t_token **tokens)
 	j = i;
 	while (cmd_line[j])
 	{
-		if (cmd_line[j] == 34 || cmd_line[j] == 39)
+		while (cmd_line[j] && ft_isspace(cmd_line[j]) == 0)
 		{
-			j = is_quote(cmd_line, j);
-			quote = true;
-		}
-		else
-		{
-			while (cmd_line[j] && ft_isspace(cmd_line[j]) == 0)
+			if (cmd_line[j] == 34 || cmd_line[j] == 39)
 			{
-				if (cmd_line[j] == 34 || cmd_line[j] == 39)
-				{
-					j = is_quote(cmd_line, j);
-					quote = true;
-				}
-				else
-					j++;
+				j = is_quote(cmd_line, j);
+				quote = true;
 			}
+			else
+				j++;
 		}
 		if (quote == true)
 		{

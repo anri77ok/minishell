@@ -13,6 +13,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		cmd_line = readline("MINISHELL:");
+		add_history(cmd_line);
 		if (cmd_line && *cmd_line)
 		{
 			tokenization(cmd_line, &tokens);

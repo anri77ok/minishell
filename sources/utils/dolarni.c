@@ -10,22 +10,28 @@ void dolarni(t_token **tokens, char **env)
 	char *envp;
 	char *begin = NULL;
 	char *word = NULL;
-	//char *end = NULL;
+	char *end = NULL;
+	char *final = NULL;
+	bool qt = false;
 
 	i = 0;
 	current = *tokens;
 	while(current)
 	{
-		if (current->type == WORD)
+		if (current->type == WORD || (current->type >= 12 && current->type <= 16))
 		{
 			while(current->value[i])
 			{
-				if (current->value[i] == '$')
+				if (current->value[i] == 39)
+					qt = !qt;
+				if (current->value[i] == '$' && qt == false)
 				{
+					printf("%d\n", qt);
 					j = i;
 					while (current->value[j] && ft_isspace(current->value[j]) != 1)
 						j++;
 					dollar = ft_substr(current->value, i + 1, j, true);
+					end = ft_substr(current->value, j, ft_strlen(current->value) - j, false);
 					if (i > 0)
 						begin = ft_substr(current->value, 0, i, true);
 					j = skip_whitespaces(current->value, j);
@@ -45,13 +51,12 @@ void dolarni(t_token **tokens, char **env)
 					{
 						free(current->value);
 						word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-						if (begin != NULL)
-						{
-							current->value = join(begin, word);
-							free(word);
-						}
-						else
-							current->value = word;
+						final = join(begin, word);
+						current->value = join(final, end);
+						free(final);
+						free(word);
+						free(begin);
+						free(end);
 						break ;
 					}
 					free(envp);
