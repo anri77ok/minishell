@@ -14,7 +14,9 @@ void	print_token_list(t_token *token_list);
 void	ft_token_list_clear(t_token **lst);
 int	ft_strcmp(char *s1, char *s2);
 void dolarni(t_token **tokens, char **env);
+void dolarni2(t_token **tokens, char **env);
 char	*ft_strjoin(char const *s1, char const *s2, char sep);
-char	*join(char const *s1, char const *s2);
+char	*join(char *s1, char *s2);
+char	*ft_strdup(char *src);
 
 #endif
