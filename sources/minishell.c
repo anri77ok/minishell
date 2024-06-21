@@ -18,10 +18,10 @@ int	main(int ac, char **av, char **env)
 		{
 			tokenization(cmd_line, &tokens);
 			dolarni2(&tokens, env);
+			chakertni(&tokens);
 			print_token_list(tokens);
 		}
 		ft_token_list_clear(&tokens);
 		free(cmd_line);
-		//system("leaks minishell");
 	}
 } 

@@ -47,13 +47,22 @@ typedef struct s_token_params
 	short	redir;
 }	t_token_params;
 
+struct s_cmd
+{
+	int infile;
+	int outfile;
+	char *cmd;
+	char **cmd_args;
+	t_cmd *next;
+}	t_cmd;
+
 struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	t_token			*next;
 	t_token			*prev;
-};
+}	t_token;
 
 void tokenization(char *cmd_line, t_token **tokens);
 int skip_whitespaces(char *line, int i);
@@ -62,5 +71,6 @@ int is_quote(char *cmd_line, int i);
 char	*str_type(int token_type);
 t_token_type set_token_type(char *value, int i);
 void	tokens_types(t_token *tokens);
+void chakertni(t_token **tokens);
 
 #endif

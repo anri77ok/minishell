@@ -6,22 +6,22 @@ void kp(char *begin, char *word, char *end, t_token **current)
 	char *final;
 
 	final = join(begin, word);
+	printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
 	free((*current)->value);
 	(*current)->value = join(final, end);
-	//printf("-%s-\n", final);
-	//sleep(100);
-	// free(final);
-	// free(word);
-	// if (begin != NULL)
-	// {
-	// free(begin);
-	// begin = NULL;
-	// }
-	// if (end != NULL)
-	// {
-	// 	free(end);
-	// 	end = NULL;
-	// }
+	printf("value -> %s\n", (*current)->value);
+	free(final);
+	free(word);
+	if (begin != NULL)
+	{
+	free(begin);
+	begin = NULL;
+	}
+	if (end != NULL)
+	{
+		free(end);
+		end = NULL;
+	}
 }
 
 char *open_dollar(char *dollar, char **env, bool flag, int *k)
@@ -44,7 +44,7 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 		if (ft_strcmp(dollar, envp) == 0)
 		{
 			word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-			*k += ft_strlen(env[i]) - j;
+			*k += 1;
 			free(envp);
 			return (word);
 		}
