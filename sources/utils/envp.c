@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
+#include "env.h"
 
 int		ft_lstsize(t_env_elem *lst)
 {

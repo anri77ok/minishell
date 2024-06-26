@@ -2,7 +2,6 @@
 # define TOKENIZATION_H
 
 # include <unistd.h>
-# include "env.h"
 
 typedef struct s_token	t_token;
 

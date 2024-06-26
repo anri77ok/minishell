@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
+#include "env.h"
 
 void	token_to_cmds_helper1(int *len, t_token *t2, char **cm, t_token **t)
 {
@@ -57,6 +58,7 @@ void	token_to_cmds(t_shell *shell, t_token *tokens)
 	t_fds	fds;
 
 	temp = tokens;
+	
 	while (temp != NULL)
 	{
 		init_fds(&fds);

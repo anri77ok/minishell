@@ -1,18 +1,7 @@
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
-
-// void redir(t_token **tokens)
-// {
-// 	t_token *current;
-
-// 	current = *tokens;
-// 	while (current)
-// 	{
-// 		if ()
-// 		current = current->next;
-// 	}
-// }
+#include "env.h"
 
 t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds)
 {
