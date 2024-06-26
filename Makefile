@@ -18,7 +18,8 @@ READLINE_LIB_PATH = $(LIBS_DIR)/readline/lib
 # Headers
 HEADERS = 	includes/minishell.h \
 			includes/tokenization.h \
-			includes/utils.h
+			includes/utils.h \
+			includes/env.h
 
 # Source directory
 SRCS_DIR = sources/
@@ -29,7 +30,7 @@ OBJS_DIR = objects/
 # Source file names
 SRCS_NAME = minishell.c tokenization/tokenization.c \
 tokenization/tok_utils.c utils/utils.c utils/dolarni2.c \
-utils/chakertni.c utils/redirect.c
+utils/chakertni.c utils/redirect.c utils/envp.c
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
 OBJS_NAME = $(SRCS_NAME:.c=.o)

@@ -12,7 +12,7 @@ int	main(int ac, char **av, char **env)
 	tokens = NULL;
 	while (1)
 	{
-		cmd_line = readline("MINISHELL:");
+		cmd_line = readline("VIBERSEIJSHELL:");
 		add_history(cmd_line);
 		if (cmd_line && *cmd_line)
 		{

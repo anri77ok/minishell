@@ -2,6 +2,7 @@
 # define TOKENIZATION_H
 
 # include <unistd.h>
+# include "env.h"
 
 typedef struct s_token	t_token;
 
@@ -47,22 +48,21 @@ typedef struct s_token_params
 	short	redir;
 }	t_token_params;
 
-struct s_cmd
+typedef struct s_fds
 {
-	int infile;
-	int outfile;
-	char *cmd;
-	char **cmd_args;
-	t_cmd *next;
-}	t_cmd;
+	int	infd;
+	int	outfd;
+	int	second_case;
+}	t_fds;
 
-struct s_token
+typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
 	t_token			*next;
 	t_token			*prev;
 }	t_token;
+
 
 void tokenization(char *cmd_line, t_token **tokens);
 int skip_whitespaces(char *line, int i);
