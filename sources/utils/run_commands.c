@@ -4,14 +4,44 @@
 #include "env.h"
 #include "pipex.h"
 
-void	run_cmds(t_cmd *cmd, char **env)
+void	run_cmds(t_cmd *shell_cmds, char **env)
 {
 	pid_t	pid;
+	int	i;
+	char	*arr;
+	char	**matrix;
 
+	i = 0;
 	pid = fork();
 	if (pid == 0)
 	{
-		if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
+		while (env[i])
+		{
+			if (ft_strstr(env[i], "PATH="))
+				break ;
+			i++;
+		}
+		arr = shell_cmds->cmd_args[0];
+		matrix = ft_split(env[i] + 5, ':');
+		// if (!matrix)
+		// 	split_matrix_failed(pipex, split_cmd);
+		shell_cmds->cmd_path = arr;
+		if (access(shell_cmds->cmd_path, X_OK) != -1)
+			if (execve(shell_cmds->cmd_path, shell_cmds->cmd_args, env) == -1)
+				printf("ERROR\n");
+		i = 0;
+		while (matrix[i])
+		{
+			shell_cmds->cmd_path = ft_strjoin(matrix[i++], arr, '/');
+			// if (!cmd)
+			// 	join_failed(pipex, split_cmd, matrix);
+			if (access(shell_cmds->cmd_path, X_OK) != -1)
+				break ;
+			free(shell_cmds->cmd_path);
+		}
+		// if (!matrix[i])
+		// 	//chi kara execve ani
+		if (execve(shell_cmds->cmd_path, shell_cmds->cmd_args, env) == -1)
 			printf("ERROR\n");
 	}
 }

@@ -18,5 +18,9 @@ void dolarni2(t_token **tokens, char **env);
 char	*ft_strjoin(char const *s1, char const *s2, char sep);
 char	*join(char *s1, char *s2);
 char	*ft_strdup(char *src);
+char	*ft_strstr(char *str, char *to_find);
 
+
+//spliti hamar
+char	**ft_split(char const *s, char c);
 #endif
