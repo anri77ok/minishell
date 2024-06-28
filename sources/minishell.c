@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **env)
 	shell->envr = init_env(shell->envr, env);
 	while(shell->envr)
 	{
-		printf("key=%s\n",shell->envr->key);
+		printf("key=%s\n",shell->envr->value);
 		shell->envr = shell->envr->next;
 	}
 	// shell->cmds = NULL;

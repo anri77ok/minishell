@@ -74,20 +74,14 @@ char	*find_value(char	*full_key_val)
 t_env_elem	*init_env(t_env_elem *envr, char	**env)
 {
 	int			i;
-	// t_env_elem	**new_env=NULL;
 	t_env_elem	*temp_env_elem;
 
 	i = 0;
 	envr = NULL;
-	// temp_env_elem = new_env;
 	while (env[i] != NULL)
 	{
-		// new_env = malloc(sizeof(t_env_elem));
-		// if (!new_env)
-		// 	return (NULL);
 		temp_env_elem = ft_lstnew_dlya_env(find_key(env[i]), find_value(env[i]));
 		ft_lstadd_back_env(&envr, temp_env_elem);
-		//  *envr = (*envr)->next;
 		i++;
 	}
 	 return (envr);
