@@ -1,6 +1,18 @@
 #include "tokenization.h"
 #include "utils.h"
 
+int	my_strlen(const char *s)
+{
+	int	len;
+
+	len = 0;
+	if (!s)
+		return (0);
+	while (s[len])
+		len++;
+	return (len);
+}
+
 int get_quote(char *str, int i, char c)
 {
 	while (str[i])
@@ -21,7 +33,6 @@ void chakertni(t_token **tokens)
 	char *final;
 	int i;
 	int j;
-	char c;
 
 	current = *tokens;
 	while (current)
@@ -31,22 +42,36 @@ void chakertni(t_token **tokens)
 		{
 			if (current->value[i] == 34 || current->value[i] == 39)
 			{
-				c = current->value[i];
-				i++;
 				j = i;
-				i = get_quote(current->value, i, c);
+				i = get_quote(current->value, i, current->value[i]);
 				if (i != -1)
 				{
-					begin = ft_substr(current->value, 0, j - 1, true);
-					word = ft_substr(current->value, j, i, true);
-					end = ft_substr(current->value, i + 1, ft_strlen(current->value), true);
+					if (j != 0)
+						begin = ft_substr(current->value, 0, j, true);
+					else
+						begin = NULL;
+					if (j + 1 != i)
+						word = ft_substr(current->value, j + 1, i, true);
+					else
+						word = NULL;
+					if (i + 1 != my_strlen(current->value))
+						end = ft_substr(current->value, i + 1, ft_strlen(current->value), true);
+					else
+						end = NULL;
 					free(current->value);
 					final = join(begin, word);
 					current->value = join(final, end);
-					// printf("j--%d i--%d\n", j, i);
-					// printf("begin--%s--\n", begin);
-					// printf("end--%s--\n", end);
-					// printf("--%s--\n", current->value);
+					printf("j--%d i--%d\n", j, i);
+					printf("begin--%s--\n", begin);
+					printf("end--%s--\n", end);
+					printf("word--%s--\n", word);
+					printf("final--%s--\n", final);
+					printf("--%s--\n", current->value);
+					if (begin != NULL)
+						i = (my_strlen(begin) - 1);
+					else
+						i = 0;
+					printf("i -- %d\n", i);
 					free(begin);
 					free(end);
 					free(final);
@@ -58,3 +83,4 @@ void chakertni(t_token **tokens)
 		current = current->next;
 	}
 }
+
