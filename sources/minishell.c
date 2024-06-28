@@ -13,7 +13,7 @@ int	main(int ac, char **av, char **env)
 	av = NULL;
 	tokens = NULL;
 	shell = malloc(sizeof(t_shell));
-	shell->envr = init_env(env);
+	shell->envr = init_env(shell->envr, env);
 	while(shell->envr)
 	{
 		printf("key=%s\n",shell->envr->key);

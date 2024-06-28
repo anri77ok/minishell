@@ -9,7 +9,7 @@
 # define APPEND 2
 # define HERE_DOC_FILE ".hd_tmp_file"
 
-t_env_elem	*init_env(char	**env);
+t_env_elem  *init_env(t_env_elem *envr, char	**env);
 void	check_env(t_shell	*shell);
 void	token_to_cmds(t_shell *shell, t_token *tokens);
 void	ft_lstadd_back(t_shell *shell, t_cmd *new);
