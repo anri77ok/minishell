@@ -3,7 +3,8 @@
 		"tokenization.h": "c",
 		"utils.h": "c",
 		"minishell.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"bitset": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

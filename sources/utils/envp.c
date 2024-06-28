@@ -75,22 +75,24 @@ t_env_elem	*init_env(char	**env)
 {
 	int			i;
 	t_env_elem	*new_env;
-	t_env_elem	temp_env_elem;
+	t_env_elem	*temp_env_elem;
 
 	i = 0;
-	new_env = &temp_env_elem;
+	// new_env = malloc(sizeof(t_env_elem));
+	// temp_env_elem = new_env;
 	while (env[i] != NULL)
 	{
-		new_env->next = malloc(sizeof(t_env_elem));
-		if (!new_env->next)
+		new_env = malloc(sizeof(t_env_elem));
+		if (!new_env)
 			return (NULL);
-		new_env->next->key = find_key(env[i]);
-		new_env->next->value = find_value(env[i]);
-		new_env->next->next = NULL;
+		temp_env_elem = new_env;
+		temp_env_elem->key = find_key(env[i]);
+		temp_env_elem->value = find_value(env[i]);
+		temp_env_elem->next = NULL;
 		new_env = new_env->next;
 		i++;
 	}
-	return (temp_env_elem.next);
+	return (temp_env_elem);
 }
 
 void	check_env(t_shell	*shell)
@@ -133,4 +135,43 @@ char	**env_list_to_array(t_env_elem *temp)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+//im hamar
+
+t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
+{
+	t_env_elem	*new;
+
+	new = malloc(sizeof(t_env_elem));
+	if (!new)
+		return (NULL);
+	new -> key = ft_strdup(key);
+	new -> value = ft_strdup(value);
+	new -> next = NULL;
+	return (new);
+}
+
+
+t_env_elem	*ft_lstlast(t_env_elem *lst)
+{
+	if (lst == NULL)
+		return (NULL);
+	while (lst && lst->next)
+		lst = lst->next;
+	return (lst);
+}
+
+void	ft_lstadd_back(t_env_elem **lst, t_env_elem *new)
+{
+	t_env_elem	*ptr;
+
+	if (!*lst)
+	{
+		*lst = new;
+		return ;
+	}
+	ptr = ft_lstlast(*lst);
+	ptr -> next = new;
+	// new->prev = ptr;
 }
