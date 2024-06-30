@@ -49,7 +49,7 @@ void	init_fds(t_fds *fds)
 	fds->second_case = -1;
 }
 
-void	token_to_cmds(t_shell *shell, t_token *tokens)
+void	token_to_cmds(t_shell *shell, t_token *token_list)
 {
 	int		len;
 	char	**cmd_args;
@@ -57,7 +57,7 @@ void	token_to_cmds(t_shell *shell, t_token *tokens)
 	t_token	*temp2;
 	t_fds	fds;
 
-	temp = tokens;
+	temp = token_list;
 	
 	while (temp != NULL)
 	{

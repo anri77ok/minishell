@@ -2,14 +2,14 @@
 #include "utils.h"
 #include <stdlib.h>
 
-void	tokens_types(t_token *tokens)
+void	tokens_types(t_token *token_list)
 {
 	t_token *current;
 	t_token_params params;
 
 	params.cmd_found = 0;
 	params.redir = 0;
-	current = tokens;
+	current = token_list;
 	while (current)
 	{
         current->type = set_token_type(current->value, 0);

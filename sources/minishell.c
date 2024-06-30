@@ -5,21 +5,21 @@
 
 int	main(int ac, char **av, char **env)
 {
-	t_token	*tokens;
-	 char	*cmd_line;
+	t_token	*token_list;
+	char	*cmd_line;
 	t_shell	*shell;
 
 	ac = 0;
 	av = NULL;
-	tokens = NULL;
+	token_list = NULL;
 	shell = malloc(sizeof(t_shell));
 	shell->envr = init_env(shell->envr, env);
+	shell->cmds = NULL;
 	// while(shell->envr)
 	// {
 	// 	printf("key=%s\n",shell->envr->value);
 	// 	shell->envr = shell->envr->next;
 	// }
-	shell->cmds = NULL;
 	check_env(shell);
 	while (1)
 	{
@@ -27,12 +27,12 @@ int	main(int ac, char **av, char **env)
 		add_history(cmd_line);
 		if (cmd_line && *cmd_line)
 		{
-			tokenization(cmd_line, &tokens);
-			dolarni2(&tokens, env);
-			// chakertni(&tokens);
-			token_to_cmds(shell, tokens);
-			// run_cmds(shell->cmds, env);
-			print_token_list(tokens);
+			tokenization(cmd_line, &token_list);
+			dolarni2(&token_list, env);
+			chakertni(&token_list);
+			token_to_cmds(shell, token_list);
+			//run_cmds(shell->cmds, env);
+			print_token_list(token_list);
 			int i = 0;
 			while (shell->cmds)
 			{
@@ -43,7 +43,7 @@ int	main(int ac, char **av, char **env)
 				shell->cmds = shell->cmds->next;
 			}
 		}
-		ft_token_list_clear(&tokens);
+		ft_token_list_clear(&token_list);
 		free(cmd_line);
 	}
 } 

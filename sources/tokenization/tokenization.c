@@ -65,7 +65,7 @@ int is_quote(char *cmd_line, int i)
 	return (i);
 }
 
-void spliting(t_token **tokens, char *str)
+void spliting(t_token **token_list, char *str)
 {
 	t_token	*new_token;
 	int i = 0;
@@ -81,21 +81,21 @@ void spliting(t_token **tokens, char *str)
 		{
 			pice = ft_substr(str, k, i, true);
 			new_token = create_new_token(pice);
-			add_to_list(tokens, new_token);
+			add_to_list(token_list, new_token);
 			k = i;
 		}
 		else if (i < k)
 		{
 			pice = ft_substr(str, i, k, true);
 			new_token = create_new_token(pice);
-			add_to_list(tokens, new_token);
+			add_to_list(token_list, new_token);
 			i = k - ft_is_operator(str, k);;
 		}
 	}
 
 }
 
-void tokenization(char *cmd_line, t_token **tokens)
+void tokenization(char *cmd_line, t_token **token_list)
 {
 	int i;
 	int j;
@@ -121,14 +121,14 @@ void tokenization(char *cmd_line, t_token **tokens)
 		{
 			line = ft_substr(cmd_line, i, j - i, false);
 			new_token = create_new_token(line);
-			add_to_list(tokens, new_token);
+			add_to_list(token_list, new_token);
 		}
 		else
 		{
 			line = ft_substr(cmd_line, i, j - i, false);
-			spliting(tokens, line);
+			spliting(token_list, line);
 		}
-		tokens_types(*tokens);
+		tokens_types(*token_list);
 		j = skip_whitespaces(cmd_line, j);
 		i = j;
 		if (quote == false)

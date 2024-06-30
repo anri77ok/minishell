@@ -54,7 +54,7 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 	return(word);
 }
 
-void dolarni2(t_token **tokens, char **env)
+void dolarni2(t_token **token_list, char **env)
 {
 	t_token *current;
 	int i;
@@ -66,7 +66,7 @@ void dolarni2(t_token **tokens, char **env)
 	bool flag = NULL;
 	bool qt = false;
 	bool double_qt = false;
-	current = *tokens;
+	current = *token_list;
 	while(current)
 	{
 		if (current->type == WORD || (current->type >= 12 && current->type <= 16))

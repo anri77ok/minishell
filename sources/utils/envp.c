@@ -98,7 +98,7 @@ void	check_env(t_shell	*shell)
 			return ;
 		temp = temp->next;
 	}
-	temp = NULL;
+	// temp = NULL;
 	temp = malloc(sizeof(t_env_elem));
 	if (!temp)
 		return ;
