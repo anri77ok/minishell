@@ -25,7 +25,7 @@
 typedef struct s_pipex
 {
 	int			(*pipes)[2];
-	int			cmd_cnt;
+	int			cmd_count;
 	t_cmd		*cmds;
 	t_env_elem	*envp;
 	pid_t		*pids;

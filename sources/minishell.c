@@ -8,7 +8,6 @@ int	main(int ac, char **av, char **env)
 	t_token	*token_list;
 	char	*cmd_line;
 	t_shell	*shell;
-
 	ac = 0;
 	av = NULL;
 	token_list = NULL;

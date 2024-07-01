@@ -67,8 +67,15 @@ void chakertni(t_token **tokens)
 					printf("word--%s--\n", word);
 					printf("final--%s--\n", final);
 					printf("--%s--\n", current->value);
-					if (begin != NULL)
-						i = (my_strlen(begin) - 1);
+					if (word != NULL)
+					{
+						if (begin == NULL)
+							i = my_strlen(word);
+						else
+							i = my_strlen(begin) + my_strlen(word);
+					}
+					else if (begin != NULL)
+						i = (my_strlen(begin));
 					else
 						i = 0;
 					printf("i -- %d\n", i);
