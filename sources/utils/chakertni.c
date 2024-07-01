@@ -83,9 +83,12 @@ void chakertni(t_token **tokens)
 					free(end);
 					free(final);
 					free(word);
+					if (current->value == NULL)
+						break ;
 				}
 			}
-			i++;
+			else
+				i++;
 		}
 		current = current->next;
 	}
