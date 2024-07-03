@@ -4,6 +4,25 @@
 #include "env.h"
 #include "pipex.h"
 
+void ft_clear_shell(t_shell **shell)
+{
+	t_cmd	*tmp;
+	while ((*shell)->cmds)
+	{
+		tmp = (*shell)->cmds;
+		//free((*shell)->cmds->cmd_path);
+		// int i = 1;
+		// while ((*shell)->cmds->cmd_args[i])
+		// {
+		// 	free((*shell)->cmds->cmd_args[i]);
+		// 	i++;
+		// }
+		// free((*shell)->cmds->cmd_args);
+		(*shell)->cmds = (*shell)->cmds->next;
+		free(tmp);
+	}
+}
+
 int	main(int ac, char **av, char **env)
 {
 	t_token	*token_list;
@@ -31,18 +50,19 @@ int	main(int ac, char **av, char **env)
 			dolarni2(&token_list, env);
 			chakertni(&token_list);
 			token_to_cmds(shell, token_list);
-			run_cmds(shell, env);
+			run_cmds(shell);
 			print_token_list(token_list);
-			int i = 0;
-			while (shell->cmds)
-			{
-				i = 0;
-				while (shell->cmds->cmd_args[i])
-					printf("%s\n", shell->cmds->cmd_args[i++]);
-				printf("path -- %s\n", shell->cmds->cmd_path);
-				shell->cmds = shell->cmds->next;
-			}
+			//int i = 0;
+			// while (shell->cmds)
+			// {
+			// 	i = 0;
+			// 	while (shell->cmds->cmd_args[i])
+			// 		printf("%s\n", shell->cmds->cmd_args[i++]);
+			// 	printf("path -- %s\n", shell->cmds->cmd_path);
+			// 	shell->cmds = shell->cmds->next;
+			// }
 		}
+		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
 	}

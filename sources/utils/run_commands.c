@@ -9,7 +9,7 @@ void	close_pipes(t_pipex *pipex)
 	int	i;
 
 	i = 0;
-	while (i < pipex->cmd_cnt - 1)
+	while (i < pipex->cmd_count - 1)
 	{
 		if (pipex->pipes)
 		{
@@ -20,8 +20,9 @@ void	close_pipes(t_pipex *pipex)
 	}
 }
 
-void duping(t_pipex *pipex, t_cmd *cmd)
+void dupeing(t_pipex *pipex, t_cmd *cmd)
 {
+	printf("----------%d\n", cmd->input);
 	if (cmd->input != 0)
 	{
 		if (dup2(cmd->input, 0) == -1)
@@ -44,33 +45,34 @@ void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i)
 	char	**matrix;
 	char	**env;
 
+	(void)cmd;
 	env = NULL;
 	pid = fork();
 	if (pid == 0)
 	{
 		env = env_list_to_array(pipex->envp);
-		dupeing()
+		//dupeing(pipex, cmd);
 		while (env[i])
 		{
 			if (ft_strstr(env[i], "PATH="))
 				break ;
 			i++;
 		}
-		arr = shell->cmds->cmd_args[0];
+		arr = pipex->cmds->cmd_args[0];
 		matrix = ft_split(env[i] + 5, ':');
-		shell->cmds->cmd_path = arr;
-		if (access(shell->cmds->cmd_path, X_OK) != -1)
-			if (execve(shell->cmds->cmd_path, shell->cmds->cmd_args, env) == -1)
+		pipex->cmds->cmd_path = arr;
+		if (access(pipex->cmds->cmd_path, X_OK) != -1)
+			if (execve(pipex->cmds->cmd_path, pipex->cmds->cmd_args, env) == -1)
 				printf("ERROR\n");
 		i = 0;
 		while (matrix[i])
 		{
-			shell->cmds->cmd_path = ft_strjoin(matrix[i++], arr, '/');
-			if (access(shell->cmds->cmd_path, X_OK) != -1)
+			// free(pipex->cmds->cmd_path);
+			pipex->cmds->cmd_path = ft_strjoin(matrix[i++], arr, '/');
+			if (access(pipex->cmds->cmd_path, X_OK) != -1)
 				break ;
-			free(shell->cmds->cmd_path);
 		}
-		if (execve(shell->cmds->cmd_path, shell->cmds->cmd_args, env) == -1)
+		if (execve(pipex->cmds->cmd_path, pipex->cmds->cmd_args, env) == -1)
 			printf("ERROR\n");
 	}
 	else
@@ -81,28 +83,30 @@ void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i)
 
 void create_proceces(t_pipex *pipex)
 {
-	t_cmd *cmd;
+	//t_cmd *cmd;
 	int i;
 
 	i = 0;
-	cmd = pipex->cmds;
-	while (i < pipex->cmd_count)
-	{
-		run_shell_cmd(pipex, cmd, i);
-		cmd = cmd->next;
-		i++;
-	}
+	//cmd = pipex->cmds;
+	//while (i < pipex->cmd_count)
+	//{
+		//printf("%s\n", pipex->cmds->cmd_path);
+		run_shell_cmd(pipex, pipex->cmds, i);
+		printf("%d\n", pipex->cmd_count);
+		//cmd = cmd->next;
+		//i++;
+	//}
 }
 
-void	run_cmds(t_shell *shell, char **env)
+void	run_cmds(t_shell *shell)
 {
-	pid_t	pid;
-	int	i;
-
 	t_pipex	pipex;
 
 	pipex_init(&pipex, shell);
-	if (pipex.cmd_count > 1)
+	//if (pipex.cmd_count > 1)
+		init_pipes(&pipex);
+	printf("heysav\n");
+	//if (pipex.cmd_count > 1)
 		create_proceces(&pipex);
 }
 

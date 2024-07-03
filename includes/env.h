@@ -16,6 +16,7 @@ void	ft_lstadd_back(t_shell *shell, t_cmd *new);
 t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds);
 int	open_file(char *fn, int type);
 int	here_doc_open(char *lim);
+char	**env_list_to_array(t_env_elem *temp);
 
 
 #endif
