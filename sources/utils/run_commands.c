@@ -25,12 +25,14 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 	printf("----------%d\n", cmd->input);
 	if (cmd->input != 0)
 	{
+		printf("lavaa\n");
 		if (dup2(cmd->input, 0) == -1)
 			printf("DUP Error\n");
 		close(cmd->input);
 	}
-	if (cmd->input != 1)
+	if (cmd->output != 1)//ste grel eir eli cmd->input
 	{
+		printf("lava\n");
 		if (dup2(cmd->output, 1) == -1)
 			printf("DUP Error\n");
 		close(cmd->input);
@@ -45,13 +47,13 @@ void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i)
 	char	**matrix;
 	char	**env;
 
-	(void)cmd;
+	// (void)cmd;
 	env = NULL;
 	pid = fork();
 	if (pid == 0)
 	{
 		env = env_list_to_array(pipex->envp);
-		//dupeing(pipex, cmd);
+		dupeing(pipex, cmd);
 		while (env[i])
 		{
 			if (ft_strstr(env[i], "PATH="))
@@ -103,11 +105,13 @@ void	run_cmds(t_shell *shell)
 	t_pipex	pipex;
 
 	pipex_init(&pipex, shell);
-	//if (pipex.cmd_count > 1)
+	if (pipex.cmd_count > 1)
+	{
 		init_pipes(&pipex);
+		printf("ashxtec\n");
+	}
 	printf("heysav\n");
-	//if (pipex.cmd_count > 1)
-		create_proceces(&pipex);
+	create_proceces(&pipex);
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)

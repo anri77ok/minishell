@@ -62,7 +62,7 @@ int	main(int ac, char **av, char **env)
 			// 	shell->cmds = shell->cmds->next;
 			// }
 		}
-		ft_clear_shell(&shell);
+		 ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
 	}
