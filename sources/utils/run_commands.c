@@ -15,7 +15,7 @@ void	run_cmds(t_shell *shell, char **env)
 
 	pipex_init(&pipex, shell);
 	if (pipex.cmd_count > 1)
-		// create_proceces(&pipex);
+		init_pipes(&pipex);
 	i = 0;
 	pid = fork();
 	if (pid == 0)
