@@ -2,6 +2,7 @@
 #include "tokenization.h"
 #include "utils.h"
 #include "env.h"
+#include "pipex.h"
 
 int	main(int ac, char **av, char **env)
 {
@@ -30,7 +31,7 @@ int	main(int ac, char **av, char **env)
 			dolarni2(&token_list, env);
 			chakertni(&token_list);
 			token_to_cmds(shell, token_list);
-			//run_cmds(shell->cmds, env);
+			run_cmds(shell, env);
 			print_token_list(token_list);
 			int i = 0;
 			while (shell->cmds)

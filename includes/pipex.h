@@ -31,4 +31,9 @@ typedef struct s_pipex
 	pid_t		*pids;
 }	t_pipex;
 
+void	run_cmds(t_shell *shell, char **env);
+int	count_shell_cmds(t_cmd *shell_cmds);
+void	pipex_init(t_pipex *pipex, t_shell *shell);
+
+
 #endif
