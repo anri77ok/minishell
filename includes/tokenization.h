@@ -72,4 +72,20 @@ t_token_type set_token_type(char *value, int i);
 void	tokens_types(t_token *tokens);
 void chakertni(t_token **tokens);
 
+
+//datark nodery jnjelu hamar
+void	get_bez_empty_nodes(t_token **token_list);
+void	delete_this_node(t_token	**token_list, int pos);
+void	middle_node(t_token **token_list, int pos);
+int	count_nodes_func(t_token	*token_list);
+int	check_value_is_empty(char	*value);
+
+
+//echo
+// void    echo(char **cmd_args, int fd);
+void    echo(char **cmd_args, int fd);
+void    fd_put_string(char *str, int fd);
+
+
+
 #endif

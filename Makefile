@@ -32,7 +32,7 @@ OBJS_DIR = objects/
 SRCS_NAME = minishell.c tokenization/tokenization.c \
 tokenization/tok_utils.c utils/utils.c utils/dolarni2.c \
 utils/chakertni.c utils/redirect.c utils/envp.c utils/open_files.c \
-utils/run_commands.c utils/split.c utils/pipex_ut.c
+utils/run_commands.c utils/split.c utils/pipex_ut.c utils/echo.c utils/pwd.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))

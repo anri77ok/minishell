@@ -22,7 +22,8 @@ void	close_pipes(t_pipex *pipex)
 
 void dupeing(t_pipex *pipex, t_cmd *cmd)
 {
-	printf("----------%d\n", cmd->input);
+	printf("-----input-----%d\n", cmd->input);
+	printf("-----output-----%d\n", cmd->output);
 	if (cmd->input != 0)
 	{
 		printf("lavaa\n");
