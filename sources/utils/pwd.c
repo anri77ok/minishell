@@ -12,5 +12,5 @@ void    pwd(int fd)
 	{}
 		//error
 	fd_put_string(current_directory, fd);
-	write (1, "\n", 1);
+	write (fd, "\n", 1);
 }

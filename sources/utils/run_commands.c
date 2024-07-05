@@ -112,7 +112,8 @@ void	run_cmds(t_shell *shell)
 		printf("ashxtec\n");
 	}
 	printf("heysav\n");
-	create_proceces(&pipex);
+	export(&pipex, shell->cmds);
+	// create_proceces(&pipex);
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)

@@ -86,6 +86,8 @@ int	check_value_is_empty(char	*value);
 void    echo(char **cmd_args, int fd);
 void    fd_put_string(char *str, int fd);
 
+//pwd
+void    pwd(int fd);
 
 
 #endif

@@ -97,7 +97,8 @@ void dolarni2(t_token **token_list, char **env)
 					kp(begin, word, end, &current);
 					flag = false;
 				}
-				i++;
+				if (current->value[0] != '\0')
+					i++;
 			}
 		}
 		current = current->next;

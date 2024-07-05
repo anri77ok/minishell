@@ -23,64 +23,65 @@ void ft_clear_shell(t_shell **shell)
 	}
 }
 
-int	main()
+int	main(int argc, char **argv, char **env)
 {
 	// char args[6][10] = {"a", "-nnannn", "-nnnnn.n", "senc", "baner", NULL};
-	 char *strings[] = {
-        "-n",
-        "-n",
-        "-nn",
-        "-nnnnn.",
-        "-nn",
-        "sixth",
-        NULL  // Завершающий NULL-указатель
-    };
-	echo(strings,1);
-	pwd(1);
-	// t_token	*token_list;
-	// char	*cmd_line;
-	// t_shell	*shell;
-	// ac = 0;
-	// av = NULL;
-	// token_list = NULL;
-	// shell = malloc(sizeof(t_shell));
-	// shell->envr = init_env(shell->envr, env);
-	// shell->cmds = NULL;
-	// // while(shell->envr)
-	// // {
-	// // 	printf("key=%s\n",shell->envr->value);
-	// // 	shell->envr = shell->envr->next;
-	// // }
-	// check_env(shell);
-	// while (1)
+	//  char *strings[] = {
+    //     "-n",
+    //     "-n",
+    //     "-nn",
+    //     "-nnnnn.",
+    //     "-nn",
+    //     "sixth",
+    //     NULL  // Завершающий NULL-указатель
+    // };
+	// echo(strings,1);
+	// pwd(1);
+	t_token	*token_list;
+	char	*cmd_line;
+	t_shell	*shell;
+	argc = 0;
+	argv = NULL;
+	token_list = NULL;
+	shell = malloc(sizeof(t_shell));
+	shell->envr = init_env(shell->envr, env);
+	shell->cmds = NULL;
+	// export()
+	// while(shell->envr)
 	// {
-	// 	cmd_line = readline("VIBERSEIJSHELL:");
-	// 	add_history(cmd_line);
-	// 	if (cmd_line && *cmd_line)
-	// 	{
-	// 		tokenization(cmd_line, &token_list);
-	// 		dolarni2(&token_list, env);
-	// 		//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
-	// 		//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
-	// 		get_bez_empty_nodes(&token_list);
-	// 		// chakertni(&token_list);
-	// 		// token_to_cmds(shell, token_list);
-	// 		// run_cmds(shell);
-	// 		print_token_list(token_list);
-	// 		//int i = 0;
-	// 		// while (shell->cmds)
-	// 		// {
-	// 		// 	i = 0;
-	// 		// 	while (shell->cmds->cmd_args[i])
-	// 		// 		printf("%s\n", shell->cmds->cmd_args[i++]);
-	// 		// 	printf("path -- %s\n", shell->cmds->cmd_path);
-	// 		// 	shell->cmds = shell->cmds->next;
-	// 		// }
-	// 	}
-	// 	ft_clear_shell(&shell);
-	// 	ft_token_list_clear(&token_list);
-	// 	free(cmd_line);
+	// 	printf("key=%s\n",shell->envr->value);
+	// 	shell->envr = shell->envr->next;
 	// }
+	check_env(shell);
+	while (1)
+	{
+		cmd_line = readline("VIBERSEIJSHELL:");
+		add_history(cmd_line);
+		if (cmd_line && *cmd_line)
+		{
+			tokenization(cmd_line, &token_list);
+			dolarni2(&token_list, env);
+			//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
+			//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
+			get_bez_empty_nodes(&token_list);
+			chakertni(&token_list);
+			token_to_cmds(shell, token_list);
+			run_cmds(shell);
+			print_token_list(token_list);
+			//int i = 0;
+			// while (shell->cmds)
+			// {
+			// 	i = 0;
+			// 	while (shell->cmds->cmd_args[i])
+			// 		printf("%s\n", shell->cmds->cmd_args[i++]);
+			// 	printf("path -- %s\n", shell->cmds->cmd_path);
+			// 	shell->cmds = shell->cmds->next;
+			// }
+		}
+		ft_clear_shell(&shell);
+		ft_token_list_clear(&token_list);
+		free(cmd_line);
+	}
 }
 
 void	get_bez_empty_nodes(t_token **token_list)
@@ -94,6 +95,7 @@ void	get_bez_empty_nodes(t_token **token_list)
 		if (check_value_is_empty(temp->value) == 1)
 		{
 			delete_this_node(token_list, pos);
+			printf("yhy\n");
 			temp = *token_list;
 			pos = 0;
 		}
