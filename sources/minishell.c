@@ -115,12 +115,19 @@ void	delete_this_node(t_token	**token_list, int pos)
 
 	temp = *token_list;
 	count_nodes = count_nodes_func(*token_list);
+	if (count_nodes == 1) // If there's only one node
+    {
+        free(*token_list);
+        *token_list = NULL;
+        return ;
+    }
 	if (pos == 0)
 	{
 		del_node = *token_list;
 		*token_list = (*token_list)->next;
-		free(del_node);
 		(*token_list)->prev = NULL;
+		free(del_node);
+		del_node = NULL;//ste seg ka//el chkaaaaaaaaaa
 	}
 	else if (pos == count_nodes - 1)
 	{
