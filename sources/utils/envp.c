@@ -178,8 +178,9 @@ void	print_env(t_env_elem *env)//esi en depquma kanchvum erb env enq grum termin
 	temp = env;
 	while (temp)
 	{
-		if (temp->value[0] != '\0')
+		if (temp->value != NULL)
 			printf("%s=%s\n", temp->key, temp->value);
 		temp = temp->next;
 	}
 }
+

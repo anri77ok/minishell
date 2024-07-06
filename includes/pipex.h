@@ -41,9 +41,9 @@ void    init_pipes(t_pipex *pipex);
 
 
 void	export(t_pipex *pipex, t_cmd *cmd);;
-void	print_export(t_pipex *pipex);
+void	print_export(t_pipex *pipex, int flag);
 
-void	ay_nor_export(t_pipex *pipex, t_cmd *cmd);
+void	ay_nor_export(t_pipex *pipex, t_cmd *cmd ,int flag);
 char	*get_word_after_equal(char	*value);
 char	*get_word_before_equal(char	*key);
 int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value);

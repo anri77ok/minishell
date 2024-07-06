@@ -6,20 +6,23 @@
 
 void	export(t_pipex *pipex, t_cmd *cmd)
 {
+	int	flag = 1;
 	if (cmd)
 	{
 		if (!cmd->cmd_args[1])
 		{
-			print_export(pipex);
+			flag = 1;
+			print_export(pipex, flag);
 		}
 		else
 		{
-			ay_nor_export(pipex, cmd);
+			flag = -1;
+			ay_nor_export(pipex, cmd, flag);
 		}
 	}
 }
 
-void	ay_nor_export(t_pipex *pipex, t_cmd *cmd)
+void	ay_nor_export(t_pipex *pipex, t_cmd *cmd ,int flag)
 {
 	t_env_elem	*new_node;
 	int		i;
@@ -31,6 +34,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd)
 	{
 		key = get_word_before_equal(cmd->cmd_args[i]);
 		value = get_word_after_equal(cmd->cmd_args[i]);
+		printf("anriiii=%s\n", value);
 		if (check_this_key_in_env_list(pipex->envp, key, value) == -1)
 		{
 			i++;
@@ -40,7 +44,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd)
 		ft_lstadd_back_env(&pipex->envp, new_node);
 		i++;
 	}
-	print_export(pipex);
+	print_export(pipex, flag);
 }
 
 
@@ -50,20 +54,27 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 	{
 		if (ft_strcmp(env_list->key, key) == 0)
 		{
-			if (env_list->value && value[0])
+			if (value == NULL)
+				return (-1);//esi arel enq vor export c  export c(erku hat node chsarqi nuyn c key-ov)
+			if(env_list->value == NULL && (value[0] == '\0' || value[0]))
+			{
+				env_list->value = ft_strdup(value);
+				return (-1);
+			}//ete unenq export f heto anum enq export f= kam export f=aa popoxutyuny lini
+			if (env_list->value && (value[0] == '\0' || value[0]))
 			{
 				char *temp = env_list->value;
 				free(temp);
 				env_list->value = ft_strdup(value);
 				return (-1);
-			}
-			if(env_list->value && value[0] == '\0')
-			{
-				return (-1);
-			}
+			}//ete lini export a=d heto export a=xx kam export export a=  poxi et node-i key-i value-n
+
 		}
 		env_list = env_list->next;
 	}
+	if (value)
+		free(value);
+	free(key);
 	return (1);
 }
 //bann ayn e vor es env-i mej erb anem export a,drvelu e a-n ira \0-ov(aysinqn datark tox)
@@ -73,17 +84,31 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 char	*get_word_after_equal(char	*value)
 {
 	int	i;
-	char	*res;
+	// char	*res;
+	int	flag;
+	int	index_equal;
 
+	flag = 0;
 	i = 0;
+	index_equal = 0;
 	while (value[i])
 	{
 		if (value[i] == '=')
-			break ;
+		{
+			flag = 1;
+			index_equal = i;
+			//break ;
+		}
 		i++;
 	}
-	res = ft_substr(value, i + 1, ft_strlen(value), true);
-	return (res);
+	if (flag == 1)
+	{
+		if (value[index_equal + 1] == '\0')
+			return (ft_strdup(""));
+		if (i > index_equal - 1)
+			return (ft_substr(value, index_equal + 1, ft_strlen(value), true));
+	}
+	return (NULL);
 }
 
 char	*get_word_before_equal(char	*key)
@@ -102,8 +127,9 @@ char	*get_word_before_equal(char	*key)
 	return (res);
 }
 
-void	print_export(t_pipex *pipex)
+void	print_export(t_pipex *pipex, int flag)
 {
+	(void)flag;
 	t_env_elem	*temp;
 	t_cmd	*val;
 	int i = 1;
@@ -115,24 +141,12 @@ void	print_export(t_pipex *pipex)
 	{
 		while (temp)
 		{
-			// if (temp->value[0])
-			// 	printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			// else
-			//   	printf("declare -x %s\n", temp->key);
-			if (temp->value[0] == '\0')
-			{
-				printf("hhesa=%d\n", have_equal_sign(val->cmd_args[i]));
-				if (have_equal_sign(val->cmd_args[i]) == 1)
-				{
-					printf("araaaaaaaaaaaaa\n");
-					printf("declare -x %s=\"\"\n", temp->key);
-				}
-				else
-					printf("declare -x %s\n", temp->key);
-			}
-			else
-				printf("declareeee -x %s=\"%s\"\n", temp->key, temp->value);
-
+			if (temp->value == NULL)
+			  	printf("declare -x %s\n", temp->key);
+			else if (temp->value != NULL && temp->value[0] == '\0')
+				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
+			else if (temp->value[0])
+				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 			temp = temp->next;
 		}
 	}
