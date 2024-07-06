@@ -140,6 +140,8 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
 		return (NULL);
 	new -> key = ft_strdup(key);
 	new -> value = ft_strdup(value);
+	printf("key=%s\n",new->key);
+	printf("value=%s\n",new->value);
 	new -> next = NULL;
 	return (new);
 }
@@ -166,4 +168,18 @@ void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new)
 	ptr = ft_lstlast(*lst);
 	ptr -> next = new;
 	// new->prev = ptr;
+}
+
+
+void	print_env(t_env_elem *env)//esi en depquma kanchvum erb env enq grum terminalum
+{
+	t_env_elem *temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (temp->value[0] != '\0')
+			printf("%s=%s\n", temp->key, temp->value);
+		temp = temp->next;
+	}
 }

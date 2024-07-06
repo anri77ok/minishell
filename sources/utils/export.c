@@ -9,13 +9,11 @@ void	export(t_pipex *pipex, t_cmd *cmd)
 	if (cmd)
 	{
 		if (!cmd->cmd_args[1])
-		{	
-			printf("apa\n");
+		{
 			print_export(pipex);
 		}
 		else
 		{
-			printf("takiny\n");
 			ay_nor_export(pipex, cmd);
 		}
 	}
@@ -61,7 +59,6 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 			}
 			if(env_list->value && value[0] == '\0')
 			{
-				// env_list->value = "NULL";
 				return (-1);
 			}
 		}
@@ -108,16 +105,27 @@ char	*get_word_before_equal(char	*key)
 void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
+	t_cmd	*val;
 
+	val = pipex->cmds;
+	int i = 1;
 	temp = merge_sort(pipex->envp, ft_strcmp);
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
 		while (temp)
 		{
+			// if (temp->value[0])
+			// 	printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
+			// else
+			//   	printf("declare -x %s\n", temp->key);
 			if (temp->value[0])
-				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			else
-				printf("declare -x %s\n", temp->key);
+			{
+				if (have_equal_sign(val->cmd_args[i++]))
+					fv
+				else
+					
+			}
+
 			temp = temp->next;
 		}
 	}
