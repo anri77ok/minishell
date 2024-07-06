@@ -106,9 +106,10 @@ void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
 	t_cmd	*val;
-
-	val = pipex->cmds;
 	int i = 1;
+	val = pipex->cmds;
+	printf("strrrr=%s\n", val->cmd_args[i]);
+	printf("len=%zu\n", ft_strlen(val->cmd_args[i]));
 	temp = merge_sort(pipex->envp, ft_strcmp);
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
@@ -118,17 +119,50 @@ void	print_export(t_pipex *pipex)
 			// 	printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 			// else
 			//   	printf("declare -x %s\n", temp->key);
-			if (temp->value[0])
+			if (temp->value[0] == '\0')
 			{
-				if (have_equal_sign(val->cmd_args[i++]))
-					fv
+				printf("hhesa=%d\n", have_equal_sign(val->cmd_args[i]));
+				if (have_equal_sign(val->cmd_args[i]) == 1)
+				{
+					printf("araaaaaaaaaaaaa\n");
+					printf("declare -x %s=\"\"\n", temp->key);
+				}
 				else
-					
+					printf("declare -x %s\n", temp->key);
 			}
+			else
+				printf("declareeee -x %s=\"%s\"\n", temp->key, temp->value);
 
 			temp = temp->next;
 		}
 	}
 	// free_list(temp);
 	temp = NULL;
+}
+
+int	have_equal_sign(char *str)
+{
+	int	i;
+	// int	flag;
+
+	printf("str=%s\n",str);
+	// flag = 0;
+	i = 0;
+	if (!str)
+		return (-8);
+	while (str[i])
+	{
+		if (str[i] == '=')
+		{
+			// flag = 1;
+			break;
+		}
+		i++;
+	}
+	// if (flag == 1)
+	// {
+		if (str[i + 1] == '\0')
+			return (1);
+	// }
+	return (-1);
 }
