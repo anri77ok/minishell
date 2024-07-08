@@ -143,6 +143,7 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
 	// printf("key=%s\n",new->key);
 	// printf("value=%s\n",new->value);
 	new -> next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -167,9 +168,8 @@ void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new)
 	}
 	ptr = ft_lstlast(*lst);
 	ptr -> next = new;
-	// new->prev = ptr;
+	new->prev = ptr;//esi  bacelem vortev t_env-um prev em avelacre
 }
-
 
 void	print_env(t_env_elem *env)//esi en depquma kanchvum erb env enq grum terminalum
 {

@@ -89,5 +89,4 @@ void    fd_put_string(char *str, int fd);
 //pwd
 void    pwd(int fd);
 
-
 #endif

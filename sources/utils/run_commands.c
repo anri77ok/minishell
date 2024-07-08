@@ -112,8 +112,9 @@ void	run_cmds(t_shell *shell)
 		printf("ashxtec\n");
 	}
 	printf("heysav\n");
-	export(&pipex, shell->cmds);
-	print_env(shell->envr);
+	// export(&pipex, shell->cmds);
+	unset(&pipex, shell->cmds);
+	// print_env(shell->envr);
 	// create_proceces(&pipex);
 }
 

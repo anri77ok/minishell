@@ -28,6 +28,7 @@ typedef struct s_env_elem
 	char		*key;
 	char		*value;
 	t_env_elem	*next;
+	t_env_elem	*prev;
 }	t_env_elem;
 
 typedef struct s_shell

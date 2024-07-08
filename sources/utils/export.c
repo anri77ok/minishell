@@ -72,9 +72,9 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 		}
 		env_list = env_list->next;
 	}
-	if (value)
-		free(value);
-	free(key);
+	// if (value)
+	//  	free(value);
+	// free(key);//es frinery seg en talmmmmmmmm
 	return (1);
 }
 //bann ayn e vor es env-i mej erb anem export a,drvelu e a-n ira \0-ov(aysinqn datark tox)

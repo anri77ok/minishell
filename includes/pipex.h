@@ -48,4 +48,12 @@ char	*get_word_after_equal(char	*value);
 char	*get_word_before_equal(char	*key);
 int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value);
 int	have_equal_sign(char *str);
+
+//unset
+//unset
+void    unset(t_pipex *pipex, t_cmd *cmd);
+void    delete_node_with_that_key(t_env_elem **env, char *key);
+void     delete_middle_node(t_env_elem **env, int pos);
+int check_this_key_in_env_list_unset(t_env_elem *env, char *key, int *pos);
+int count_env_nodes_(t_env_elem *env);
 #endif
