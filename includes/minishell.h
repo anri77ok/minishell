@@ -11,6 +11,11 @@
 # include "readline/readline.h"
 # include "readline/history.h"
 
+# define RM "rm"
+# define RF	"-rf"
+# define HERE_DOC_FILE ".hd_tmp_file"
+# define TERM_CODE_SHIFT 128
+
 typedef struct s_env_elem	t_env_elem;
 typedef struct s_cmd		t_cmd;
 
