@@ -4,6 +4,8 @@
 #include "env.h"
 #include "pipex.h"
 
+int	g_exit_status = 0;
+
 void ft_clear_shell(t_shell **shell)
 {
 	t_cmd	*tmp;
@@ -55,12 +57,12 @@ int	main(int argc, char **argv, char **env)
 	check_env(shell);
 	while (1)
 	{
-		cmd_line = readline("VIBERSEIJSHELL:");
+		cmd_line = readline("\033[0;036m MINIVIBERSEIJ: \033[0m");
 		add_history(cmd_line);
 		if (cmd_line && *cmd_line)
 		{
 			tokenization(cmd_line, &token_list);
-			dolarni2(&token_list, env);
+			dolarni2(&token_list, env_list_to_array(shell->envr));
 			//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
 			//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
 			get_bez_empty_nodes(&token_list);
@@ -95,7 +97,7 @@ void	get_bez_empty_nodes(t_token **token_list)
 		if (check_value_is_empty(temp->value) == 1)
 		{
 			delete_this_node(token_list, pos);
-			printf("yhy\n");
+			//printf("yhy\n");
 			temp = *token_list;
 			pos = 0;
 		}

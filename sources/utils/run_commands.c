@@ -4,6 +4,8 @@
 #include "env.h"
 #include "pipex.h"
 
+extern int	g_exit_status;
+
 void	close_pipes(t_pipex *pipex)
 {
 	int	i;
@@ -22,18 +24,14 @@ void	close_pipes(t_pipex *pipex)
 
 void dupeing(t_pipex *pipex, t_cmd *cmd)
 {
-	printf("-----input-----%d\n", cmd->input);
-	printf("-----output-----%d\n", cmd->output);
 	if (cmd->input != 0)
 	{
-		printf("lavaa\n");
 		if (dup2(cmd->input, 0) == -1)
 			printf("DUP Error\n");
 		close(cmd->input);
 	}
-	if (cmd->output != 1)//ste grel eir eli cmd->input
+	if (cmd->output != 1)
 	{
-		printf("lava\n");
 		if (dup2(cmd->output, 1) == -1)
 			printf("DUP Error\n");
 		close(cmd->input);
@@ -86,19 +84,44 @@ void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i)
 
 void create_proceces(t_pipex *pipex)
 {
-	//t_cmd *cmd;
+	t_cmd *cmd;
 	int i;
 
 	i = 0;
-	//cmd = pipex->cmds;
-	//while (i < pipex->cmd_count)
-	//{
-		//printf("%s\n", pipex->cmds->cmd_path);
+	cmd = pipex->cmds;
+	while (i < pipex->cmd_count)
+	{
+		if (!cmd->cmd_path)
+		{
+			cmd = cmd->next;
+			i++;
+			continue ;
+		}
 		run_shell_cmd(pipex, pipex->cmds, i);
-		printf("%d\n", pipex->cmd_count);
-		//cmd = cmd->next;
-		//i++;
-	//}
+		cmd = cmd->next;
+		i++;
+	}
+}
+
+void	wait_processes(t_pipex *pipex)
+{
+	int		i;
+	int		exit_status;
+	pid_t	pid;
+
+	i = 0;
+	//  && is_builtin(pipex->cmds->cmd_path
+	if (pipex->cmd_count == 1)
+		return ;
+	while (i < pipex->cmd_count - 1)
+	{
+		pid = waitpid(pipex->pids[i], &exit_status, 0);
+		if (WIFEXITED(exit_status))
+			g_exit_status = WEXITSTATUS(exit_status);
+		else if (WIFSIGNALED(exit_status))
+			g_exit_status = TERM_CODE_SHIFT + WTERMSIG(exit_status);
+		i++;
+	}
 }
 
 void	run_cmds(t_shell *shell)
@@ -109,14 +132,28 @@ void	run_cmds(t_shell *shell)
 	if (pipex.cmd_count > 1)
 	{
 		init_pipes(&pipex);
-		printf("ashxtec\n");
+		//printf("ashxtec\n");
 	}
+<<<<<<< HEAD
 	printf("heysav\n");
 	// export(&pipex, shell->cmds);
 	// unset(&pipex, shell->cmds);
 	cd(pipex.cmds->cmd_args[1], &pipex);
 	print_env(shell->envr);
 	// create_proceces(&pipex);
+=======
+	printf("cmds count ----> %d\n", pipex.cmd_count);
+	//export(&pipex, shell->cmds);
+	// print_env(shell->envr);
+	create_proceces(&pipex);
+	close_pipes(&pipex);
+	wait_processes(&pipex);
+	if (pipex.pipes != NULL)
+		free(pipex.pipes);
+	pipex.pipes = NULL;
+	free(pipex.pids);
+	//return (EXIT_SUCCESS);
+>>>>>>> 3987c10db23bb55ba564c9a412757c698d4e26fa
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)
