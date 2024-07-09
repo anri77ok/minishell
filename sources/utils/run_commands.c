@@ -97,11 +97,33 @@ void create_proceces(t_pipex *pipex)
 			i++;
 			continue ;
 		}
+		which_built_in_will_be_runed(pipex, cmd);
 		run_shell_cmd(pipex, pipex->cmds, i);
 		cmd = cmd->next;
 		i++;
 	}
 }
+
+void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd)
+{
+	if (ft_strcmp(cmd->cmd_path, "env") == 0)
+		g_exit_status = print_env(pipex->envp);
+	else if (ft_strcmp(cmd->cmd_path, "pwd") == 0)
+		g_exit_status = pwd(STDOUT_FILENO);
+	else if (ft_strcmp(cmd->cmd_path, "cd") == 0)
+		g_exit_status = cd(pipex->cmds->cmd_args[1], pipex);
+	else if (ft_strcmp(cmd->cmd_path, "echo") == 0)
+		g_exit_status = echo(cmd->cmd_args, STDOUT_FILENO);
+	else if (ft_strcmp(cmd->cmd_path, "export") == 0)
+		g_exit_status = export(pipex, cmd);
+	else if (ft_strcmp(cmd->cmd_path, "unset") == 0)
+		g_exit_status = unset(pipex, cmd);
+	// else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
+	// 	built_exit(cmd, is_builtin, 0);
+	// if (*is_builtin == 1)
+	// 	exit(g_exit_status);
+}
+
 
 void	wait_processes(t_pipex *pipex)
 {
@@ -134,18 +156,18 @@ void	run_cmds(t_shell *shell)
 		init_pipes(&pipex);
 		//printf("ashxtec\n");
 	}
-<<<<<<< HEAD
+
 	printf("heysav\n");
-	// export(&pipex, shell->cmds);
+	export(&pipex, shell->cmds);
 	// unset(&pipex, shell->cmds);
-	cd(pipex.cmds->cmd_args[1], &pipex);
-	print_env(shell->envr);
+	// cd(pipex.cmds->cmd_args[1], &pipex);
+	// print_env(shell->envr);
 	// create_proceces(&pipex);
-=======
-	printf("cmds count ----> %d\n", pipex.cmd_count);
+
+	// printf("cmds count ----> %d\n", pipex.cmd_count);
 	//export(&pipex, shell->cmds);
 	// print_env(shell->envr);
-	create_proceces(&pipex);
+	// create_proceces(&pipex);
 	close_pipes(&pipex);
 	wait_processes(&pipex);
 	if (pipex.pipes != NULL)
@@ -153,7 +175,7 @@ void	run_cmds(t_shell *shell)
 	pipex.pipes = NULL;
 	free(pipex.pids);
 	//return (EXIT_SUCCESS);
->>>>>>> 3987c10db23bb55ba564c9a412757c698d4e26fa
+
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)

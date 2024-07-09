@@ -4,25 +4,26 @@
 #include "env.h"
 #include "pipex.h"
 
-void	export(t_pipex *pipex, t_cmd *cmd)
+int	export(t_pipex *pipex, t_cmd *cmd)
 {
-	int	flag = 1;
+	int error_exit;
+
+	error_exit = 0;
 	if (cmd)
 	{
 		if (!cmd->cmd_args[1])
 		{
-			flag = 1;
-			print_export(pipex, flag);
+			print_export(pipex);
 		}
 		else
 		{
-			flag = -1;
-			ay_nor_export(pipex, cmd, flag);
+			ay_nor_export(pipex, cmd, &error_exit);
 		}
 	}
+	return (error_exit);
 }
 
-void	ay_nor_export(t_pipex *pipex, t_cmd *cmd ,int flag)
+void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 {
 	t_env_elem	*new_node;
 	int		i;
@@ -32,9 +33,24 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd ,int flag)
 	i = 1;
 	while (cmd->cmd_args[i])
 	{
+		if (cmd->cmd_args && cmd->cmd_args[i] && cmd->cmd_args[i][0] == '=')
+		{
+			// p_err(1, "minishell: export: `", var[i],
+			// 	"': not a valid identifier\n");
+		*error_exit = 1;
+			i++;
+			printf("vade\n");
+			continue ;
+		}
 		key = get_word_before_equal(cmd->cmd_args[i]);
+		if (is_valid_identifer(key) == -1)
+		{
+			*error_exit = 1;
+			i++;
+			printf("chexav axper\n");
+			continue ;
+		}
 		value = get_word_after_equal(cmd->cmd_args[i]);
-		printf("anriiii=%s\n", value);
 		if (check_this_key_in_env_list(pipex->envp, key, value) == -1)
 		{
 			i++;
@@ -44,7 +60,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd ,int flag)
 		ft_lstadd_back_env(&pipex->envp, new_node);
 		i++;
 	}
-	print_export(pipex, flag);
+	print_export(pipex);
 }
 
 
@@ -127,9 +143,8 @@ char	*get_word_before_equal(char	*key)
 	return (res);
 }
 
-void	print_export(t_pipex *pipex, int flag)
+void	print_export(t_pipex *pipex)
 {
-	(void)flag;
 	t_env_elem	*temp;
 	t_cmd	*val;
 	int i = 1;

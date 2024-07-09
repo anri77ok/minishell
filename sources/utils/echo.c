@@ -4,7 +4,7 @@
 #include "env.h"
 #include "pipex.h"
 
-void    echo(char **cmd_args, int fd)
+int    echo(char **cmd_args, int fd)
 {
     int i;
 	int	flag;
@@ -43,6 +43,7 @@ void    echo(char **cmd_args, int fd)
     }
 	if (flag == 1)
 		write (fd, "\n", 1);
+	return (0);
 }
 
 void    fd_put_string(char *str, int fd)

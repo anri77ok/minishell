@@ -39,10 +39,10 @@ int	cd(char *path, t_pipex *pipex)
 		modified_cmd = path;
 	getcwd(old_path, PATH_MAX);
 	printf("old=%s\n",old_path);
-	if (cd_helper_1(modified_cmd) == -1)
+	if (cd_helper_1(modified_cmd) == 1)
 	{
 		printf("STOOOOP\n");
-		return 1;
+		return (1);
 	}
 	getcwd(new_path, PATH_MAX);
 	printf("new=%s\n",new_path);
@@ -75,31 +75,31 @@ int	cd_helper_1(char *modified_cmd)
 		//Причины могут быть различными, например:
 		// Файл или директория не существуют.
 		// У вас нет прав доступа к указанному пути.
-		return (-1);
+		return (1);
 	}
 	if (is_directory(modified_cmd) == 0)
 	{
 		fd_put_string("Error: %s is not a directory\n", 2);//modified_cmd);
-		return (-1);
+		return (1);
 	}
 	if (can_access(modified_cmd) == 0)
 	{
 		perror("Permission denided");
-		return (-1);
+		return (1);
 	}
 	if (chdir(modified_cmd) == -1)
 	{
 		// return (p_err(1, "minishell: cd: ", mc,
 		// 	": No such file or directory\n"), 1);
-		return (-1);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	can_access(char *modfied_cmd)
 {
 	if (access(modfied_cmd, R_OK | X_OK) != 0)
-        return 0;
+        return (0);
 	return (1);
 }
 
@@ -111,7 +111,6 @@ int	is_directory(char *modfied_cmd)
 		return (false);
 	return (S_ISDIR(path_stat.st_mode));
 	// Проверяем, является ли путь директорией
-   
 }
 
 int is_file_or_directory(char *modified_cmd)
@@ -120,7 +119,7 @@ int is_file_or_directory(char *modified_cmd)
 
     // Получаем информацию о файле
     if (stat(modified_cmd, &path_stat) != 0)
-        return 0;
+        return (0);
 	return (1);
 }
 

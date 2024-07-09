@@ -92,7 +92,6 @@ void spliting(t_token **token_list, char *str)
 			i = k - ft_is_operator(str, k);;
 		}
 	}
-
 }
 
 void tokenization(char *cmd_line, t_token **token_list)
