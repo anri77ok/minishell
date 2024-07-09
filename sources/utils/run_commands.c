@@ -113,8 +113,9 @@ void	run_cmds(t_shell *shell)
 	}
 	printf("heysav\n");
 	// export(&pipex, shell->cmds);
-	unset(&pipex, shell->cmds);
-	// print_env(shell->envr);
+	// unset(&pipex, shell->cmds);
+	cd(pipex.cmds->cmd_args[1], &pipex);
+	print_env(shell->envr);
 	// create_proceces(&pipex);
 }
 
