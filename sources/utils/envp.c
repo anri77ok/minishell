@@ -171,7 +171,7 @@ void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new)
 	new->prev = ptr;//esi  bacelem vortev t_env-um prev em avelacre
 }
 
-int	print_env(t_env_elem *env)//esi en depquma kanchvum erb env enq grum terminalum
+int	print_env(t_env_elem *env, int *is_builtin)//esi en depquma kanchvum erb env enq grum terminalum
 {
 	t_env_elem *temp;
 
@@ -182,6 +182,7 @@ int	print_env(t_env_elem *env)//esi en depquma kanchvum erb env enq grum termina
 			printf("%s=%s\n", temp->key, temp->value);
 		temp = temp->next;
 	}
+	*is_builtin = 1;
 	return (0);
 }
 

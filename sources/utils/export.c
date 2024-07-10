@@ -4,7 +4,7 @@
 #include "env.h"
 #include "pipex.h"
 
-int	export(t_pipex *pipex, t_cmd *cmd)
+int	export(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
 	int error_exit;
 
@@ -20,6 +20,7 @@ int	export(t_pipex *pipex, t_cmd *cmd)
 			ay_nor_export(pipex, cmd, &error_exit);
 		}
 	}
+	*is_builtin = 1;
 	return (error_exit);
 }
 

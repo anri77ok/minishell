@@ -60,7 +60,7 @@ int	open_file(char *fn, int type)
 	// 	return (p_err(1, "minishell: ", fn, ": Permission denied\n"), 1);
 	// if (fd == -2 && type != INPUT)
 	// 	return (p_err(1, "minishell: ", fn, ": No such file or directory\n"), 1);
-	return (-1);
+	return (0);
 }
 
 void	here_doc_write(int tmp_file_fd, char *lim)

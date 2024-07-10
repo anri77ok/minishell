@@ -83,10 +83,10 @@ int	check_value_is_empty(char	*value);
 
 //echo
 // void    echo(char **cmd_args, int fd);
-int    echo(char **cmd_args, int fd);
+int    echo(char **cmd_args, int fd, int *is_builtin);
 void    fd_put_string(char *str, int fd);
 
 //pwd
-int    pwd(int fd);
+int    pwd(int fd, int *is_builtin);
 
 #endif

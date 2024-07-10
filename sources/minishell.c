@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:24:27 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/09 19:24:31 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/10 12:34:06 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ int	main(int argc, char **argv, char **env)
 	shell = malloc(sizeof(t_shell));
 	shell->envr = init_env(shell->envr, env);
 	shell->cmds = NULL;
-	// export()
-	// while(shell->envr)
-	// {
-	// 	printf("key=%s\n",shell->envr->value);
-	// 	shell->envr = shell->envr->next;
-	// }
 	check_env(shell);
 	while (1)
 	{
@@ -81,16 +75,7 @@ int	main(int argc, char **argv, char **env)
 			chakertni(&token_list);
 			token_to_cmds(shell, token_list);
 			run_cmds(shell);
-			print_token_list(token_list);
-			//int i = 0;
-			// while (shell->cmds)
-			// {
-			// 	i = 0;
-			// 	while (shell->cmds->cmd_args[i])
-			// 		printf("%s\n", shell->cmds->cmd_args[i++]);
-			// 	printf("path -- %s\n", shell->cmds->cmd_path);
-			// 	shell->cmds = shell->cmds->next;
-			// }
+			print_token_list(token_list);	
 		}
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
@@ -109,7 +94,6 @@ void	get_bez_empty_nodes(t_token **token_list)
 		if (check_value_is_empty(temp->value) == 1)
 		{
 			delete_this_node(token_list, pos);
-			//printf("yhy\n");
 			temp = *token_list;
 			pos = 0;
 		}
@@ -187,9 +171,6 @@ int	count_nodes_func(t_token	*token_list)
 	}
 	return (count_nodes);
 }
-
-
-
 
 int	check_value_is_empty(char	*value)
 {

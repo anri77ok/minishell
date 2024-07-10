@@ -4,7 +4,7 @@
 #include "env.h"
 #include "pipex.h"
 
-int	unset(t_pipex *pipex, t_cmd *cmd)
+int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
 	int i;
 	int error_exit;
@@ -28,6 +28,7 @@ int	unset(t_pipex *pipex, t_cmd *cmd)
 	// 	printf("%s=%s\n", temp->key, temp->value);
 	// 	temp = temp->next;
 	// }
+	*is_builtin = 1;
 	return (error_exit);
 }
 

@@ -4,10 +4,11 @@
 #include "env.h"
 #include "pipex.h"
 
-int    pwd(int fd)
+int    pwd(int fd, int *is_builtin)
 {
     char current_directory[PATH_MAX];
 
+	*is_builtin = 1;
     if (getcwd(current_directory, PATH_MAX) == NULL)
 	{
 		//erroni hamar teqst

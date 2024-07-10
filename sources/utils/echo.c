@@ -4,7 +4,7 @@
 #include "env.h"
 #include "pipex.h"
 
-int    echo(char **cmd_args, int fd)
+int    echo(char **cmd_args, int fd, int *is_builtin)
 {
     int i;
 	int	flag;
@@ -14,6 +14,7 @@ int    echo(char **cmd_args, int fd)
 	flag = 1;
     i = 0;
 	ind = 0;
+	*is_builtin = 1;
 	while (cmd_args[i])
 	{
 		if (cmd_args[i][0] == '-' && cmd_args[i][1] == 'n')

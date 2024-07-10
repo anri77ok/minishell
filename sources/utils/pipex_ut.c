@@ -39,23 +39,23 @@ void    init_pipes(t_pipex *pipex)
 	// }
 }
 
-void	run_builtins(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int fork)
-{
-	if (ft_strcmp(cmd->cmd_path, "env") == 0 && fork == 1)
-		g_exit_status = print_env(pipex->envp);
-	else if (ft_strcmp(cmd->cmd_path, "pwd") == 0 && fork == 1)
-		g_exit_status = pwd(STDOUT_FILENO);
-	else if (ft_strcmp(cmd->cmd_path, "cd") == 0)
-		g_exit_status = cd(pipex->cmds->cmd_args[1], pipex);
-	else if (ft_strcmp(cmd->cmd_path, "echo") == 0 && fork == 1)
-		g_exit_status = echo(cmd->cmd_args, STDOUT_FILENO);
-	else if (ft_strcmp(cmd->cmd_path, "export") == 0)
-		g_exit_status = export(pipex, cmd);
-	else if (ft_strcmp(cmd->cmd_path, "unset") == 0)
-		g_exit_status = unset(pipex, cmd);
-	// else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
-	// 	built_exit(cmd, is_builtin, fork, 0);
-	if (*is_builtin == 1 && fork == 1)
-		exit(g_exit_status);
-}
+// void	run_builtins(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int fork)
+// {
+// 	if (ft_strcmp(cmd->cmd_path, "env") == 0 && fork == 1)
+// 		g_exit_status = print_env(pipex->envp);
+// 	else if (ft_strcmp(cmd->cmd_path, "pwd") == 0 && fork == 1)
+// 		g_exit_status = pwd(STDOUT_FILENO);
+// 	else if (ft_strcmp(cmd->cmd_path, "cd") == 0)
+// 		g_exit_status = cd(pipex->cmds->cmd_args[1], pipex);
+// 	else if (ft_strcmp(cmd->cmd_path, "echo") == 0 && fork == 1)
+// 		g_exit_status = echo(cmd->cmd_args, STDOUT_FILENO);
+// 	else if (ft_strcmp(cmd->cmd_path, "export") == 0)
+// 		g_exit_status = export(pipex, cmd);
+// 	else if (ft_strcmp(cmd->cmd_path, "unset") == 0)
+// 		g_exit_status = unset(pipex, cmd);
+// 	// else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
+// 	// 	built_exit(cmd, is_builtin, fork, 0);
+// 	if (*is_builtin == 1 && fork == 1)
+// 		exit(g_exit_status);
+// }
 

@@ -6,11 +6,13 @@
 
 #include <sys/stat.h>
 
-int	cd(char *path, t_pipex *pipex)
+int	cd(char *path, t_pipex *pipex, int *is_builtin)
 {
 	char	*modified_cmd = NULL;
 	char	old_path[PATH_MAX];
 	char	new_path[PATH_MAX];
+
+	*is_builtin = 1;
 	if (!path)
 	{
 		modified_cmd = get_cmd_in_env(pipex->envp, "HOME");
