@@ -34,12 +34,12 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 	{
 		if (dup2(cmd->output, 1) == -1)
 			printf("DUP Error\n");
-		close(cmd->input);
+		close(cmd->output);
 	}
 	close_pipes(pipex);
 }
 
-void  run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
+void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 {
 	pid_t	pid;
 	char	*arr;
@@ -48,42 +48,44 @@ void  run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 
 	// (void)cmd;
 	env = NULL;
-	pid = fork();
-	if (pid == 0)
-	{
-		env = env_list_to_array(pipex->envp);
-		dupeing(pipex, cmd);
+	//printf("%d\n", *is_builtin);
+		// printf("path -- %s\n", cmd->cmd_path);
+		pid = fork();
+		if (pid == 0)
+		{
+			dupeing(pipex, cmd);
 			which_built_in_will_be_runed(pipex, cmd, is_builtin);
-			if (is_builtin == 0)
+			if (*is_builtin == 0)
 			{
+				env = env_list_to_array(pipex->envp);
 				while (env[i])
 				{
 					if (ft_strstr(env[i], "PATH="))
 						break ;
 					i++;
 				}
-				arr = pipex->cmds->cmd_args[0];
+				arr = cmd->cmd_args[0];
 				matrix = ft_split(env[i] + 5, ':');
-				pipex->cmds->cmd_path = arr;
-				if (access(pipex->cmds->cmd_path, X_OK) != -1)
-					if (execve(pipex->cmds->cmd_path, pipex->cmds->cmd_args, env) == -1)
-						printf("ERROR\n");
+				cmd->cmd_path = arr;
+				if (access(cmd->cmd_path, X_OK) != -1)
+					if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
+						exit(1);
 				i = 0;
 				while (matrix[i])
 				{
 					// free(pipex->cmds->cmd_path);
-					pipex->cmds->cmd_path = ft_strjoin(matrix[i++], arr, '/');
-					if (access(pipex->cmds->cmd_path, X_OK) != -1)
+					cmd->cmd_path = ft_strjoin(matrix[i++], arr, '/');
+					if (access(cmd->cmd_path, X_OK) != -1)
 						break ;
 				}
-				if (execve(pipex->cmds->cmd_path, pipex->cmds->cmd_args, env) == -1)
-					printf("ERROR\n");
+				if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
+					exit(1);
 			}
-	}
-	else
-		pipex->pids[i] = pid;
-	if (env != NULL)
-		free(env);
+		}
+		else
+			pipex->pids[i] = pid;
+		if (env != NULL)
+			free(env);
 }
 
 void create_proceces(t_pipex *pipex)
@@ -97,22 +99,20 @@ void create_proceces(t_pipex *pipex)
 	while (i < pipex->cmd_count)
 	{
 		is_builtin = 0;
-
 		if (!cmd->cmd_path)
 		{
 			cmd = cmd->next;
 			i++;
 			continue ;
 		}
-		check_is_built_in(cmd, &is_builtin);
-		if (pipex->cmd_count == 1 && is_builtin == 1)
-		{
-			which_built_in_will_be_runed(pipex, cmd, &is_builtin);
-			cmd = cmd->next;
-			i++;
-			continue ;
-		}
-		run_shell_cmd(pipex, pipex->cmds, i, &is_builtin);
+		// if (pipex->cmd_count == 1)
+		// {
+		// 	which_built_in_will_be_runed(pipex, cmd, &is_builtin);
+		// 	cmd = cmd->next;
+		// 	i++;
+		// 	continue ;
+		// }
+		run_shell_cmd(pipex, cmd, i, &is_builtin);
 		cmd = cmd->next;
 		i++;
 	}
@@ -160,9 +160,10 @@ void	wait_processes(t_pipex *pipex)
 	//  && is_builtin(pipex->cmds->cmd_path
 	if (pipex->cmd_count == 1)
 		return ;
-	while (i < pipex->cmd_count - 1)
+	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
+		printf("%d\n", pid);
 		if (WIFEXITED(exit_status))
 			g_exit_status = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
@@ -176,12 +177,13 @@ void	run_cmds(t_shell *shell)
 	t_pipex	pipex;
 
 	pipex_init(&pipex, shell);
+	
+	// printf("tiv ---- %d\n", pipex.cmd_count);
 	if (pipex.cmd_count > 1)
 	{
 		init_pipes(&pipex);
-		printf("ashxtec\n");
 	}
-	printf("heysav\n");
+	// printf("heysav\n");
 	create_proceces(&pipex);
 	close_pipes(&pipex);
 	wait_processes(&pipex);
@@ -196,7 +198,7 @@ void	run_cmds(t_shell *shell)
 	// print_env(shell->envr);
 	// create_proceces(&pipex);
 
-	printf("cmds count ----> %d\n", pipex.cmd_count);
+	//printf("cmds count ----> %d\n", pipex.cmd_count);
 	// export(&pipex, shell->cmds, int *is_builtin);
 	// print_env(shell->envr, int *is_builtin);
 }

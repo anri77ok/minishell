@@ -61,7 +61,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		ft_lstadd_back_env(&pipex->envp, new_node);
 		i++;
 	}
-	print_export(pipex);
+	// print_export(pipex);
 }
 
 
@@ -148,10 +148,10 @@ void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
 	t_cmd	*val;
-	int i = 1;
+	//int i = 1;
 	val = pipex->cmds;
-	printf("strrrr=%s\n", val->cmd_args[i]);
-	printf("len=%zu\n", ft_strlen(val->cmd_args[i]));
+	//printf("strrrr=%s\n", val->cmd_args[i]);
+	//printf("len=%zu\n", ft_strlen(val->cmd_args[i]));
 	temp = merge_sort(pipex->envp, ft_strcmp);
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
