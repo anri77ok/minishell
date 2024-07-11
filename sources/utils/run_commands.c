@@ -54,7 +54,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 		if (pid == 0)
 		{
 			dupeing(pipex, cmd);
-			which_built_in_will_be_runed(pipex, cmd, is_builtin);
+			which_built_in_will_be_runed(pipex, cmd, is_builtin ,1);
 			if (*is_builtin == 0)
 			{
 				env = env_list_to_array(pipex->envp);
@@ -105,14 +105,10 @@ void create_proceces(t_pipex *pipex)
 			i++;
 			continue ;
 		}
-		// if (pipex->cmd_count == 1)
-		// {
-		// 	which_built_in_will_be_runed(pipex, cmd, &is_builtin);
-		// 	cmd = cmd->next;
-		// 	i++;
-		// 	continue ;
-		// }
-		run_shell_cmd(pipex, cmd, i, &is_builtin);
+		if (pipex->cmd_count == 1)
+			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);
+		if (is_builtin == 0)
+			run_shell_cmd(pipex, cmd, i, &is_builtin);
 		cmd = cmd->next;
 		i++;
 	}
@@ -129,7 +125,7 @@ void	check_is_built_in(t_cmd *cmd, int *is_builtin)
 
 
 
-void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
+void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int is_in_fork)
 {
 	if (ft_strcmp(cmd->cmd_path, "env") == 0)
 		g_exit_status = print_env(pipex->envp, is_builtin);
@@ -145,8 +141,8 @@ void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 		g_exit_status = unset(pipex, cmd, is_builtin);
 	// else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
 	// 	built_exit(cmd, is_builtin, 0);
-	// if (*is_builtin == 1)
-	// 	exit(g_exit_status);
+	if (*is_builtin == 1 && is_in_fork == 1)
+		exit(g_exit_status);
 }
 
 

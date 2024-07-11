@@ -61,6 +61,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		ft_lstadd_back_env(&pipex->envp, new_node);
 		i++;
 	}
+	//printf("DDUM\n");
 	// print_export(pipex);
 }
 
@@ -147,9 +148,9 @@ char	*get_word_before_equal(char	*key)
 void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
-	t_cmd	*val;
+	// t_cmd	*val;
 	//int i = 1;
-	val = pipex->cmds;
+	// val = pipex->cmds;
 	//printf("strrrr=%s\n", val->cmd_args[i]);
 	//printf("len=%zu\n", ft_strlen(val->cmd_args[i]));
 	temp = merge_sort(pipex->envp, ft_strcmp);
@@ -170,29 +171,17 @@ void	print_export(t_pipex *pipex)
 	temp = NULL;
 }
 
-int	have_equal_sign(char *str)
+void	free_list(t_env_elem *temp)
 {
-	int	i;
-	// int	flag;
+	t_env_elem *del;
 
-	printf("str=%s\n",str);
-	// flag = 0;
-	i = 0;
-	if (!str)
-		return (-8);
-	while (str[i])
+	while (temp)
 	{
-		if (str[i] == '=')
-		{
-			// flag = 1;
-			break;
-		}
-		i++;
+		del = temp;
+		free(temp->key);
+		free(temp->value);
+		temp = temp->next;
+		temp->prev = NULL;
+		free(del);
 	}
-	// if (flag == 1)
-	// {
-		if (str[i + 1] == '\0')
-			return (1);
-	// }
-	return (-1);
 }
