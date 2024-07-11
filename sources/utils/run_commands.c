@@ -153,8 +153,8 @@ void	wait_processes(t_pipex *pipex)
 	pid_t	pid;
 
 	i = 0;
-	if (pipex->cmd_count == 1  && is_builtin(pipex->cmds->cmd_path)
-		return ;
+	// if (pipex->cmd_count == 1  && is_builtin(pipex->cmds->cmd_path)
+	// 	return ;
 	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
