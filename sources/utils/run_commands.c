@@ -54,7 +54,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 		if (pid == 0)
 		{
 			dupeing(pipex, cmd);
-			which_built_in_will_be_runed(pipex, cmd, is_builtin ,1);
+			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);
 			if (*is_builtin == 0)
 			{
 				env = env_list_to_array(pipex->envp);
@@ -153,8 +153,7 @@ void	wait_processes(t_pipex *pipex)
 	pid_t	pid;
 
 	i = 0;
-	//  && is_builtin(pipex->cmds->cmd_path
-	if (pipex->cmd_count == 1)
+	if (pipex->cmd_count == 1  && is_builtin(pipex->cmds->cmd_path)
 		return ;
 	while (i < pipex->cmd_count)
 	{
