@@ -148,12 +148,10 @@ char	*get_word_before_equal(char	*key)
 void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
-	// t_cmd	*val;
-	//int i = 1;
-	// val = pipex->cmds;
-	//printf("strrrr=%s\n", val->cmd_args[i]);
-	//printf("len=%zu\n", ft_strlen(val->cmd_args[i]));
-	temp = merge_sort(pipex->envp, ft_strcmp);
+	t_env_elem	*copy;
+
+	copy = get_copy_env(pipex->envp);
+	temp = merge_sort(copy, ft_strcmp);
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
 		while (temp)
@@ -170,6 +168,35 @@ void	print_export(t_pipex *pipex)
 	// free_list(temp);
 	temp = NULL;
 }
+
+
+
+
+t_env_elem	*get_copy_env(t_env_elem *env)
+{
+	t_env_elem	*copy;
+	t_env_elem	*node;
+	t_env_elem	*temp;
+
+	// while (env)
+	// {
+	// 	printf("%s=%s\n", env->key, env->value);
+	// 	env= env->next;
+	// }
+	copy = NULL;
+	temp = env;
+	while (temp)
+	{
+		// printf("%s=%s\n", temp->key, temp->value);
+		node = ft_lstnew_dlya_env(temp->key, temp->value);
+		ft_lstadd_back_env(&copy, node);
+		temp = temp->next;
+	}
+	return (copy);
+}
+
+
+
 
 void	free_list(t_env_elem *temp)
 {
