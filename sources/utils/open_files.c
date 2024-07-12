@@ -33,11 +33,11 @@ void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
 	if (temp2->type == HERE_DOC)
 		fds->infd = here_doc_open(temp2->next->value);
 	if (temp2->type == IN_REDIR)
-		fds->infd = open_file(temp2->next->value, INPUT);
+		fds->infd = open_file(temp2->next, INPUT);
 	if (temp2->type == OUT_REDIR)
-		fds->outfd = open_file(temp2->next->value, TRUNC);
+		fds->outfd = open_file(temp2->next, TRUNC);
 	if (temp2->type == APPEND_REDIR)
-		fds->outfd = open_file(temp2->next->value, APPEND);
+		fds->outfd = open_file(temp2->next, APPEND);
 	if (temp2->type == WORD)
 		(*len)++;
 }

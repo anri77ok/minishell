@@ -6,10 +6,10 @@ void kp(char *begin, char *word, char *end, t_token **current)
 	char *final;
 
 	final = join(begin, word);
-	printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
+	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
 	free((*current)->value);
 	(*current)->value = join(final, end);
-	printf("value -> %s\n", (*current)->value);
+	// printf("value -> %s\n", (*current)->value);
 	free(final);
 	free(word);
 	if (begin != NULL)
@@ -69,7 +69,7 @@ void dolarni2(t_token **token_list, char **env)
 	current = *token_list;
 	while(current)
 	{
-		if (current->type == WORD || (current->type >= 12 && current->type <= 16))
+		if ((current->type == WORD || (current->type >= 12 && current->type <= 16)) && current->type != LIMITER)
 		{
 			i = 0;
 			while(current->value[i])

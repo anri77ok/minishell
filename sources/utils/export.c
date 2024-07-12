@@ -169,9 +169,6 @@ void	print_export(t_pipex *pipex)
 	temp = NULL;
 }
 
-
-
-
 t_env_elem	*get_copy_env(t_env_elem *env)
 {
 	t_env_elem	*copy;
@@ -194,9 +191,6 @@ t_env_elem	*get_copy_env(t_env_elem *env)
 	}
 	return (copy);
 }
-
-
-
 
 void	free_list(t_env_elem *temp)
 {

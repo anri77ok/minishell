@@ -44,7 +44,7 @@ void	close_pipes(t_pipex *pipex);
 void    init_pipes(t_pipex *pipex);
 
 void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int is_in_fork);
-void	check_is_built_in(t_cmd *cmd, int *is_builtin);
+int	check_is_built_in(t_cmd *cmd);
 
 
 
@@ -81,6 +81,9 @@ int is_file_or_directory(char *modified_cmd);
 char	*home_kpcnel_pathin(t_env_elem *env, char *path);
 char	*get_cmd_in_env(t_env_elem *env, char *pntrvox);
 
-
+//exit
+void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork);
+long	ft_atoll(const char *nptr);
+int is_only_digits_and_plus_minus(char *str);
 
 #endif

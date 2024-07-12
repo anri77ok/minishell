@@ -54,7 +54,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 		if (pid == 0)
 		{
 			dupeing(pipex, cmd);
-			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);
+			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
 			if (*is_builtin == 0)
 			{
 				env = env_list_to_array(pipex->envp);
@@ -106,9 +106,9 @@ void create_proceces(t_pipex *pipex)
 			continue ;
 		}
 		if (pipex->cmd_count == 1)
-			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);
+			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);//ete mihat cmd-a pordzum enq ashxatacnel builinner@,bayc ete trbav hramany built in chi apa mtnum enq taki if-@ 
 		if (is_builtin == 0)
-			run_shell_cmd(pipex, cmd, i, &is_builtin);
+			run_shell_cmd(pipex, cmd, i, &is_builtin);//stex nayum enq ete
 		cmd = cmd->next;
 		i++;
 	}
@@ -116,10 +116,11 @@ void create_proceces(t_pipex *pipex)
 
 
 
-void	check_is_built_in(t_cmd *cmd, int *is_builtin)
+int	check_is_built_in(t_cmd *cmd)
 {
 		if (ft_strcmp(cmd->cmd_path, "env") == 0 || ft_strcmp(cmd->cmd_path, "pwd") == 0 || ft_strcmp(cmd->cmd_path, "echo") == 0 || ft_strcmp(cmd->cmd_path, "export") || ft_strcmp(cmd->cmd_path, "unset") == 0)
-			*is_builtin = 1;
+			return (1);
+		return (-1);
 }
 
 
@@ -139,9 +140,9 @@ void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, i
 		g_exit_status = export(pipex, cmd, is_builtin);
 	else if (ft_strcmp(cmd->cmd_path, "unset") == 0)
 		g_exit_status = unset(pipex, cmd, is_builtin);
-	// else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
-	// 	built_exit(cmd, is_builtin, 0);
-	if (*is_builtin == 1 && is_in_fork == 1)
+	else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
+		mini_exit(cmd, is_builtin, is_in_fork);
+	if (*is_builtin == 1 && is_in_fork == 1)//sa nra hamara vor ete builtinner-@ arvel en childum exit linenq ,vor childy prccnenq eli
 		exit(g_exit_status);
 }
 
@@ -153,12 +154,13 @@ void	wait_processes(t_pipex *pipex)
 	pid_t	pid;
 
 	i = 0;
-	// if (pipex->cmd_count == 1  && is_builtin(pipex->cmds->cmd_path)
-	// 	return ;
+	//esi areci sksec sxal ashxtel shat baner
+	// if (pipex->cmd_count == 1  && check_is_built_in(pipex->cmds))
+	//  	return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
 	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
-		printf("%d\n", pid);
+		// printf("%d\n", pid);
 		if (WIFEXITED(exit_status))
 			g_exit_status = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))

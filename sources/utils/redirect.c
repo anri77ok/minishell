@@ -12,6 +12,8 @@ t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds)
 		return (NULL);
 	new_node->cmd_args = cmd_args;
 	new_node->cmd_path = cmd_args[0];
+	if (fds->infd == -20 || fds->outfd == -20)
+		return (NULL);//nra hamar em are vor baci en vor asi ambiguous redirect ayl nayev tvyal built in-@ chani orinak echo-n,husam urish tex xndir chi ta
 	if (fds->infd > 2)
 		new_node->input = fds->infd;
 	else
@@ -39,27 +41,39 @@ void	ft_lstadd_back(t_shell *shell, t_cmd *new)
 	current->next = new;
 }
 
-int	open_file(char *fn, int type)
+int	open_file(t_token *cmd, int type)
 {
 	int	fd;
 
 	fd = -1;
+	if (!cmd)
+	{
+		printf("ambiguous redirect\n");
+		return (-20);//ambiguous redirect
+	}
 	if (type == INPUT)
 	{
-		fd = open(fn, O_RDONLY);
+		fd = open(cmd->value, O_RDONLY);
 		if (fd < 0)
 			fd = -2;
 	}
 	else if (type == TRUNC)
-		fd = open(fn, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		fd = open(cmd->value, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else if (type == APPEND)
-		fd = open(fn, O_CREAT | O_WRONLY | O_APPEND, 0644);
+		fd = open(cmd->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd > 2)
 		return (fd);
 	// if (fd == -1)
-	// 	return (p_err(1, "minishell: ", fn, ": Permission denied\n"), 1);
+	// 	return (p_err(1, "minishell: ", cmd->value, ": Permission denied\n"), 1);
 	// if (fd == -2 && type != INPUT)
-	// 	return (p_err(1, "minishell: ", fn, ": No such file or directory\n"), 1);
+	// 	return (p_err(1, "minishell: ", cmd->value, ": No such file or directory\n"), 1);
+	
+	
+	//avelacnum enq
+//	if (fd == -20)
+		//pti grenq bash: $Aaaaaaaaaa: ambiguous redirect
+		// aha orinaky but      echo vrd > $Aaaaaaaaaa
+		// 					 bash: $Aaaaaaaaaa: ambiguous redirect
 	return (-1);
 }
 

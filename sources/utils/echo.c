@@ -12,8 +12,8 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
 	int	j;
 
 	flag = 1;
-    i = 0;
-	ind = 0;
+    i = 1;
+	ind = 1;
 	*is_builtin = 1;
 	while (cmd_args[i])
 	{
@@ -36,7 +36,6 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
 		}
 		i++;
 	}
-	j = 0;
     while (cmd_args[ind])
     {
         fd_put_string(cmd_args[ind++], fd);
@@ -55,3 +54,7 @@ void    fd_put_string(char *str, int fd)
     while (str[i])
         write(fd, &str[i++], 1);
 }
+
+//echo a >          syntax error pti ta bayc mery echo-n anuma
+//echo a > $a   esi chishta
+//echo a > "$a"  pti gri No such file or directory, byc mery anuma husam en chakertnery haneluc null-i texy vor datark tox dnes kdzvi
