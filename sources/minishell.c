@@ -6,7 +6,11 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:24:27 by vbarsegh          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/07/13 18:09:26 by vbarsegh         ###   ########.fr       */
+=======
+/*   Updated: 2024/07/13 17:37:38 by anrkhach         ###   ########.fr       */
+>>>>>>> 3a8b18a463fafea49632fcc306ba703eaab27ac9
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +65,10 @@ int	main(int argc, char **argv, char **env)
 	shell->envr = init_env(shell->envr, env);
 	shell->cmds = NULL;
 	check_env(shell);
-	while (1)
+	cmd_line = "";
+	while (cmd_line)
 	{
+		set_singals();
 		cmd_line = readline("\033[0;036m MINIVIBERSEIJ: \033[0m");
 		add_history(cmd_line);
 		if (cmd_line && *cmd_line)

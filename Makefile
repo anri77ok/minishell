@@ -34,7 +34,7 @@ tokenization/tok_utils.c utils/utils.c utils/dolarni2.c \
 utils/chakertni.c utils/redirect.c utils/envp.c utils/open_files.c \
 utils/run_commands.c utils/split.c utils/pipex_ut.c utils/echo.c utils/pwd.c \
 utils/agvanMerj.c utils/export.c utils/unset.c utils/cd.c utils/atol.c \
-utils/exit.c
+utils/exit.c utils/signals.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))

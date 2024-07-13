@@ -1,0 +1,78 @@
+#include "minishell.h"
+#include "tokenization.h"
+#include "utils.h"
+#include "env.h"
+#include "pipex.h"
+
+extern int	g_exit_status;
+
+void	*ft_memset(void *b, int c, size_t len)
+{
+	unsigned char	*ptr;
+
+	ptr = (unsigned char*)b;
+	while (len-- > 0)
+		*(ptr++) = (unsigned char)c;
+	return (b);
+}
+
+void	disable_echoctl(void)
+{
+	struct termios	term;
+
+	if (tcgetattr(STDIN_FILENO, &term) != 0)
+		return ;
+	term.c_lflag &= ~(ECHOCTL);
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	ctrl_d(int sig)
+{
+	(void)sig;
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	rl_cleanup_after_signal();
+}
+
+void	ctrl_bckslash(void)
+{
+	struct sigaction	sa;
+
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &sa, NULL);
+}
+
+void	ctrl_c(int sig)
+{
+	(void)sig;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_exit_status = 1;
+}
+
+void	choose_signal(void (*f), int flag)
+{
+	struct sigaction	sa;
+
+	if (flag == 0)
+		ctrl_bckslash();
+	ft_memset(&sa, 0, sizeof(sa));
+	sa.sa_handler = f;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = SA_RESTART;
+	if (flag == 0)
+		sigaction(SIGINT, &sa, NULL);
+	else if (flag == 1)
+		sigaction(SIGQUIT, &sa, NULL);
+	disable_echoctl();
+}
+
+void	set_singals(void)
+{
+	choose_signal(ctrl_c, 0);
+	choose_signal(ctrl_d, 1);
+}

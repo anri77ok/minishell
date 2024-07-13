@@ -48,6 +48,7 @@ t_env_elem	*merge_sort(t_env_elem *begin_list, int (*cmp)());
 t_env_elem	*ft_merge_sorted_list(t_env_elem *left, t_env_elem *right, int (*cmp)());
 t_env_elem	*ft_env_elem_at(t_env_elem *begin_list, unsigned int nbr);
 int	ft_env_elem_size( t_env_elem *begin_list);
+void	set_singals(void);
 
 
 #endif
