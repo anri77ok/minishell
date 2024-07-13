@@ -94,7 +94,7 @@ void spliting(t_token **token_list, char *str)
 	}
 }
 
-void tokenization(char *cmd_line, t_token **token_list)
+int tokenization(char *cmd_line, t_token **token_list)
 {
 	int i;
 	int j;
@@ -111,6 +111,11 @@ void tokenization(char *cmd_line, t_token **token_list)
 			if (cmd_line[j] == 34 || cmd_line[j] == 39)
 			{
 				j = is_quote(cmd_line, j);
+				if (j == -1)
+				{
+					printf("syntax error\n");
+					return (-1);
+				}
 				quote = true;
 			}
 			else
@@ -133,4 +138,5 @@ void tokenization(char *cmd_line, t_token **token_list)
 		if (quote == false)
 			free(line);
 	}
+	return (0);
 }

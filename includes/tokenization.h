@@ -63,7 +63,7 @@ typedef struct s_token
 }	t_token;
 
 
-void tokenization(char *cmd_line, t_token **tokens);
+int tokenization(char *cmd_line, t_token **tokens);
 int skip_whitespaces(char *line, int i);
 t_token *create_new_token(char *value);
 int is_quote(char *cmd_line, int i);
