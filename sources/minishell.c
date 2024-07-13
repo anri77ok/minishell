@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 19:24:27 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/13 16:08:15 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/13 18:09:26 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ void	get_bez_empty_nodes(t_token **token_list)
 	pos = 0;
 	while (temp)
 	{
-		if (temp->prev && ft_strcmp(temp->value,"\"\"") == 0 && (temp->prev->type == OUT_REDIR || temp->prev->type == IN_REDIR))
-			temp->flag = 1;
 		if (check_value_is_empty(temp->value) == 1)
 		{
 			delete_this_node(token_list, pos);
@@ -107,13 +105,12 @@ void	get_bez_empty_nodes(t_token **token_list)
 			temp = temp->next;
 		}
 	}
-	temp = *token_list;
-	while (temp)
-	{
-		printf("value=%s\n",temp->value);
-		printf("flag==%d\n",temp->flag);
-		temp= temp->next;
-	}
+	// temp = *token_list;
+	// while (temp)
+	// {
+	// 	printf("value=%s\n",temp->value);
+	// 	temp= temp->next;
+	// }
 }
 
 void	delete_this_node(t_token	**token_list, int pos)
