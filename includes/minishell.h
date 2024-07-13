@@ -13,7 +13,7 @@
 
 # define RM "rm"
 # define RF	"-rf"
-# define HERE_DOC_FILE ".hd_tmp_file"
+# define HERE_DOC_FILE "hesa kjnjvem"
 # define TERM_CODE_SHIFT 128
 
 int	g_exit_status;

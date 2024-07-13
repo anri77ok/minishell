@@ -21,6 +21,7 @@ t_token *create_new_token(char *value)
 	new_token->type = ERROR;
 	new_token->next = NULL;
 	new_token->prev = NULL;
+	new_token->flag = 0;
 	return (new_token);
 }
 

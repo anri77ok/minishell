@@ -39,7 +39,8 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
     while (cmd_args[ind])
     {
         fd_put_string(cmd_args[ind++], fd);
-		write (fd, " ", 1);
+		if (cmd_args[ind])
+			write (fd, " ", 1);
     }
 	if (flag == 1)
 		write (fd, "\n", 1);

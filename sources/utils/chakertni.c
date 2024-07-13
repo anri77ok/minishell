@@ -92,11 +92,11 @@ void chakertni(t_token **tokens)
 		}
 		current = current->next;
 	}
-	current = *tokens;
-	while (current)
-	{
-		printf("value=%s\n",current->value);
-		current= current->next;
-	}
+	// current = *tokens;
+	// while (current)
+	// {
+	// 	printf("value=%s\n",current->value);
+	// 	current= current->next;
+	// }
 }
 

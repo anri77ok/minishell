@@ -7,7 +7,7 @@
 # define INPUT 0
 # define TRUNC 1
 # define APPEND 2
-# define HERE_DOC_FILE ".hd_tmp_file"
+# define HERE_DOC_FILE "hesa kjnjvem"
 
 t_env_elem  *init_env(t_env_elem *envr, char	**env);
 void	check_env(t_shell	*shell);
@@ -18,5 +18,5 @@ int	open_file(t_token *cmd, int type);
 int	here_doc_open(char *lim);
 char	**env_list_to_array(t_env_elem *temp);
 
-
+void	del_here_doc_file(void);
 #endif

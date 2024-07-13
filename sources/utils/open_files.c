@@ -31,7 +31,10 @@ void	token_to_cmds_helper1(int *len, t_token *t2, char **cm, t_token **t)
 void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
 {
 	if (temp2->type == HERE_DOC)
+	{
 		fds->infd = here_doc_open(temp2->next->value);
+		del_here_doc_file();
+	}
 	if (temp2->type == IN_REDIR)
 		fds->infd = open_file(temp2->next, INPUT);
 	if (temp2->type == OUT_REDIR)
@@ -40,6 +43,11 @@ void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
 		fds->outfd = open_file(temp2->next, APPEND);
 	if (temp2->type == WORD)
 		(*len)++;
+}
+
+void	del_here_doc_file(void)
+{
+	unlink(HERE_DOC_FILE);
 }
 
 void	init_fds(t_fds *fds)
