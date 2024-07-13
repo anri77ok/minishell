@@ -46,7 +46,7 @@ int	open_file(t_token *cmd, int type)
 	int	fd;
 
 	fd = -1;
-	if (!cmd)
+	if (cmd == NULL)
 	{
 		printf("ambiguous redirect\n");
 		return (-20);//ambiguous redirect
@@ -65,8 +65,9 @@ int	open_file(t_token *cmd, int type)
 		return (fd);
 	// if (fd == -1)
 	// 	return (p_err(1, "minishell: ", cmd->value, ": Permission denied\n"), 1);
-	// if (fd == -2 && type != INPUT)
-	// 	return (p_err(1, "minishell: ", cmd->value, ": No such file or directory\n"), 1);
+	if (fd == -2 && type != INPUT)
+		printf("No such file or directory\n");
+		// return (p_err(1, "minishell: ", cmd->value, ": No such file or directory\n"), 1);
 	
 	
 	//avelacnum enq

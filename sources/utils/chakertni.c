@@ -49,15 +49,15 @@ void chakertni(t_token **tokens)
 					if (j != 0)
 						begin = ft_substr(current->value, 0, j, true);
 					else
-						begin = NULL;
+						begin = ft_strdup("");
 					if (j + 1 != i)
 						word = ft_substr(current->value, j + 1, i, true);
 					else
-						word = NULL;
+						word =ft_strdup("");
 					if (i + 1 != my_strlen(current->value))
 						end = ft_substr(current->value, i + 1, ft_strlen(current->value), true);
 					else
-						end = NULL;
+						end = ft_strdup("");
 					free(current->value);
 					final = join(begin, word);
 					current->value = join(final, end);
@@ -67,14 +67,14 @@ void chakertni(t_token **tokens)
 					// printf("word--%s--\n", word);
 					// printf("final--%s--\n", final);
 					// printf("--%s--\n", current->value);
-					if (word != NULL)
+					if (word != '\0')
 					{
-						if (begin == NULL)
+						if (begin == '\0')
 							i = my_strlen(word);
 						else
 							i = my_strlen(begin) + my_strlen(word);
 					}
-					else if (begin != NULL)
+					else if (begin != '\0')
 						i = (my_strlen(begin));
 					else
 						i = 0;
@@ -83,7 +83,7 @@ void chakertni(t_token **tokens)
 					free(end);
 					free(final);
 					free(word);
-					if (current->value == NULL)
+					if (current->value == '\0')
 						break ;
 				}
 			}
@@ -92,11 +92,11 @@ void chakertni(t_token **tokens)
 		}
 		current = current->next;
 	}
-	// current = *tokens;
-	// while (current)
-	// {
-	// 	printf("value=%s\n",current->value);
-	// 	current= current->next;
-	// }
+	current = *tokens;
+	while (current)
+	{
+		printf("value=%s\n",current->value);
+		current= current->next;
+	}
 }
 
