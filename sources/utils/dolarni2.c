@@ -44,7 +44,8 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 		if (ft_strcmp(dollar, envp) == 0)
 		{
 			word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-			*k += 1;
+			//if (word !=)
+			*k += 0;
 			free(envp);
 			return (word);
 		}
@@ -72,7 +73,7 @@ void dolarni2(t_token **token_list, char **env)
 		if ((current->type == WORD || (current->type >= 12 && current->type <= 16)) && current->type != LIMITER)
 		{
 			i = 0;
-			while(current->value[i])
+			while(current->value && current->value[i])
 			{
 				if (current->value[i] == 34 && qt == false)
 					double_qt = !double_qt;
@@ -82,7 +83,7 @@ void dolarni2(t_token **token_list, char **env)
 				{
 					j = i;
 					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
-					 current->value[j] != 34 && current->value[j] != 39))
+					current->value[j] != 34 && current->value[j] != 39))
 					{
 						j++;
 						if (current->value[j] == '$')
@@ -99,7 +100,7 @@ void dolarni2(t_token **token_list, char **env)
 				}
 				if (current->value[0] != '\0')
 					i++;
-			}
+				}
 		}
 		current = current->next;
 	}

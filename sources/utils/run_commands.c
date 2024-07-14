@@ -29,12 +29,14 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 		if (dup2(cmd->input, 0) == -1)
 			printf("DUP Error\n");
 		close(cmd->input);
+		printf("arajinn1!!!\n");
 	}
 	if (cmd->output != 1)
 	{
 		if (dup2(cmd->output, 1) == -1)
 			printf("DUP Error\n");
 		close(cmd->output);
+		printf("erkrord2!!!\n");
 	}
 	close_pipes(pipex);
 }
@@ -53,6 +55,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 		pid = fork();
 		if (pid == 0)
 		{
+			// *is_builtin = 0;
 			dupeing(pipex, cmd);
 			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
 			if (*is_builtin == 0)
@@ -86,6 +89,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 			pipex->pids[i] = pid;
 		if (env != NULL)
 			free(env);
+		
 }
 
 void create_proceces(t_pipex *pipex)
@@ -134,8 +138,13 @@ void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, i
 		g_exit_status = pwd(STDOUT_FILENO, is_builtin);
 	else if (ft_strcmp(cmd->cmd_path, "cd") == 0)
 		g_exit_status = cd(pipex->cmds->cmd_args[1], pipex, is_builtin);
-	else if (ft_strcmp(cmd->cmd_path, "echo") == 0 && *is_builtin == 1)
-		g_exit_status = echo(cmd->cmd_args, cmd->output, is_builtin);
+	else if (ft_strcmp(cmd->cmd_path, "echo") == 0)
+	{
+		if (is_in_fork == 1)
+			g_exit_status = echo(cmd->cmd_args, STDOUT_FILENO, is_builtin);
+		else
+			g_exit_status = echo(cmd->cmd_args, cmd->output, is_builtin);
+	}
 	else if (ft_strcmp(cmd->cmd_path, "export") == 0)
 		g_exit_status = export(pipex, cmd, is_builtin);
 	else if (ft_strcmp(cmd->cmd_path, "unset") == 0)

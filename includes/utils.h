@@ -30,4 +30,11 @@ t_env_elem	*ft_lstlast(t_env_elem *lst);
 void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new);
 
 int print_env(t_env_elem *env, int *is_builtin);
+
+
+//check_syntax-i hamar
+int	check_syntax(t_token *token);
+int permitted_operator(t_token *token);
+int control_operators(t_token *token);
+
 #endif

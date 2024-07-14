@@ -6,14 +6,14 @@
 t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds)
 {
 	t_cmd	*new_node;
-	printf("input=%d\n", fds->infd);
-	printf("output=%d\n", fds->outfd);
+	// printf("input=%d\n", fds->infd);
+	// printf("output=%d\n", fds->outfd);
 	new_node = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
 	new_node->cmd_args = cmd_args;
 	new_node->cmd_path = cmd_args[0];
-	if (fds->infd == -20 || fds->outfd == -20 || fds->infd == -19 || fds->outfd == -19)
+	if (fds->infd == -20 || fds->outfd == -20 )//|| fds->infd == -19 || fds->outfd == -19)
 		return (NULL);//nra hamar em are vor baci en vor asi ambiguous redirect ayl nayev tvyal built in-@ chani orinak echo-n,husam urish tex xndir chi ta
 	if (fds->infd > 2)
 		new_node->input = fds->infd;
@@ -52,11 +52,11 @@ int	open_file(t_token *cmd, int type)
 		printf("ambiguous redirect\n");
 		return (-20);//ambiguous redirect
 	}
-	if (cmd->flag == 1)
-	{
-		printf("syntaxx error\n");
-		return (-19);
-	}
+	// if (cmd->flag == 1)
+	// {
+	// 	printf("syntaxx error\n");
+	// 	return (-19);
+	// }//maqreci vortev vor check_syntax funkcian avelacreci pti dzvi es pahy//echo a >
 	if (type == INPUT)
 	{
 		fd = open(cmd->value, O_RDONLY);
