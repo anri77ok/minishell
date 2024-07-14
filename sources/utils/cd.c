@@ -33,9 +33,10 @@ int	cd(char *path, t_pipex *pipex, int *is_builtin)
 			}
 		}
 	}
-	else if (path && path[0] == '~')
+	else if ((path && path[0] == '~' && path[1] == '\0')
+				|| (path && path[0] == '~' && path[1] == '/'))
 	{
-		modified_cmd = home_kpcnel_pathin(pipex->envp, path);
+		modified_cmd = home_kpcnel_pathin(pipex->envp, path + 1);
 	}
 	else
 		modified_cmd = path;
@@ -71,6 +72,7 @@ void	update_env(t_env_elem *env, char *old_path, char *new_path)
 
 int	cd_helper_1(char *modified_cmd)
 {
+	printf("mod=%s\n",modified_cmd);
 	if (is_file_or_directory(modified_cmd) == 0)
 	{
 		perror("No such file or directory\n");//sa nshanakuma vor chenq kara info imananq tvayl modified_path-@ fayla te direktoria
