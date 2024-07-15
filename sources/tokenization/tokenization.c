@@ -1,6 +1,8 @@
 #include "tokenization.h"
 #include "utils.h"
 #include <stdlib.h>
+#include "pipex.h"
+#include "minishell.h"
 
 int skip_whitespaces(char *line, int i)
 {
@@ -99,6 +101,7 @@ int tokenization(char *cmd_line, t_token **token_list)
 {
 	int i;
 	int j;
+	int k;
 	char *line;
 	t_token	*new_token;
 	bool quote = false;
@@ -111,10 +114,11 @@ int tokenization(char *cmd_line, t_token **token_list)
 		{
 			if (cmd_line[j] == 34 || cmd_line[j] == 39)
 			{
+				k = j;
 				j = is_quote(cmd_line, j);
 				if (j == -1)
 				{
-					printf("syntax error\n");
+					p_error(NULL, QUOT_ERR, &cmd_line[k], 2);
 					return (-1);
 				}
 				quote = true;

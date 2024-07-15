@@ -27,16 +27,14 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 	if (cmd->input != 0)
 	{
 		if (dup2(cmd->input, 0) == -1)
-			printf("DUP Error\n");
+			p_error(pipex, DUP_ERR, NULL, 1);
 		close(cmd->input);
-		printf("arajinn1!!!\n");
 	}
 	if (cmd->output != 1)
 	{
 		if (dup2(cmd->output, 1) == -1)
-			printf("DUP Error\n");
+			p_error(pipex, DUP_ERR, NULL, 1);
 		close(cmd->output);
-		printf("erkrord2!!!\n");
 	}
 	close_pipes(pipex);
 }
@@ -53,6 +51,8 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 	//printf("%d\n", *is_builtin);
 		// printf("path -- %s\n", cmd->cmd_path);
 		pid = fork();
+		if (pid == -1)
+			p_error(pipex, FORK_ERR, NULL, 1);
 		if (pid == 0)
 		{
 			 
@@ -76,24 +76,24 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 				cmd->cmd_path = arr;
 				if (access(cmd->cmd_path, X_OK) != -1)
 					if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
-						exit(1);
+					{
+						p_error(pipex, CMD_NOT_FOUND, NULL, 1);
+					}
 				i = 0;
 				while (matrix[i])
 				{
 					// free(pipex->cmds->cmd_path);
 					cmd->cmd_path = ft_strjoin(matrix[i++], arr, '/');
-					printf(":%s\n",cmd->cmd_path);
+					// printf(":%s\n",cmd->cmd_path);
 					if (access(cmd->cmd_path, X_OK) != -1)
 						break ;
 				}
-				// if (matrix[i])
-				// 	g_exit_status = 127;
+				//printf(":%d\n",I);
+				// if (!matrix[i])
+				// 	p_error(pipex, EXECVE_ERR, NULL, 1);
 				if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
 				{
-					g_exit_status = 127;
-					// printf("exit=%d\n", g_exit_status);
-					printf("commmmand not found\n");
-					exit(g_exit_status);
+					p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
 				}
 			}
 		}

@@ -15,7 +15,7 @@ void    init_pipes(t_pipex *pipex)
 	pipex->pipes = malloc(sizeof(int [2]) * pipex->cmd_count - 1);
 	if (!pipex->pipes)
 	{
-		//error
+		p_error(pipex, MALLOC_ERR, NULL, 1);
 		return ;
 	}
     cur = pipex->cmds;
@@ -25,10 +25,7 @@ void    init_pipes(t_pipex *pipex)
 		// printf("fd=%d\n",cur->input);
 		// printf("fdoutput=%d\n",cur->output);
         if (pipe(pipex->pipes[i]) == -1)
-		{
-            //error
-			return ;
-		}
+			p_error(pipex, PIPE_ERR, NULL, 1);
 		// if (cur->input == 20 || cur->output == 20)
 		// {
 		// 	printf("ambiguous redirect\n");

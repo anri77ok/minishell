@@ -11,7 +11,7 @@
 # include "minishell.h"
 
 # define MIN_ARGS 4
-# define INVALID_ARG_CNT 1
+# define ARGS_COUNT_ERR 1
 # define SYNTAX_ERR 2
 # define FILEIN_ERR 3
 # define QUOT_ERR 4
@@ -86,4 +86,7 @@ void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork);
 long	ft_atoll(const char *nptr);
 int is_only_digits_and_plus_minus(char *str);
 
+
+//errorneri hamar
+void p_error(t_pipex *pipex, int error_code, char *message, int status);
 #endif

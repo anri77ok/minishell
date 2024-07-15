@@ -7,6 +7,95 @@
 
 int	g_exit_status = 0;
 
+int	global(int exit_status, int set)
+{
+	static int	status;
+
+	if (set == 1)
+		status = exit_status;
+	return (status);
+}
+
+void	ft_putstr_fd(char const *s, int fd)
+{
+	int		i;
+
+	i = 0;
+	while (s[i])
+		write(fd, &s[i++], 1);
+}
+
+void	multy_putstr_fd(char *start, char *mid, char *end, int fd)
+{
+	int		i;
+
+	i = 0;
+	if (start != NULL)
+	{
+		while (start[i])
+			write(fd, &start[i++], 1);
+	}
+	if (mid != NULL)
+	{
+		i = 0;
+		while (mid[i])
+			write(fd, &mid[i++], 1);
+	}
+	if (end != NULL)
+	{
+		i = 0;
+		while (end[i])
+			write(fd, &end[i++], 1);
+	}
+}
+
+int	error_helper2(char *s1, char s2, char *s3, int exit_status)
+{
+	// global(exit_status, 1);
+	g_exit_status = exit_status;
+	if (s1 != NULL)
+		ft_putstr_fd(s1, 2);
+	write(2, &s2, 1);
+	if (s3 != NULL)
+		ft_putstr_fd(s3, 2);
+	return (exit_status);
+}
+
+int	error_helper1(char *s1, char *s2, char *s3, int exit_status)
+{
+	//global(exit_status, 1);
+	g_exit_status = exit_status;
+	multy_putstr_fd(s1, s2, s3, 2);
+	return (exit_status);
+}
+
+void p_error(t_pipex *pipex, int error_code, char *message, int status)
+{
+	if (pipex && pipex->pipes != NULL)
+	{
+		free(pipex->pipes);
+		pipex->pipes = NULL;
+	}
+	if (error_code == ARGS_COUNT_ERR)
+		exit(error_helper1("Invalid count of arguments\n", NULL, NULL, 1));
+	else if (error_code == SYNTAX_ERR)
+		error_helper1("minishell : syntax error near unexpected token `", message, "'\n", status);
+	else if (error_code == QUOT_ERR)
+		error_helper2("minishell : syntax error near unexpected token `", message[0], "'\n", status);
+	else if (error_code == MALLOC_ERR)
+		exit(error_helper1("minishell: ", NULL, ": malloc error\n", 1));
+	else if (error_code == PIPE_ERR)
+		perror("pipe failed");
+	else if (error_code == FORK_ERR)
+		perror("fork failed");
+	else if (error_code == DUP_ERR)
+		perror("dup failed");
+	else if (error_code == CMD_NOT_FOUND)
+		exit(error_helper1("minishell: ", message, ": command not found\n", status));
+	else if (error_code == EXECVE_ERR)
+		perror("execve failed");
+}
+
 void ft_clear_shell(t_shell **shell)
 {
 	t_cmd	*tmp;
@@ -28,21 +117,12 @@ void ft_clear_shell(t_shell **shell)
 
 int	main(int argc, char **argv, char **env)
 {
-	// char args[6][10] = {"a", "-nnannn", "-nnnnn.n", "senc", "baner", NULL};
-	//  char *strings[] = {
-    //     "-n",
-    //     "-n",
-    //     "-nn",
-    //     "-nnnnn.",
-    //     "-nn",
-    //     "sixth",
-    //     NULL  // Завершающий NULL-указатель
-    // };
-	// echo(strings,1);
-	// pwd(1);
 	t_token	*token_list;
 	char	*cmd_line;
 	t_shell	*shell;
+
+	if (argc > 1)
+		p_error(NULL, ARGS_COUNT_ERR, NULL, 1);
 	argc = 0;
 	argv = NULL;
 	token_list = NULL;
@@ -60,18 +140,20 @@ int	main(int argc, char **argv, char **env)
 		{
 			if (tokenization(cmd_line, &token_list) == 0)
 			{
-				// check_syntax(token_list);
-				dolarni2(&token_list, env_list_to_array(shell->envr));
-				//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
-				//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
-				get_bez_empty_nodes(&token_list);
-				chakertni(&token_list);
-				token_to_cmds(shell, token_list);
-				run_cmds(shell);
-				print_token_list(token_list);	
+				if (check_syntax(token_list) != 2)
+				{
+					dolarni2(&token_list, env_list_to_array(shell->envr));
+					//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
+					//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
+					get_bez_empty_nodes(&token_list);
+					chakertni(&token_list);
+					token_to_cmds(shell, token_list);
+					run_cmds(shell);
+					print_token_list(token_list);	
+				}
 			}
 		}
-
+		//printf("exit\n");
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
@@ -87,19 +169,21 @@ int	check_syntax(t_token *token)
 	while (temp)
 	{
 		if (temp->type == S_PIPE && (!temp->prev || !temp->next))
-			return -1;//bash: syntax error near unexpected token `|'
+			return (p_error(NULL, SYNTAX_ERR, temp->value, 258), 2);
 		if (temp->type == OUT_REDIR || temp->type == IN_REDIR || temp->type == APPEND_REDIR || temp->type == HERE_DOC)
 		{
 			if (!temp->next)
-				return -1;//bash: syntax error near unexpected token `newline'
+				return (p_error(NULL, SYNTAX_ERR, "newline", 258), 2);
+				// return -1;//bash: syntax error near unexpected token `newline'
 			if (temp->next->type == FILEOUT || temp->next->type == FILEIN || temp->next->type == APPEND_FILEOUT || temp->next->type == LIMITER)
 				return (0);
-			// perror_exit(SYNTAX_ERR, NULL, t_l->value, 2);
-			// return (2);
+			return (p_error(NULL, SYNTAX_ERR, temp->next->value,258), 2);
 		}
 		if (temp->type == S_PIPE && control_operators(temp->next) == 1)
-			return -1;//bash: syntax error near unexpected token `|'
+			return (p_error(NULL, SYNTAX_ERR, temp->value, 258), 2);
+			// return -1;//bash: syntax error near unexpected token `|'
 		if (permitted_operator(temp))
+			return (p_error(NULL, SYNTAX_ERR, temp->value, 258), 2);
 			// return (perror_exit(SYNTAX_ERR, NULL, t_l->value, 2), 2);
 		temp = temp->next;
 	}
@@ -108,7 +192,7 @@ int	check_syntax(t_token *token)
 
 int permitted_operator(t_token *token)
 {
-	if (token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
+	if (token->type == ERROR || token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
 			return (1);
 		return (0);
 }
@@ -120,12 +204,6 @@ int control_operators(t_token *token)
 		return (1);
 	return (-1);
 }
-
-
-
-
-
-
 
 void	get_bez_empty_nodes(t_token **token_list)
 {

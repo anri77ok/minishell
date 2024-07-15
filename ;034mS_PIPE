@@ -1,0 +1,72 @@
+aaaaaaaaa
+input=6
+output=5
+aaaaaaaaa
+input=8
+output=1
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;035m)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(token)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(-)[0m
+[0;035m token -> [0;034mOUT_REDIR      [0;031m | [0;032m       value -> [0;033m(>)[0m
+[0;035m token -> [0;034mFILEOUT        [0;031m | [0;032m       value -> [0;033m(;034mS_PIPE)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;031m)[0m
+[0;035m token -> [0;034mS_PIPE         [0;031m | [0;032m       value -> [0;033m(|)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;032m)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(value)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(-)[0m
+[0;035m token -> [0;034mOUT_REDIR      [0;031m | [0;032m       value -> [0;033m(>)[0m
+[0;035m token -> [0;034mFILEOUT        [0;031m | [0;032m       value -> [0;033m(;033m()[0m
+[0;035m token -> [0;034mS_PIPE         [0;031m | [0;032m       value -> [0;033m(|)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m()m)[0m
+[0;036m MINIVIBERSEIJ: [0m;035m token -> ;034mWORD           ;031m | ;032m       value -> ;033m(asd)m
+value=;035m
+flag==0
+value=token
+flag==0
+value=-
+flag==0
+value=>
+flag==0
+value=;034mWORD
+flag==0
+value=;031m
+flag==0
+value=|
+flag==0
+value=;032m
+flag==0
+value=value
+flag==0
+value=-
+flag==0
+value=>
+flag==0
+value=;033m(asd)m
+flag==0
+=;035m
+=token
+=-
+=;031m
+=;032m
+=value
+=-
+pip2 - erkrord!!!
+aaaaaaaaa
+input=0
+output=3
+aaaaaaaaa
+input=7
+output=6
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;035m)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(token)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(-)[0m
+[0;035m token -> [0;034mOUT_REDIR      [0;031m | [0;032m       value -> [0;033m(>)[0m
+[0;035m token -> [0;034mFILEOUT        [0;031m | [0;032m       value -> [0;033m(;034mWORD)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;031m)[0m
+[0;035m token -> [0;034mS_PIPE         [0;031m | [0;032m       value -> [0;033m(|)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(;032m)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(value)[0m
+[0;035m token -> [0;034mWORD           [0;031m | [0;032m       value -> [0;033m(-)[0m
+[0;035m token -> [0;034mOUT_REDIR      [0;031m | [0;032m       value -> [0;033m(>)[0m
+[0;035m token -> [0;034mFILEOUT        [0;031m | [0;032m       value -> [0;033m(;033m(asd)m)[0m
+[0;036m MINIVIBERSEIJ: [0m

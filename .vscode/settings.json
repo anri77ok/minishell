@@ -4,7 +4,8 @@
 		"utils.h": "c",
 		"minishell.h": "c",
 		"stdlib.h": "c",
-		"bitset": "c"
+		"bitset": "c",
+		"stdio.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
