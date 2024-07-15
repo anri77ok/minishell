@@ -37,4 +37,7 @@ int	check_syntax(t_token *token);
 int permitted_operator(t_token *token);
 int control_operators(t_token *token);
 
+
+//freee
+void	free_list(t_env_elem *temp);
 #endif

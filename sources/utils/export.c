@@ -36,9 +36,8 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 	{
 		if (cmd->cmd_args && cmd->cmd_args[i] && cmd->cmd_args[i][0] == '=')
 		{
-			// p_err(1, "minishell: export: `", var[i],
-			// 	"': not a valid identifier\n");
-		*error_exit = 1;
+			error_helper1("minishell: export: `", cmd->cmd_args[i], "': not a valid identifier\n", 1);
+			*error_exit = 1;
 			i++;
 			continue ;
 		}
@@ -74,14 +73,16 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 				return (-1);//esi arel enq vor export c  export c(erku hat node chsarqi nuyn c key-ov)
 			if(env_list->value == NULL && (value[0] == '\0' || value[0]))
 			{
+				free(env_list->value);
 				env_list->value = ft_strdup(value);
+				free(value);
 				return (-1);
 			}//ete unenq export f heto anum enq export f= kam export f=aa popoxutyuny lini
 			if (env_list->value && (value[0] == '\0' || value[0]))
 			{
-				char *temp = env_list->value;
-				free(temp);
+				free(env_list->value);
 				env_list->value = ft_strdup(value);
+				free(value);
 				return (-1);
 			}//ete lini export a=d heto export a=xx kam export export a=  poxi et node-i key-i value-n
 
@@ -93,14 +94,10 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 	// free(key);//es frinery seg en talmmmmmmmm
 	return (1);
 }
-//bann ayn e vor es env-i mej erb anem export a,drvelu e a-n ira \0-ov(aysinqn datark tox)
-//isk env-n tpleuc ete a-n arjeq chuneav inqy pti chtpvi,isk es nenc emm are,vor da hashvi chem are
-//lucel ayd xndiry
 
 char	*get_word_after_equal(char	*value)
 {
 	int	i;
-	// char	*res;
 	int	flag;
 	int	index_equal;
 
@@ -113,7 +110,6 @@ char	*get_word_after_equal(char	*value)
 		{
 			flag = 1;
 			index_equal = i;
-			//break ;
 		}
 		i++;
 	}
@@ -147,24 +143,25 @@ void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
 	t_env_elem	*copy;
-
+	t_env_elem	*temp2;
 	copy = get_copy_env(pipex->envp);
 	temp = merge_sort(copy, ft_strcmp);
+	temp2 = temp;
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
-		while (temp)
+		while (temp2)
 		{
-			if (temp->value == NULL)
+			if (temp2->value == NULL)
 			  	printf("declare -x %s\n", temp->key);
-			else if (temp->value != NULL && temp->value[0] == '\0')
-				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			else if (temp->value[0])
-				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			temp = temp->next;
+			else if (temp2->value != NULL && temp2->value[0] == '\0')
+				printf("declare -x %s=\"%s\"\n", temp2->key, temp2->value);
+			else if (temp2->value[0])
+				printf("declare -x %s=\"%s\"\n", temp2->key, temp2->value);
+			temp2 = temp2->next;
 		}
 	}
-	// free_list(temp);
-	temp = NULL;
+	free_list(copy);//
+	copy = NULL;//
 }
 
 t_env_elem	*get_copy_env(t_env_elem *env)
@@ -173,11 +170,6 @@ t_env_elem	*get_copy_env(t_env_elem *env)
 	t_env_elem	*node;
 	t_env_elem	*temp;
 
-	// while (env)
-	// {
-	// 	printf("%s=%s\n", env->key, env->value);
-	// 	env= env->next;
-	// }
 	copy = NULL;
 	temp = env;
 	while (temp)
@@ -194,13 +186,16 @@ void	free_list(t_env_elem *temp)
 {
 	t_env_elem *del;
 
+
 	while (temp)
 	{
+		printf("mtaaaaa\n");
 		del = temp;
 		free(temp->key);
 		free(temp->value);
 		temp = temp->next;
-		temp->prev = NULL;
+		if (temp)
+			temp->prev = NULL;
 		free(del);
 	}
 }
