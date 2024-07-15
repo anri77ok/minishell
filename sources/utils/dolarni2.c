@@ -102,6 +102,7 @@ void dolarni2(t_token **token_list, char **env)
 					end = ft_substr(current->value, j, ft_strlen(current->value) - j, false);
 					word = open_dollar(dollar, env, flag, &i);
 					kp(begin, word, end, &current);
+					free(dollar);
 					flag = false;
 				}
 				if (current->value[0] != '\0')

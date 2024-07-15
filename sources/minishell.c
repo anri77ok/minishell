@@ -16,15 +16,6 @@ int	global(int exit_status, int set)
 	return (status);
 }
 
-void	ft_putstr_fd(char const *s, int fd)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-		write(fd, &s[i++], 1);
-}
-
 void	multy_putstr_fd(char *start, char *mid, char *end, int fd)
 {
 	int		i;
@@ -54,10 +45,10 @@ int	error_helper2(char *s1, char s2, char *s3, int exit_status)
 	// global(exit_status, 1);
 	g_exit_status = exit_status;
 	if (s1 != NULL)
-		ft_putstr_fd(s1, 2);
+		fd_put_string(s1, 2);
 	write(2, &s2, 1);
 	if (s3 != NULL)
-		ft_putstr_fd(s3, 2);
+		fd_put_string(s3, 2);
 	return (exit_status);
 }
 
@@ -99,18 +90,19 @@ void p_error(t_pipex *pipex, int error_code, char *message, int status)
 void ft_clear_shell(t_shell **shell)
 {
 	t_cmd	*tmp;
+	int i;
+
 	while ((*shell)->cmds)
 	{
 		tmp = (*shell)->cmds;
-		//free((*shell)->cmds->cmd_path);
-		// int i = 1;
-		// while ((*shell)->cmds->cmd_args[i])
+		i = 0;
+		// while (tmp->cmd_args[i])
 		// {
-		// 	free((*shell)->cmds->cmd_args[i]);
+		// 	free(tmp->cmd_args[i]);
 		// 	i++;
 		// }
-		// free((*shell)->cmds->cmd_args);
 		(*shell)->cmds = (*shell)->cmds->next;
+		free(tmp->cmd_args);
 		free(tmp);
 	}
 }
@@ -123,7 +115,6 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc > 1)
 		p_error(NULL, ARGS_COUNT_ERR, NULL, 1);
-	argc = 0;
 	argv = NULL;
 	token_list = NULL;
 	shell = malloc(sizeof(t_shell));
@@ -149,15 +140,29 @@ int	main(int argc, char **argv, char **env)
 					chakertni(&token_list);
 					token_to_cmds(shell, token_list);
 					run_cmds(shell);
-					print_token_list(token_list);	
+					//print_token_list(token_list);	
 				}
 			}
 		}
-		//printf("exit\n");
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
+		system("leaks minishell");
 	}
+
+	t_env_elem *temp;
+
+	while (shell->envr)
+	{
+		temp = shell->envr;
+		shell->envr = shell->envr->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+	}
+	free(shell);
+	printf("exit\n");
+	system("leaks minishell");
 }
 
 
@@ -192,7 +197,7 @@ int	check_syntax(t_token *token)
 
 int permitted_operator(t_token *token)
 {
-	if (token->type == ERROR || token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
+	if (token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
 			return (1);
 		return (0);
 }
@@ -227,13 +232,13 @@ void	get_bez_empty_nodes(t_token **token_list)
 			temp = temp->next;
 		}
 	}
-	temp = *token_list;
-	while (temp)
-	{
-		printf("value=%s\n",temp->value);
-		printf("flag==%d\n",temp->flag);
-		temp= temp->next;
-	}
+	// temp = *token_list;
+	// while (temp)
+	// {
+	// 	printf("value=%s\n",temp->value);
+	// 	printf("flag==%d\n",temp->flag);
+	// 	temp= temp->next;
+	// }
 }
 
 void	delete_this_node(t_token	**token_list, int pos)
@@ -246,6 +251,7 @@ void	delete_this_node(t_token	**token_list, int pos)
 	count_nodes = count_nodes_func(*token_list);
 	if (count_nodes == 1) // If there's only one node
     {
+		free((*token_list)->value);
         free(*token_list);
         *token_list = NULL;
         return ;
@@ -253,6 +259,7 @@ void	delete_this_node(t_token	**token_list, int pos)
 	if (pos == 0)
 	{
 		del_node = *token_list;
+		free(del_node->value);
 		*token_list = (*token_list)->next;
 		(*token_list)->prev = NULL;
 		free(del_node);
@@ -263,6 +270,7 @@ void	delete_this_node(t_token	**token_list, int pos)
 		while (temp->next->next)
 			temp = temp->next;
 		del_node = temp->next;
+		free(del_node->value);
 		free(del_node);
 		temp->next = NULL;
 	}
@@ -282,6 +290,7 @@ void	middle_node(t_token **token_list, int pos)
 		pos--;
 	}
 	del_node = temp;
+	free(del_node->value);
 	temp->prev->next = temp->next;
 	temp->next->prev = temp->prev;
 	free(del_node);
