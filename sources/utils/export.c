@@ -40,7 +40,6 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 			// 	"': not a valid identifier\n");
 		*error_exit = 1;
 			i++;
-			printf("vade\n");
 			continue ;
 		}
 		key = get_word_before_equal(cmd->cmd_args[i]);
@@ -48,7 +47,6 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		{
 			*error_exit = 1;
 			i++;
-			printf("chexav axper\n");
 			continue ;
 		}
 		value = get_word_after_equal(cmd->cmd_args[i]);

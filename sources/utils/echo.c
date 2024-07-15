@@ -56,6 +56,6 @@ void    fd_put_string(char *str, int fd)
         write(fd, &str[i++], 1);
 }
 
-//echo a >          syntax error pti ta bayc mery echo-n anuma
-//echo a > $a   esi chishta
+
 //echo a > "$a"  pti gri No such file or directory, byc mery anuma husam en chakertnery haneluc null-i texy vor datark tox dnes kdzvi
+///echo a >"$a"

@@ -121,9 +121,6 @@ void create_proceces(t_pipex *pipex)
 			i++;
 			continue ;
 		}
-		printf("aaaaaaaaa\n");
-				printf("input=%d\n",cmd->input);
-				printf("output=%d\n",cmd->output);
 		if (pipex->cmd_count == 1)
 			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);//ete mihat cmd-a pordzum enq ashxatacnel builinner@,bayc ete trbav hramany built in chi apa mtnum enq taki if-@ 
 		if (is_builtin == 0)
@@ -177,7 +174,6 @@ void	wait_processes(t_pipex *pipex)
 	//esi areci sksec sxal ashxtel shat baner//arden che)))))
 	if (pipex->cmd_count == 1 && check_is_built_in(pipex->cmds) == 1)
 	{
-		printf("ha eli\n");
 		return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
 	}
 	while (i < pipex->cmd_count)

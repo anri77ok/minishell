@@ -36,12 +36,10 @@ void    init_pipes(t_pipex *pipex)
         if (cur && cur->output == 1)
 		{
 			cur->output = pipex->pipes[i][1];
-			printf("pip1 - arajinn!!!\n");
 		}
 		if (cur->next && cur->next->input == 0)
 		{
 			cur->next->input = pipex->pipes[i][0];
-			printf("pip2 - erkrord!!!\n");
 		}
 		i++;
 		cur = cur->next;

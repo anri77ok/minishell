@@ -72,7 +72,6 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 	pos = 0;
 	if (check_this_key_in_env_list_unset(*env, key, &pos) == 1)
 	{
-		printf("pos=%d\n",pos);
 		if (pos == 0)
 		{
 			del_node = *env;

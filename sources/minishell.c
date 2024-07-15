@@ -16,15 +16,6 @@ int	global(int exit_status, int set)
 	return (status);
 }
 
-void	ft_putstr_fd(char const *s, int fd)
-{
-	int		i;
-
-	i = 0;
-	while (s[i])
-		write(fd, &s[i++], 1);
-}
-
 void	multy_putstr_fd(char *start, char *mid, char *end, int fd)
 {
 	int		i;
@@ -54,10 +45,10 @@ int	error_helper2(char *s1, char s2, char *s3, int exit_status)
 	// global(exit_status, 1);
 	g_exit_status = exit_status;
 	if (s1 != NULL)
-		ft_putstr_fd(s1, 2);
+		fd_put_string(s1, 2);
 	write(2, &s2, 1);
 	if (s3 != NULL)
-		ft_putstr_fd(s3, 2);
+		fd_put_string(s3, 2);
 	return (exit_status);
 }
 
@@ -153,11 +144,11 @@ int	main(int argc, char **argv, char **env)
 				}
 			}
 		}
-		//printf("exit\n");
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
 	}
+	printf("exit\n");
 }
 
 
@@ -192,7 +183,7 @@ int	check_syntax(t_token *token)
 
 int permitted_operator(t_token *token)
 {
-	if (token->type == ERROR || token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
+	if (token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
 			return (1);
 		return (0);
 }
@@ -227,13 +218,13 @@ void	get_bez_empty_nodes(t_token **token_list)
 			temp = temp->next;
 		}
 	}
-	temp = *token_list;
-	while (temp)
-	{
-		printf("value=%s\n",temp->value);
-		printf("flag==%d\n",temp->flag);
-		temp= temp->next;
-	}
+	// temp = *token_list;
+	// while (temp)
+	// {
+	// 	printf("value=%s\n",temp->value);
+	// 	printf("flag==%d\n",temp->flag);
+	// 	temp= temp->next;
+	// }
 }
 
 void	delete_this_node(t_token	**token_list, int pos)

@@ -19,7 +19,6 @@ void	token_to_cmds_helper1(int *len, t_token *t2, char **cm, t_token **t)
 		{
 			if (t2->type == WORD)
 			{
-				printf("=%s\n",t2->value);
 				cm[*len] = t2->value;
 				(*len)++;
 			}

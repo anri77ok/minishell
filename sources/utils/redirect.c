@@ -49,7 +49,7 @@ int	open_file(t_token *cmd, int type)
 	fd = -1;
 	if (!cmd)
 	{
-		printf("ambiguous redirect\n");
+		error_helper1("minishell: ", NULL, ": ambiguous redirect\n", -20);
 		return (-20);//ambiguous redirect
 	}
 	// if (cmd->flag == 1)
@@ -69,18 +69,10 @@ int	open_file(t_token *cmd, int type)
 		fd = open(cmd->value, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (fd > 2)
 		return (fd);
-	// if (fd == -1)
-	// 	return (p_err(1, "minishell: ", cmd->value, ": Permission denied\n"), 1);
+	if (fd == -1)
+		return (error_helper1("minishell: ", cmd->value, ": Permission denied\n", 1), 1);
 	if (fd == -2 && type != INPUT)
-		printf("No such file or directory\n");
-		// return (p_err(1, "minishell: ", cmd->value, ": No such file or directory\n"), 1);
-	
-	
-	//avelacnum enq
-//	if (fd == -20)
-		//pti grenq bash: $Aaaaaaaaaa: ambiguous redirect
-		// aha orinaky but      echo vrd > $Aaaaaaaaaa
-		// 					 bash: $Aaaaaaaaaa: ambiguous redirect
+		return (error_helper1("minishell: ", cmd->value, ": No such file or directory\n", 1), 1);
 	return (-1);
 }
 

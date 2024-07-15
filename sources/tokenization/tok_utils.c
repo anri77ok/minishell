@@ -44,12 +44,16 @@ t_token_type set_token_type(char *value, int i)
 		return (ERROR);
 	if (value[i] == '|')
 	{
+		if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+            return (D_PIPE);
 		if (syntx_err(value, i + 1) == 1)
 			return (ERROR);
 		return (S_PIPE);
 	}
 	else if (value[i] == '&')
 	{
+		if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+            return (D_AND);
 		if (syntx_err(value, i + 1) == 1)
 			return (ERROR);
 		return (S_AND);

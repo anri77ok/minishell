@@ -50,6 +50,6 @@ t_env_elem	*ft_env_elem_at(t_env_elem *begin_list, unsigned int nbr);
 int	ft_env_elem_size( t_env_elem *begin_list);
 void	set_singals(void);
 
-
+int	error_helper1(char *s1, char *s2, char *s3, int exit_status);
 
 #endif
