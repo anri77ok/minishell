@@ -72,6 +72,10 @@ char	*str_type(int token_type);
 t_token_type set_token_type(char *value, int i);
 void	tokens_types(t_token *tokens);
 void chakertni(t_token **tokens);
+//itoa
+char	*foo(void);
+int	ft_len(int n);
+char	*ft_itoa(int n);
 
 
 //datark nodery jnjelu hamar

@@ -81,6 +81,12 @@ void dolarni2(t_token **token_list, char **env)
 					qt = !qt;
 				if (current->value[i] == '$' && qt == false)
 				{
+					if (current->value[i + 1] && current->value[i + 1] == '?')
+					{
+						current->value = ft_strdup(ft_itoa(g_exit_status));
+						break ;
+					}
+					
 					j = i;
 					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
 					current->value[j] != 34 && current->value[j] != 39))
@@ -104,4 +110,61 @@ void dolarni2(t_token **token_list, char **env)
 		}
 		current = current->next;
 	}
+}
+
+
+
+
+//itoa
+char	*foo(void)
+{
+	char	*ptr;
+
+	ptr = malloc(sizeof(char) * 2);
+	ptr[0] = 48;
+	ptr[1] = '\0';
+	return (ptr);
+}
+
+int	ft_len(int n)
+{
+	int	len;
+
+	len = 0;
+	if (n < 0)
+		len++;
+	while (n != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa(int n)
+{
+	char	*arr;
+	int		len;
+	long	long_n;
+
+	if (n == 0)
+		return (foo());
+	len = ft_len(n);
+	arr = malloc(sizeof(char) *(len + 1));
+	if (!arr)
+		return (NULL);
+	long_n = (long)n;
+	arr[len] = '\0';
+	len--;
+	if (n < 0)
+	{
+		arr[0] = '-';
+		long_n = -long_n;
+	}
+	while (long_n != 0)
+	{
+		arr[len--] = ((long_n % 10) + 48);
+		long_n /= 10;
+	}
+	return (arr);
 }

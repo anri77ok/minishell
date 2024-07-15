@@ -55,11 +55,14 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 		pid = fork();
 		if (pid == 0)
 		{
+			 
 			// *is_builtin = 0;
 			dupeing(pipex, cmd);
 			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
+			
 			if (*is_builtin == 0)
 			{
+				
 				env = env_list_to_array(pipex->envp);
 				while (env[i])
 				{
@@ -67,6 +70,7 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 						break ;
 					i++;
 				}
+				
 				arr = cmd->cmd_args[0];
 				matrix = ft_split(env[i] + 5, ':');
 				cmd->cmd_path = arr;
@@ -78,11 +82,19 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 				{
 					// free(pipex->cmds->cmd_path);
 					cmd->cmd_path = ft_strjoin(matrix[i++], arr, '/');
+					printf(":%s\n",cmd->cmd_path);
 					if (access(cmd->cmd_path, X_OK) != -1)
 						break ;
 				}
+				// if (matrix[i])
+				// 	g_exit_status = 127;
 				if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
-					exit(1);
+				{
+					g_exit_status = 127;
+					// printf("exit=%d\n", g_exit_status);
+					printf("commmmand not found\n");
+					exit(g_exit_status);
+				}
 			}
 		}
 		else
@@ -109,6 +121,9 @@ void create_proceces(t_pipex *pipex)
 			i++;
 			continue ;
 		}
+		printf("aaaaaaaaa\n");
+				printf("input=%d\n",cmd->input);
+				printf("output=%d\n",cmd->output);
 		if (pipex->cmd_count == 1)
 			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);//ete mihat cmd-a pordzum enq ashxatacnel builinner@,bayc ete trbav hramany built in chi apa mtnum enq taki if-@ 
 		if (is_builtin == 0)
@@ -118,16 +133,12 @@ void create_proceces(t_pipex *pipex)
 	}
 }
 
-
-
 int	check_is_built_in(t_cmd *cmd)
 {
 		if (ft_strcmp(cmd->cmd_path, "env") == 0 || ft_strcmp(cmd->cmd_path, "pwd") == 0 || ft_strcmp(cmd->cmd_path, "echo") == 0 || ft_strcmp(cmd->cmd_path, "export") == 0 || ft_strcmp(cmd->cmd_path, "unset") == 0 || ft_strcmp(cmd->cmd_path, "exit") == 0)
 			return (1);
 		return (-1);
 }
-
-
 
 
 void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int is_in_fork)
@@ -176,7 +187,7 @@ void	wait_processes(t_pipex *pipex)
 		if (WIFEXITED(exit_status))
 			g_exit_status = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
-			g_exit_status = TERM_CODE_SHIFT + WTERMSIG(exit_status);
+			g_exit_status = TERM_CODE_SHIFT + WTERMSIG(exit_status);// TERM_CODE_SHIFT fiqsvac 128a
 		i++;
 	}
 }

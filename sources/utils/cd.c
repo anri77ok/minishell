@@ -127,8 +127,6 @@ int is_file_or_directory(char *modified_cmd)
 	return (1);
 }
 
-
-
 char	*home_kpcnel_pathin(t_env_elem *env, char *path)
 {
 	char	*HOME_VALUE;
