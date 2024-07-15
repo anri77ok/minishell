@@ -89,11 +89,11 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 						break ;
 				}
 				//printf(":%d\n",I);
-				// if (!matrix[i])
-				// 	p_error(pipex, EXECVE_ERR, NULL, 1);
+				if (access(cmd->cmd_path, X_OK) != 0)//kam !matrix[i - 1]
+					p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
 				if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
 				{
-					p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
+					p_error(pipex, EXECVE_ERR, NULL, 1);
 				}
 			}
 		}
