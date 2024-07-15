@@ -64,7 +64,7 @@ void dolarni2(t_token **token_list, char **env)
 	char *begin = NULL;
 	char *word = NULL;
 	char *end = NULL;
-	bool flag = NULL;
+	bool flag = false;
 	bool qt = false;
 	bool double_qt = false;
 	current = *token_list;
@@ -83,10 +83,10 @@ void dolarni2(t_token **token_list, char **env)
 				{
 					if (current->value[i + 1] && current->value[i + 1] == '?')
 					{
-						current->value = ft_strdup(ft_itoa(g_exit_status));
+						free(current->value);
+						current->value = ft_itoa(g_exit_status);
 						break ;
-					}
-					
+					}		
 					j = i;
 					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
 					current->value[j] != 34 && current->value[j] != 39))
@@ -110,6 +110,13 @@ void dolarni2(t_token **token_list, char **env)
 		}
 		current = current->next;
 	}
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
 

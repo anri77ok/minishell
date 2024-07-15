@@ -90,17 +90,17 @@ void p_error(t_pipex *pipex, int error_code, char *message, int status)
 void ft_clear_shell(t_shell **shell)
 {
 	t_cmd	*tmp;
+	int i;
+
 	while ((*shell)->cmds)
 	{
 		tmp = (*shell)->cmds;
-		//free((*shell)->cmds->cmd_path);
-		// int i = 1;
-		// while ((*shell)->cmds->cmd_args[i])
+		i = 0;
+		// while (tmp->cmds->cmd_args[i])
 		// {
-		// 	free((*shell)->cmds->cmd_args[i]);
+		// 	free(tmp->cmds->cmd_args[i]);
 		// 	i++;
 		// }
-		// free((*shell)->cmds->cmd_args);
 		(*shell)->cmds = (*shell)->cmds->next;
 		free(tmp);
 	}
@@ -114,7 +114,6 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc > 1)
 		p_error(NULL, ARGS_COUNT_ERR, NULL, 1);
-	argc = 0;
 	argv = NULL;
 	token_list = NULL;
 	shell = malloc(sizeof(t_shell));
@@ -137,18 +136,31 @@ int	main(int argc, char **argv, char **env)
 					//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
 					//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
 					get_bez_empty_nodes(&token_list);
-					chakertni(&token_list);
-					token_to_cmds(shell, token_list);
-					run_cmds(shell);
-					print_token_list(token_list);	
+					//chakertni(&token_list);
+					//token_to_cmds(shell, token_list);
+					//run_cmds(shell);
+					//print_token_list(token_list);	
 				}
 			}
 		}
-		ft_clear_shell(&shell);
-		ft_token_list_clear(&token_list);
+		//ft_clear_shell(&shell);
+		//ft_token_list_clear(&token_list);
 		free(cmd_line);
 	}
+
+	t_env_elem *temp;
+
+	while (shell->envr)
+	{
+		temp = shell->envr;
+		shell->envr = shell->envr->next;
+		free(temp->key);
+		free(temp->value);
+		free(temp);
+	}
+	free(shell);
 	printf("exit\n");
+	system("leaks minishell");
 }
 
 

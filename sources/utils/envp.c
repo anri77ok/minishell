@@ -142,6 +142,8 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
 	new -> value = ft_strdup(value);
 	// printf("key=%s\n",new->key);
 	// printf("value=%s\n",new->value);
+	free(key);
+	free(value);
 	new -> next = NULL;
 	new->prev = NULL;
 	return (new);
