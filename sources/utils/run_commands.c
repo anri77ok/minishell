@@ -145,7 +145,7 @@ void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, i
 {
 	if (ft_strcmp(cmd->cmd_path, "env") == 0)
 		g_exit_status = print_env(pipex->envp, is_builtin);
-	else if (ft_strcmp(cmd->cmd_path, "pwd") == 0 && *is_builtin == 1)
+	else if (ft_strcmp(cmd->cmd_path, "pwd") == 0)
 		g_exit_status = pwd(STDOUT_FILENO, is_builtin);
 	else if (ft_strcmp(cmd->cmd_path, "cd") == 0)
 		g_exit_status = cd(pipex->cmds->cmd_args[1], pipex, is_builtin);
@@ -175,11 +175,11 @@ void	wait_processes(t_pipex *pipex)
 
 	i = 0;
 	//esi areci sksec sxal ashxtel shat baner//arden che)))))
-	// if (pipex->cmd_count == 1 && check_is_built_in(pipex->cmds) == 1)
-	// {
-	// 	printf("ha eli\n");
-	// 	return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
-	// }
+	if (pipex->cmd_count == 1 && check_is_built_in(pipex->cmds) == 1)
+	{
+		printf("ha eli\n");
+		return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
+	}
 	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
