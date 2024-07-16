@@ -59,6 +59,7 @@ void chakertni(t_token **tokens)
 					else
 						end = ft_strdup("");
 					free(current->value);
+<<<<<<< HEAD
 					final = join(begin, word, 0, 0);
 					current->value = join(final, end, 0, 0);
 					// printf("j--%d i--%d\n", j, i);
@@ -67,6 +68,10 @@ void chakertni(t_token **tokens)
 					// printf("word--%s--\n", word);
 					// printf("final--%s--\n", final);
 					// printf("--%s--\n", current->value);
+=======
+					final = join(begin, word);
+					current->value = join(final, end);
+>>>>>>> 0270ea7f29dbd0254d4c20130b8c66aabd1437b2
 					if (word != '\0')
 					{
 						if (begin == '\0')
@@ -78,7 +83,6 @@ void chakertni(t_token **tokens)
 						i = (my_strlen(begin));
 					else
 						i = 0;
-					// printf("i -- %d\n", i);
 					free(begin);
 					free(end);
 					free(final);
@@ -92,11 +96,5 @@ void chakertni(t_token **tokens)
 		}
 		current = current->next;
 	}
-	// current = *tokens;
-	// while (current)
-	// {
-	// 	printf("value=%s\n",current->value);
-	// 	current= current->next;
-	// }
 }
 

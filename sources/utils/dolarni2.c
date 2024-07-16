@@ -5,11 +5,17 @@ void kp(char *begin, char *word, char *end, t_token **current)
 {
 	char *final;
 
+<<<<<<< HEAD
 	final = join(begin, word, 0, 0);
 	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
 	free((*current)->value);
 	(*current)->value = join(final, end, 0, 0);
 	// printf("value -> %s\n", (*current)->value);
+=======
+	final = join(begin, word);
+	free((*current)->value);
+	(*current)->value = join(final, end);
+>>>>>>> 0270ea7f29dbd0254d4c20130b8c66aabd1437b2
 	free(final);
 	free(word);
 	if (begin != NULL)
@@ -44,7 +50,6 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 		if (ft_strcmp(dollar, envp) == 0)
 		{
 			word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-			//if (word !=)
 			*k += 0;
 			free(envp);
 			return (word);
@@ -54,76 +59,60 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 	}
 	return(word);
 }
+void veragrum(char **begin, char **word, char **end, char **dollar)
+{
+	*begin = NULL;
+	*word = NULL;
+	*end = NULL;
+	*dollar = NULL;
+}
 
-void dolarni2(t_token **token_list, char **env)
+void qt_check_for_dollar(bool *d_qt, bool *qt, char *value, int i)
+{
+	if (value[i] == 34 && *qt == false)
+		*d_qt = !*d_qt;
+	if (value[i] == 39 && *d_qt == false)
+		*qt = !*qt;
+}
+
+void dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 {
 	t_token *current;
 	int i;
 	int j;
-	char *dollar = NULL;
-	char *begin = NULL;
-	char *word = NULL;
-	char *end = NULL;
-	bool flag = false;
+	char *word;
+	char **parts;
 	bool qt = false;
 	bool double_qt = false;
+
 	current = *token_list;
 	while(current)
 	{
 		if ((current->type == WORD || (current->type >= 12 && current->type <= 16)) && current->type != LIMITER)
 		{
 			i = 0;
-			while(current->value && current->value[i])
+			while(current->value && current->value[i] && flag_a != true)
 			{
-				if (current->value[i] == 34 && qt == false)
-					double_qt = !double_qt;
-				if (current->value[i] == 39 && double_qt == false)
-					qt = !qt;
+				qt_check_for_dollar(&double_qt, &qt, current->value, i);
 				if (current->value[i] == '$' && qt == false)
 				{
-					if (current->value[i + 1] && current->value[i + 1] == '?')
-					{
-						free(current->value);
-						current->value = ft_itoa(g_exit_status);
-						break ;
-					}		
-					j = i;
-					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
-					current->value[j] != 34 && current->value[j] != 39))
-					{
-						j++;
-						if (current->value[j] == '$' || current->value[j] == '/' || current->value[j] == '=')
-							break ;
-					}
+					karch(current->value, &i, &j, &flag_a);
 					if (j == i + 1)
 						flag = true;
-					begin = ft_substr(current->value, 0, i, true);
-					dollar = ft_substr(current->value, i + 1, j, true);
-					end = ft_substr(current->value, j, ft_strlen(current->value) - j, false);
-					word = open_dollar(dollar, env, flag, &i);
-					kp(begin, word, end, &current);
-					free(dollar);
-					flag = false;
+					parts = karch2(current->value, i, j, strlen(current->value));
+					word = open_dollar(parts[1], env, flag, &i);
+					kp(parts[0], word, parts[2], &current);
+					karch3(parts[1], parts, &flag);
 				}
 				if (current->value[0] != '\0')
 					i++;
-				}
+			}
 		}
 		current = current->next;
 	}
-	i = 0;
-	while (env[i])
-	{
-		free(env[i]);
-		i++;
-	}
-	free(env);
+	free_env(env);
 }
 
-
-
-
-//itoa
 char	*foo(void)
 {
 	char	*ptr;
