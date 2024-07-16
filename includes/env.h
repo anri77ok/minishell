@@ -12,6 +12,9 @@
 t_env_elem  *init_env(t_env_elem *envr, char	**env);
 void	check_env(t_shell	*shell);
 void	token_to_cmds(t_shell *shell, t_token *tokens);
+void token_to_cmds_helper2(t_token	*temp2, t_token	**temp);
+void	token_to_cmds_helper1(int *len, t_token *t2, char **cm);
+// void	token_to_cmds_helper1(int *len, t_token *t2, char **cm, t_token **t);
 void	ft_lstadd_back(t_shell *shell, t_cmd *new);
 t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds);
 int	open_file(t_token *cmd, int type);

@@ -3,29 +3,19 @@
 #include "utils.h"
 #include "env.h"
 
-void	token_to_cmds_helper1(int *len, t_token *t2, char **cm, t_token **t)
+void	token_to_cmds_helper1(int *len, t_token *t2, char **cm)
 {
-	if (*len == -1)
+	*len = 0;
+	while (t2 != NULL && t2->type != S_PIPE)
 	{
-		if (t2 != NULL)
-			*t = t2->next;
-		else
-			*t = t2;
-	}
-	else
-	{
-		*len = 0;
-		while (t2 != NULL && t2->type != S_PIPE)
+		if (t2->type == WORD)
 		{
-			if (t2->type == WORD)
-			{
-				cm[*len] = t2->value;
-				(*len)++;
-			}
-			t2 = t2->next;
+			cm[*len] = t2->value;
+			(*len)++;
 		}
-		cm[*len] = NULL;
+		t2 = t2->next;
 	}
+	cm[*len] = NULL;
 }
 
 void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
@@ -80,8 +70,17 @@ void	token_to_cmds(t_shell *shell, t_token *token_list)
 		cmd_args = malloc(sizeof(char *) * (len + 1));
 		if (!cmd_args)
 			return ;
-		token_to_cmds_helper1(&len, temp, cmd_args, NULL);
+		token_to_cmds_helper1(&len, temp, cmd_args);
 		ft_lstadd_back(shell, ft_lstnew(cmd_args, &fds));
-		token_to_cmds_helper1(&fds.second_case, temp2, NULL, &temp);
+		token_to_cmds_helper2(temp2,&temp);
+		// token_to_cmds_helper1(&fds.second_case, temp2, NULL, &temp);
 	}
+}
+
+void token_to_cmds_helper2(t_token	*temp2, t_token	**temp)
+{
+	if (temp2 != NULL)
+			*temp = temp2->next;
+		else
+			*temp = temp2;
 }
