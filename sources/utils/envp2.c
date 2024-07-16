@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envp2.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:11:25 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:11:27 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -5,7 +17,7 @@
 
 int		ft_lstsize(t_env_elem *lst)
 {
-	int		count;
+	int			count;
 	t_env_elem	*temp;
 
 	count = 0;

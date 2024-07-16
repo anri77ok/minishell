@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envp.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:11:19 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:11:20 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -69,14 +81,14 @@ t_env_elem	*init_env(t_env_elem *envr, char	**env)
 		ft_lstadd_back_env(&envr, temp_env_elem);
 		i++;
 	}
-	 return (envr);
+	return (envr);
 }
 
 char	**env_list_to_array(t_env_elem *temp)
 {
-	char		**env;
-	int			len;
-	int			i;
+	char	**env;
+	int		len;
+	int		i;
 
 	len = ft_lstsize(temp);
 	env = malloc(sizeof(char *) * (len + 1));
@@ -95,7 +107,7 @@ char	**env_list_to_array(t_env_elem *temp)
 
 int	print_env(t_env_elem *env, int *is_builtin)
 {
-	t_env_elem *temp;
+	t_env_elem	*temp;
 
 	temp = env;
 	while (temp)

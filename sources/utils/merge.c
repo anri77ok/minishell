@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   merge.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:11:45 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:11:46 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -23,8 +35,7 @@ t_env_elem	*merge_sort(t_env_elem *begin_list, int (*cmp)())
 	return (ft_merge_sorted_list(left, right, cmp));
 }
 
-t_env_elem	*ft_merge_sorted_list(t_env_elem *left, t_env_elem *right,
-			int (*cmp)())
+t_env_elem	*ft_merge_sorted_list(t_env_elem *left, t_env_elem *right, int (*cmp)())
 {
 	t_env_elem	dummy;
 	t_env_elem	*sorted_list;

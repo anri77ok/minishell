@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dolar_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:12:11 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:12:13 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenization.h"
 #include "utils.h"
 
 extern int	g_exit_status;
 
-void karch(char *value, int *i, int *j, bool *flag_a)
+void	karch(char *value, int *i, int *j, bool *flag_a)
 {
 	if (value[*i + 1] && value[*i + 1] == '?')
 	{
@@ -21,9 +33,9 @@ void karch(char *value, int *i, int *j, bool *flag_a)
 	}
 }
 
-void free_env(char **env)
+void	free_env(char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (env[i])
@@ -34,11 +46,11 @@ void free_env(char **env)
 	free(env);
 }
 
-char **karch2(char *value, int start, int mid, int end)
+char	**karch2(char *value, int start, int mid, int end)
 {
-	char **arr;
-	arr = NULL;
+	char	**arr;
 
+	arr = NULL;
 	arr = malloc(sizeof(char *) * 4);
 	arr[0] = ft_substr(value, 0, start, true);
 	arr[1] = ft_substr(value, start + 1, mid, true);
@@ -47,7 +59,7 @@ char **karch2(char *value, int start, int mid, int end)
 	return (arr);
 }
 
-void karch3(char *p1, char **p, bool *flag)
+void	karch3(char *p1, char **p, bool *flag)
 {
 	free(p1);
 	free(p);

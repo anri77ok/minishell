@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:10:32 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:10:33 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -6,8 +18,8 @@
 
 int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
-	int i;
-	int error_exit;
+	int	i;
+	int	error_exit;
 
 	error_exit = 0;
 	i = 1;
@@ -27,7 +39,7 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 	return (error_exit);
 }
 
-int is_valid_identifer(char *cmd)
+int	is_valid_identifer(char *cmd)
 {
 	int	i;
 
@@ -43,7 +55,7 @@ int is_valid_identifer(char *cmd)
 	return (1);
 }
 
-int is_first_simbol_valid(char c)
+int	is_first_simbol_valid(char c)
 {
 	if (c == '_' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
 		return (1);
@@ -57,10 +69,10 @@ int	is_digit_or_letter_or__(char c)
 	return (-1);
 }
 
-void    delete_node_with_that_key(t_env_elem **env, char *key)
+void	delete_node_with_that_key(t_env_elem **env, char *key)
 {
-	int pos;
-	t_env_elem  *temp;
+	int			pos;
+	t_env_elem	*temp;
 	t_env_elem	*del_node;
 
 	temp = *env;
@@ -96,9 +108,6 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 			temp->next = NULL;
 		}
 	}
-
-
-
 }
 
 void	del_first_node(t_env_elem **env)
@@ -114,9 +123,9 @@ void	del_first_node(t_env_elem **env)
 	del_node = NULL;
 }
 
-void     delete_middle_node(t_env_elem **env, int pos)
+void	delete_middle_node(t_env_elem **env, int pos)
 {
-    t_env_elem	*temp;
+	t_env_elem	*temp;
 	t_env_elem	*del_node;
 
 	temp = *env;
@@ -135,25 +144,25 @@ void     delete_middle_node(t_env_elem **env, int pos)
 
 int check_this_key_in_env_list_unset(t_env_elem *env, char *key, int *pos)
 {
-    while (env)
-    {
-        if (ft_strcmp(env->key, key) == 0)
-            return (1);
-        (*pos)++;
-        env = env->next;
-    }
-    return (-1);
+	while (env)
+	{
+		if (ft_strcmp(env->key, key) == 0)
+			return (1);
+		(*pos)++;
+		env = env->next;
+	}
+	return (-1);
 }
 
 int count_env_nodes_(t_env_elem *env)
 {
-    int count;
+	int	count;
 
-    count = 0;
-    while (env)
-    {
-        count++;
-        env = env->next;
-    }
-    return (count);
+	count = 0;
+	while (env)
+	{
+		count++;
+		env = env->next;
+	}
+	return (count);
 }

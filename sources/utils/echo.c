@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:09:53 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:09:54 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
 #include "env.h"
 #include "pipex.h"
 
-int    echo(char **cmd_args, int fd, int *is_builtin)
+int	echo(char **cmd_args, int fd, int *is_builtin)
 {
-    int i;
+	int	i;
 	int	ind;
 
-    i = 1;
+	i = 1;
 	ind = 1;
 	*is_builtin = 1;
 	echo_run_helper(cmd_args, i, fd, ind);
@@ -18,7 +30,7 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
 
 void	echo_run_helper(char **cmd_args, int i, int fd, int ind)
 {
-	int flag;
+	int	flag;
 	int	j;
 
 	flag = 1;
@@ -48,22 +60,22 @@ void	echo_run_helper(char **cmd_args, int i, int fd, int ind)
 void	write_helper(char **cmd_args, int ind, int fd, int flag)
 {
 	while (cmd_args[ind])
-    {
-        fd_put_string(cmd_args[ind++], fd);
+	{
+		fd_put_string(cmd_args[ind++], fd);
 		if (cmd_args[ind])
 			write (fd, " ", 1);
-    }
+	}
 	if (flag == 1)
 		write (fd, "\n", 1);
 }
 
-void    fd_put_string(char *str, int fd)
+void	fd_put_string(char *str, int fd)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-        write(fd, &str[i++], 1);
+	i = 0;
+	while (str[i])
+		write(fd, &str[i++], 1);
 }
 
 

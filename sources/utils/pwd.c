@@ -4,12 +4,12 @@
 #include "env.h"
 #include "pipex.h"
 
-int    pwd(int fd, int *is_builtin)
+int	pwd(int fd, int *is_builtin)
 {
-    char current_directory[PATH_MAX];
+	char current_directory[PATH_MAX];
 
 	*is_builtin = 1;
-    if (getcwd(current_directory, PATH_MAX) == NULL)
+	if (getcwd(current_directory, PATH_MAX) == NULL)
 	{
 		fd_put_string("minishell: can't read getcwd\n", fd);
 		return (1);//esi mer komica arvac bashi vaxt exit error-@ 1 chi//by Narek

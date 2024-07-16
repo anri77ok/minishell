@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:09:59 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:12:40 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -59,7 +71,7 @@ void	in_this_condition(t_cmd *cmd)
 	exit(g_exit_status);
 }
 
-int is_only_digits_and_plus_minus(char *str)
+int	is_only_digits_and_plus_minus(char *str)
 {
 	int	i;
 

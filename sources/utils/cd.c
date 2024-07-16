@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:11:58 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:11:59 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -22,7 +34,7 @@ int	cd(char *path, t_pipex *pipex, int *is_builtin)
 	return (0);
 }
 
-int cd_helper_1(char *path, t_pipex *pipex, char **modified_cmd)
+int	cd_helper_1(char *path, t_pipex *pipex, char **modified_cmd)
 {
 	if (!path)
 	{

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd2.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:12:02 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:12:03 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -33,24 +45,24 @@ int	cd_helper_2(char *modified_cmd)
 int	can_access(char *modfied_cmd)
 {
 	if (access(modfied_cmd, R_OK | X_OK) != 0)
-        return (0);
+		return (0);
 	return (1);
 }
 
 int	is_directory(char *modfied_cmd)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
 	if (stat(modfied_cmd, &path_stat) != 0)
 		return (false);
 	return (S_ISDIR(path_stat.st_mode));
 }
 
-int is_file_or_directory(char *modified_cmd)
+int	is_file_or_directory(char *modified_cmd)
 {
-	struct stat path_stat;
+	struct stat	path_stat;
 
-    if (stat(modified_cmd, &path_stat) != 0)
-        return (0);
+	if (stat(modified_cmd, &path_stat) != 0)
+		return (0);
 	return (1);
 }

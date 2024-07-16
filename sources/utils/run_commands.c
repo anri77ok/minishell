@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_commands.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:13:42 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:13:44 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -22,7 +34,7 @@ void	close_pipes(t_pipex *pipex)
 	}
 }
 
-void dupeing(t_pipex *pipex, t_cmd *cmd)
+void	dupeing(t_pipex *pipex, t_cmd *cmd)
 {
 	if (cmd->input != 0)
 	{
@@ -39,7 +51,7 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 	close_pipes(pipex);
 }
 
-void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
+void	run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 {
 	pid_t	pid;
 	// char	*arr;
@@ -92,7 +104,7 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 		p_error(pipex, EXECVE_ERR, NULL, 1);
 }
 
-int find_pathi_line(char **env, int i)
+int	find_pathi_line(char **env, int i)
 {
 	while (env[i])
 	{
@@ -103,11 +115,11 @@ int find_pathi_line(char **env, int i)
 	return (i);
 }
 
-void create_proceces(t_pipex *pipex)
+void	create_proceces(t_pipex *pipex)
 {
-	t_cmd *cmd;
-	int i;
-	int	is_builtin;
+	t_cmd	*cmd;
+	int		i;
+	int		is_builtin;
 
 	i = 0;
 	cmd = pipex->cmds;
@@ -131,7 +143,9 @@ void create_proceces(t_pipex *pipex)
 
 int	check_is_built_in(t_cmd *cmd)
 {
-		if (ft_strcmp(cmd->cmd_path, "env") == 0 || ft_strcmp(cmd->cmd_path, "pwd") == 0 || ft_strcmp(cmd->cmd_path, "echo") == 0 || ft_strcmp(cmd->cmd_path, "export") == 0 || ft_strcmp(cmd->cmd_path, "unset") == 0 || ft_strcmp(cmd->cmd_path, "exit") == 0)
+		if (ft_strcmp(cmd->cmd_path, "env") == 0 || ft_strcmp(cmd->cmd_path, "pwd") == 0
+			|| ft_strcmp(cmd->cmd_path, "echo") == 0 || ft_strcmp(cmd->cmd_path, "export") == 0
+			|| ft_strcmp(cmd->cmd_path, "unset") == 0 || ft_strcmp(cmd->cmd_path, "exit") == 0)
 			return (1);
 		return (-1);
 }
@@ -188,7 +202,6 @@ void	run_cmds(t_shell *shell)
 	t_pipex	pipex;
 
 	pipex_init(&pipex, shell);
-	
 	if (pipex.cmd_count > 1)
 		init_pipes(&pipex);
 	create_proceces(&pipex);

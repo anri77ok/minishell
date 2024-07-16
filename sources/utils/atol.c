@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   atol.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:09:39 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:09:40 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -6,9 +18,9 @@
 
 long	ft_atoll(const char *nptr)
 {
-	int			i;
+	int		i;
 	long	result;
-	int			poc;
+	int		poc;
 
 	poc = 1;
 	i = 0;

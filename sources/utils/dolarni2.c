@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dolarni2.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:12:32 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenization.h"
 #include "utils.h"
 
-void kp(char *begin, char *word, char *end, t_token **current)
+void	kp(char *begin, char *word, char *end, t_token **current)
 {
-	char *final;
+	char	*final;
 
 	final = join(begin, word, 0, 0);
 	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
@@ -24,12 +36,12 @@ void kp(char *begin, char *word, char *end, t_token **current)
 	}
 }
 
-char *open_dollar(char *dollar, char **env, bool flag, int *k)
+char	*open_dollar(char *dollar, char **env, bool flag, int *k)
 {
-	char *word;
-	char *envp;
-	int i;
-	int j;
+	char	*word;
+	char	*envp;
+	int		i;
+	int		j;
 
 	word = NULL;
 	i = 0;
@@ -54,7 +66,7 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 	return(word);
 }
 
-void veragrum(char **begin, char **word, char **end, char **dollar)
+void	veragrum(char **begin, char **word, char **end, char **dollar)
 {
 	*begin = NULL;
 	*word = NULL;
@@ -62,7 +74,7 @@ void veragrum(char **begin, char **word, char **end, char **dollar)
 	*dollar = NULL;
 }
 
-void qt_check_for_dollar(bool *d_qt, bool *qt, char *value, int i)
+void	qt_check_for_dollar(bool *d_qt, bool *qt, char *value, int i)
 {
 	if (value[i] == 34 && *qt == false)
 		*d_qt = !*d_qt;
@@ -70,16 +82,18 @@ void qt_check_for_dollar(bool *d_qt, bool *qt, char *value, int i)
 		*qt = !*qt;
 }
 
-void dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
+void	dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 {
-	t_token *current;
-	int i;
-	int j;
-	char *word;
-	char **parts;
-	bool qt = false;
-	bool double_qt = false;
+	t_token	*current;
+	int		i;
+	int		j;
+	char	*word;
+	char	**parts;
+	bool	qt;
+	bool	double_qt;
 
+	qt = false;
+	double_qt = false;
 	current = *token_list;
 	while(current)
 	{

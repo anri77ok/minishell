@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chakertni.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:09:46 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:09:49 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenization.h"
 #include "utils.h"
 
@@ -13,7 +25,7 @@ int	my_strlen(const char *s)
 	return (len);
 }
 
-int get_quote(char *str, int i, char c)
+int	get_quote(char *str, int i, char c)
 {
 	while (str[i])
 	{
@@ -24,15 +36,15 @@ int get_quote(char *str, int i, char c)
 	return (-1);
 }
 
-void chakertni(t_token **tokens)
+void	chakertni(t_token **tokens)
 {
-	t_token *current;
-	char *begin;
-	char *end;
-	char *word;
-	char *final;
-	int i;
-	int j;
+	t_token	*current;
+	char	*begin;
+	char	*end;
+	char	*word;
+	char	*final;
+	int		i;
+	int		j;
 
 	current = *tokens;
 	while (current)

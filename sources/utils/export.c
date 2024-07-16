@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:12:46 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:12:49 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -6,7 +18,7 @@
 
 int	export(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
-	int error_exit;
+	int	error_exit;
 
 	error_exit = 0;
 	if (cmd)
@@ -27,9 +39,9 @@ int	export(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 {
 	t_env_elem	*new_node;
-	int		i;
-	char	*key;
-	char	*value;
+	int			i;
+	char		*key;
+	char		*value;
 
 	i = 1;
 	while (cmd->cmd_args[i])
@@ -45,7 +57,6 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		key = get_word_before_equal(cmd->cmd_args[i]);
 		if (is_valid_identifer(key) == -1)
 		{
-			//
 			error_helper1("minishell: export: `", key, "': not a valid identifier\n", 1);
 			free(key);
 			*error_exit = 1;
@@ -133,7 +144,7 @@ char	*get_word_after_equal(char	*value)
 
 char	*get_word_before_equal(char	*key)
 {
-	int	i;
+	int		i;
 	char	*res;
 
 	i = 0;
@@ -166,7 +177,7 @@ void	print_export(t_pipex *pipex)
 		while (temp)
 		{
 			if (temp->value == NULL)
-			  	printf("declare -x %s\n", temp->key);
+				printf("declare -x %s\n", temp->key);
 			else if (temp->value != NULL && temp->value[0] == '\0')
 				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
 			else if (temp->value[0])
@@ -197,8 +208,7 @@ t_env_elem	*get_copy_env(t_env_elem *env)
 
 void	free_list(t_env_elem *temp)
 {
-	t_env_elem *del;
-
+	t_env_elem	*del;
 
 	while (temp)
 	{
