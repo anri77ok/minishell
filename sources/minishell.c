@@ -144,27 +144,27 @@ int	main(int argc, char **argv, char **env)
 					chakertni(&token_list);
 					token_to_cmds(shell, token_list);
 					run_cmds(shell);
-					//print_token_list(token_list);	
+					print_token_list(token_list);	
 				}
 			}
 		}
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 
-	t_env_elem *temp;
+	// t_env_elem *temp;
 
-	while (shell->envr)
-	{
-		temp = shell->envr;
-		shell->envr = shell->envr->next;
-		free(temp->key);
-		free(temp->value);
-		free(temp);
-	}
-	free(shell);
+	// while (shell->envr)
+	// {
+	// 	temp = shell->envr;
+	// 	shell->envr = shell->envr->next;
+	// 	free(temp->key);
+	// 	free(temp->value);
+	// 	free(temp);
+	// }
+	// free(shell);
 	printf("exit\n");
 	system("leaks minishell");
 }

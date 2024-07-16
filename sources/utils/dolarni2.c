@@ -10,9 +10,6 @@ void kp(char *begin, char *word, char *end, t_token **current)
 	free((*current)->value);
 	(*current)->value = join(final, end, 0, 0);
 	// printf("value -> %s\n", (*current)->value);
-	final = join(begin, word, 0, 0);
-	free((*current)->value);
-	(*current)->value = join(final, end, 0, 0);
 	free(final);
 	free(word);
 	if (begin != NULL)
@@ -56,6 +53,7 @@ char *open_dollar(char *dollar, char **env, bool flag, int *k)
 	}
 	return(word);
 }
+
 void veragrum(char **begin, char **word, char **end, char **dollar)
 {
 	*begin = NULL;
@@ -88,12 +86,25 @@ void dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 		if ((current->type == WORD || (current->type >= 12 && current->type <= 16)) && current->type != LIMITER)
 		{
 			i = 0;
-			while(current->value && current->value[i] && flag_a != true)
+			while(current->value && current->value[i])
 			{
 				qt_check_for_dollar(&double_qt, &qt, current->value, i);
 				if (current->value[i] == '$' && qt == false)
 				{
-					karch(current->value, &i, &j, &flag_a);
+					if (current->value[i + 1] && current->value[i + 1] == '?')
+					{
+						free(current->value);
+						current->value = ft_itoa(g_exit_status);
+						break ;
+					}		
+					j = i;
+					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
+					current->value[j] != 34 && current->value[j] != 39))
+					{
+						j = j + 1;
+						if (current->value[j] == '$' || current->value[j] == '/' || current->value[j] == '=')
+							break ;
+					}
 					if (j == i + 1)
 						flag = true;
 					parts = karch2(current->value, i, j, strlen(current->value));
@@ -106,6 +117,7 @@ void dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 			}
 		}
 		current = current->next;
+		flag_a = false;
 	}
 	free_env(env);
 }

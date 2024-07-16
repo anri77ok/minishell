@@ -23,6 +23,7 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free)
 {
 	t_env_elem	*new;
 
+	(void)will_free;
 	new = malloc(sizeof(t_env_elem));
 	if (!new)
 		return (NULL);
@@ -32,6 +33,8 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free)
 	{
 		free(key);
 		free(value);
+		key = NULL;
+		value = NULL;
 	}
 	new -> next = NULL;
 	new->prev = NULL;

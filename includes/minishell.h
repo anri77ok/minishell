@@ -56,4 +56,5 @@ void	disable_echoctl(void);
 
 int	error_helper1(char *s1, char *s2, char *s3, int exit_status);
 
+
 #endif

@@ -69,15 +69,19 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 	{
 		if (pos == 0)
 		{
-			printf("sax esem\n");
 			// del_first_node(env);
-			del_node = *env;
-			free(del_node->key);
-			free(del_node->value);
-			*env = (*env)->next;
-			(*env)->prev = NULL;
-			free(del_node);
-			del_node = NULL;
+			// del_node = *env;
+			// if (del_node->key != NULL)
+			// {
+			// 	free(del_node->key);
+			// 	free(del_node->value);
+			// 	del_node->key = NULL;
+			// 	del_node->value = NULL;
+			// }
+			//env = (*env)->next;
+			//(*env)->prev = NULL;
+			//free(del_node);
+			//del_node = NULL;
 		}
 		else if (pos > 0 && pos < count_env_nodes_(*env) - 1)
 			delete_middle_node(env, pos);
@@ -92,6 +96,8 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 			temp->next = NULL;
 		}
 	}
+
+
 
 }
 

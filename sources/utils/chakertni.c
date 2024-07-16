@@ -61,14 +61,6 @@ void chakertni(t_token **tokens)
 					free(current->value);
 					final = join(begin, word, 0, 0);
 					current->value = join(final, end, 0, 0);
-					// printf("j--%d i--%d\n", j, i);
-					// printf("begin--%s--\n", begin);
-					// printf("end--%s--\n", end);
-					// printf("word--%s--\n", word);
-					// printf("final--%s--\n", final);
-					// printf("--%s--\n", current->value);
-					final = join(begin, word, 0, 0);
-					current->value = join(final, end, 0, 0);
 					if (word != '\0')
 					{
 						if (begin == '\0')
