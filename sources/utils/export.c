@@ -34,6 +34,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 	i = 1;
 	while (cmd->cmd_args[i])
 	{
+		key = NULL;
 		if (cmd->cmd_args && cmd->cmd_args[i] && cmd->cmd_args[i][0] == '=')
 		{
 			error_helper1("minishell: export: `", cmd->cmd_args[i], "': not a valid identifier\n", 1);
@@ -45,6 +46,8 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		if (is_valid_identifer(key) == -1)
 		{
 			//
+			error_helper1("minishell: export: `", key, "': not a valid identifier\n", 1);
+			free(key);
 			*error_exit = 1;
 			i++;
 			continue ;
@@ -71,28 +74,32 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 		if (ft_strcmp(env_list->key, key) == 0)
 		{
 			if (value == NULL)
+			{
+				free(value);
+				free(key);
 				return (-1);//esi arel enq vor export c  export c(erku hat node chsarqi nuyn c key-ov)
+			}
 			if(env_list->value == NULL && (value[0] == '\0' || value[0]))
 			{
-				//free(env_list->value);
 				env_list->value = ft_strdup(value);
-				//free(value);
+				free(value);
+				free(key);
 				return (-1);
 			}//ete unenq export f heto anum enq export f= kam export f=aa popoxutyuny lini
 			if (env_list->value && (value[0] == '\0' || value[0]))
 			{
-				//free(env_list->value);
+				free(env_list->value);
 				env_list->value = ft_strdup(value);
-				//free(value);
+				free(value);
+				free(key);
 				return (-1);
 			}//ete lini export a=d heto export a=xx kam export export a=  poxi et node-i key-i value-n
 
 		}
 		env_list = env_list->next;
 	}
-	// if (value)
-	//  	free(value);
-	// free(key);//es frinery seg en talmmmmmmmm
+	// if (key)
+	// 	free(key);//es frinery seg en talmmmmmmmm
 	return (1);
 }
 
@@ -140,15 +147,20 @@ char	*get_word_before_equal(char	*key)
 	return (res);
 }
 
+void	ft_sort(t_env_elem **copy, int (*cmp)())
+{
+	*copy = merge_sort(*copy, cmp);
+}
+
 void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
-	t_env_elem	*temp2;
 	t_env_elem	*copy;
 
+	copy = pipex->envp;
 	copy = get_copy_env(pipex->envp);
-	temp = merge_sort(copy, ft_strcmp);
-	temp2 = temp;
+	ft_sort(&copy, ft_strcmp);
+	temp = copy;
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
 		while (temp)
@@ -163,9 +175,6 @@ void	print_export(t_pipex *pipex)
 		}
 	}
 	free_list(copy);
-	//free_list(temp2);
-	//copy = NULL;
-	//temp2 = NULL;
 }
 
 t_env_elem	*get_copy_env(t_env_elem *env)

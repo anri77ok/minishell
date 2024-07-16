@@ -55,7 +55,7 @@ void	in_this_condition(t_cmd *cmd)
 {
 	printf("exit\n");
 	g_exit_status = 255;
-	error_helper1("minishell: exit: ", cmd->cmd_args[1], ": numeric argument required\n", 2);
+	error_helper1("minishell: exit: ", cmd->cmd_args[1], ": numeric argument required\n", g_exit_status);
 	exit(g_exit_status);
 }
 
