@@ -99,13 +99,13 @@ void	check_env(t_shell	*shell)
 		temp = temp->next;
 	}
 	// temp = NULL;
-	temp = malloc(sizeof(t_env_elem));
-	if (!temp)
-		return ;
-	temp->key = "PATH";
-	temp->value = "";
-	temp->next = shell->envr;
-	shell->envr = temp;
+	// temp = malloc(sizeof(t_env_elem));
+	// if (!temp)
+	// 	return ;
+	// temp->key = "PATH";
+	// temp->value = "";
+	// temp->next = shell->envr;
+	// shell->envr = temp;
 }
 
 char	**env_list_to_array(t_env_elem *temp)

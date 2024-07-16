@@ -70,7 +70,8 @@ void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 						break ;
 					i++;
 				}
-				
+				if (!env[i])
+					p_error(pipex, PATH_CHKA, cmd->cmd_path, 127);
 				arr = cmd->cmd_args[0];
 				matrix = ft_split(env[i] + 5, ':');
 				cmd->cmd_path = arr;

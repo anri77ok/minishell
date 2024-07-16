@@ -22,7 +22,7 @@ int	cd(char *path, t_pipex *pipex, int *is_builtin)
 			return (1);
 		}
 	}
-	else if (path && path[0] == '-' && ft_strlen(path))
+	else if (path && path[0] == '-' && ft_strlen(path) == 1)
 	{
 		modified_cmd = get_cmd_in_env(pipex->envp, "OLDPWD");
 		{
@@ -61,10 +61,14 @@ void	update_env(t_env_elem *env, char *old_path, char *new_path)
 	{
 		if (ft_strcmp(temp->key, "OLDPWD") == 0)
 		{
+			free(temp->value);
 			temp->value = ft_strdup(old_path);
 		}
 		if (ft_strcmp(temp->key, "PWD") == 0)
+		{
+			free(temp->value);
 			temp->value = ft_strdup(new_path);
+		}
 		temp = temp->next;
 	}
 }

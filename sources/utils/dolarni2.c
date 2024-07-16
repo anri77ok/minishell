@@ -92,7 +92,7 @@ void dolarni2(t_token **token_list, char **env)
 					current->value[j] != 34 && current->value[j] != 39))
 					{
 						j++;
-						if (current->value[j] == '$')
+						if (current->value[j] == '$' || current->value[j] == '/' || current->value[j] == '=')
 							break ;
 					}
 					if (j == i + 1)

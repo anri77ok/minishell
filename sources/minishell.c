@@ -85,7 +85,11 @@ void p_error(t_pipex *pipex, int error_code, char *message, int status)
 		exit(error_helper1("minishell: ", message, ": command not found\n", status));
 	else if (error_code == EXECVE_ERR)
 		perror("execve failed");
+	else if (error_code == PATH_CHKA)
+		exit(error_helper1("minishell: ", message, ": No such file or directory\n", status));
 }
+
+
 
 void ft_clear_shell(t_shell **shell)
 {
@@ -120,7 +124,7 @@ int	main(int argc, char **argv, char **env)
 	shell = malloc(sizeof(t_shell));
 	shell->envr = init_env(shell->envr, env);
 	shell->cmds = NULL;
-	check_env(shell);
+	// check_env(shell);
 	cmd_line = "";
 	while (cmd_line)
 	{

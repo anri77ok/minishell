@@ -21,7 +21,7 @@
 # define DUP_ERR 8
 # define CMD_NOT_FOUND 9
 # define EXECVE_ERR 10
-
+# define PATH_CHKA 771
 #define	 STDIN_FILENO	0
 #define	STDOUT_FILENO	1
 #define	STDERR_FILENO	2

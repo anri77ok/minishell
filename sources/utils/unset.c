@@ -15,6 +15,7 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 	{
 		if (is_valid_identifer(cmd->cmd_args[i]) == -1)
 		{
+			error_helper1("minishell: ", cmd->cmd_args[i], ": not a valid identifier\n", 1);
 			error_exit = 1;
 			i++;
 			continue ;
@@ -75,6 +76,8 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 		if (pos == 0)
 		{
 			del_node = *env;
+			free(del_node->key);
+			free(del_node->value);
 			*env = (*env)->next;
 			(*env)->prev = NULL;
 			free(del_node);
@@ -89,6 +92,8 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 			while (temp->next->next)
 				temp = temp->next;
 			del_node = temp->next;
+			free(del_node->key);
+			free(del_node->value);
 			free(del_node);
 			temp->next = NULL;
 		}
@@ -108,6 +113,8 @@ void     delete_middle_node(t_env_elem **env, int pos)
 		pos--;
 	}
 	del_node = temp;
+	free(del_node->key);
+	free(del_node->value);
 	temp->prev->next = temp->next;
 	temp->next->prev = temp->prev;
 	free(del_node);
