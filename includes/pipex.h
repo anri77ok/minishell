@@ -74,17 +74,21 @@ int	is_digit_or_letter_or__(char c);
 //cd 
 int	cd(char *path, t_pipex *pipex, int *is_builtin);
 void	update_env(t_env_elem *env, char *old_path, char *new_path);
-int	cd_helper_1(char *modified_cmd);
+int	cd_helper_2(char *modified_cmd);
 int	can_access(char *modfied_cmd);
 int	is_directory(char *modfied_cmd);
 int is_file_or_directory(char *modified_cmd);
 char	*home_kpcnel_pathin(t_env_elem *env, char *path);
 char	*get_cmd_in_env(t_env_elem *env, char *pntrvox);
+int cd_helper_1(char *path, t_pipex *pipex, char **modified_cmd);
 
 //exit
 void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork);
 long	ft_atoll(const char *nptr);
 int is_only_digits_and_plus_minus(char *str);
+void	just_exit_bez_argumentov(int is_in_fork);
+void	check_exit_num_plus_or_minus(long long exit_num);
+void	in_this_condition(t_cmd *cmd);
 
 
 //errorneri hamar

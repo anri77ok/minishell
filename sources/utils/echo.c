@@ -7,14 +7,21 @@
 int    echo(char **cmd_args, int fd, int *is_builtin)
 {
     int i;
-	int	flag;
 	int	ind;
-	int	j;
 
-	flag = 1;
     i = 1;
 	ind = 1;
 	*is_builtin = 1;
+	echo_run_helper(cmd_args, i, fd, ind);
+	return (0);
+}
+
+void	echo_run_helper(char **cmd_args, int i, int fd, int ind)
+{
+	int flag;
+	int	j;
+
+	flag = 1;
 	while (cmd_args[i])
 	{
 		if (cmd_args[i][0] == '-' && cmd_args[i][1] == 'n')
@@ -31,12 +38,16 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
 				break ;
 		}
 		else
-		{
 			break ;
-		}
 		i++;
 	}
-    while (cmd_args[ind])
+	write_helper(cmd_args, ind, fd, flag);
+}
+
+
+void	write_helper(char **cmd_args, int ind, int fd, int flag)
+{
+	while (cmd_args[ind])
     {
         fd_put_string(cmd_args[ind++], fd);
 		if (cmd_args[ind])
@@ -44,7 +55,6 @@ int    echo(char **cmd_args, int fd, int *is_builtin)
     }
 	if (flag == 1)
 		write (fd, "\n", 1);
-	return (0);
 }
 
 void    fd_put_string(char *str, int fd)

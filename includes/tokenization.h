@@ -90,6 +90,8 @@ int	check_value_is_empty(char	*value);
 // void    echo(char **cmd_args, int fd);
 int    echo(char **cmd_args, int fd, int *is_builtin);
 void    fd_put_string(char *str, int fd);
+void	echo_run_helper(char **cmd_args, int i, int fd, int ind);
+void	write_helper(char **cmd_args, int ind, int fd, int flag);
 
 //pwd
 int    pwd(int fd, int *is_builtin);

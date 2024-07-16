@@ -28,7 +28,7 @@ char	**ft_split(char const *s, char c);
 t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free);
 t_env_elem	*ft_lstlast(t_env_elem *lst);
 void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new);
-
+int		ft_lstsize(t_env_elem *lst);
 int print_env(t_env_elem *env, int *is_builtin);
 
 

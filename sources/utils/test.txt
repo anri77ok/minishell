@@ -58,23 +58,23 @@ echo ''''''''''$USER''''''''''
 echo """"""""$USER""""""""
 echo $USER'$USER'text oui oui     oui  oui $USER oui      $USER ''
 echo $USER '' $USER $USER '' $USER '' $USER -n $USER
-echo ' \' ' \'
+m
 echo "$USER""$USER""$USER"
 echo nenie"$USER"iri
 echo '$USER' "$USER" "nenie \' iri"
 echo $USER " "
-echo "$USER""Users/$USER/file""'$USER'"'$USER'      esi sxala
+echo "$USER""Users/$USER/file""'$USER'"'$USER'     
 echo "$USER$USER$USER"
 echo '$USER'"$USER"'$USER'
 echo '"$USER"''$USER'"""$USER"
 echo " $USER  "'$PWD'
-echo $USER=4                                      esi sxala
+echo $USER=4                                     
 echo $?
 echo $USER213
-echo "$USER=12$USER"                              nuyn verevini pahova
+echo "$USER=12$USER"                             
 echo $PWD
-echo $PWD/file                      nuyn verevini pahova
-echo "$PWD/file"                        sxala
+echo $PWD/file                     
+echo "$PWD/file"                     
 echo "nenie_iri" "nenie_iri$USER" ... "$USER"
 echo test      tout
 
@@ -122,8 +122,8 @@ exit echo
 exit cd ..
 exit nenie iri
 exit 42 42 42 42 42
-exit echo nenie_iri
-exit exit
+
+exit exit                    sxala 
 
 
 --------------- export ---------------
