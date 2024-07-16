@@ -39,6 +39,7 @@ void	run_cmds(t_shell *shell);
 int	count_shell_cmds(t_cmd *shell_cmds);
 void	pipex_init(t_pipex *pipex, t_shell *shell);
 void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin);
+void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env);
 void dupeing(t_pipex *pipex, t_cmd *cmd);
 void	close_pipes(t_pipex *pipex);
 void    init_pipes(t_pipex *pipex);
@@ -71,6 +72,8 @@ int count_env_nodes_(t_env_elem *env);
 int is_valid_identifer(char *cmd);
 int is_first_simbol_valid(char c);
 int	is_digit_or_letter_or__(char c);
+void	del_first_node(t_env_elem **env);
+
 //cd 
 int	cd(char *path, t_pipex *pipex, int *is_builtin);
 void	update_env(t_env_elem *env, char *old_path, char *new_path);

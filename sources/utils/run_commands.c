@@ -42,68 +42,69 @@ void dupeing(t_pipex *pipex, t_cmd *cmd)
 void   run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 {
 	pid_t	pid;
-	char	*arr;
-	char	**matrix;
+	// char	*arr;
+	// char	**matrix;
 	char	**env;
 
-	// (void)cmd;
 	env = NULL;
-	//printf("%d\n", *is_builtin);
-		// printf("path -- %s\n", cmd->cmd_path);
-		pid = fork();
-		if (pid == -1)
-			p_error(pipex, FORK_ERR, NULL, 1);
-		if (pid == 0)
-		{
-			 
-			// *is_builtin = 0;
-			dupeing(pipex, cmd);
-			which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
-			
-			if (*is_builtin == 0)
-			{
-				
-				env = env_list_to_array(pipex->envp);
-				while (env[i])
-				{
-					if (ft_strstr(env[i], "PATH="))
-						break ;
-					i++;
-				}
-				if (!env[i])
-					p_error(pipex, PATH_CHKA, cmd->cmd_path, 127);
-				arr = cmd->cmd_args[0];
-				matrix = ft_split(env[i] + 5, ':');
-				cmd->cmd_path = arr;
-				if (access(cmd->cmd_path, X_OK) != -1)
-					if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
-					{
-						p_error(pipex, CMD_NOT_FOUND, NULL, 1);
-					}
-				i = 0;
-				while (matrix[i])
-				{
-					// free(pipex->cmds->cmd_path);
-					cmd->cmd_path = ft_strjoin(matrix[i++], arr, '/');
-					// printf(":%s\n",cmd->cmd_path);
-					if (access(cmd->cmd_path, X_OK) != -1)
-						break ;
-				}
-				//printf(":%d\n",I);
-				if (access(cmd->cmd_path, X_OK) != 0)//kam !matrix[i - 1]
-					p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
-				if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
-				{
-					p_error(pipex, EXECVE_ERR, NULL, 1);
-				}
-			}
-		}
-		else
-			pipex->pids[i] = pid;
-		if (env != NULL)
-			free(env);
-		
+	pid = fork();
+	if (pid == -1)
+		p_error(pipex, FORK_ERR, NULL, 1);
+	if (pid == 0)
+	{
+		dupeing(pipex, cmd);
+		which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
+		if (*is_builtin == 0)
+			run_cmd_with_execve(pipex, cmd, i ,env);
+	}
+	else
+		pipex->pids[i] = pid;
+	if (env != NULL)
+		free(env);
 }
+
+
+void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
+{
+	char	*arr;
+	char	**matrix;
+
+	env = env_list_to_array(pipex->envp);
+	
+	while (env[i])
+	{
+		if (ft_strstr(env[i], "PATH="))
+			break ;
+		i++;
+	}
+	if (!env[i])
+		p_error(pipex, PATH_CHKA, cmd->cmd_path, 127);
+	arr = cmd->cmd_args[0];
+	matrix = ft_split(env[i] + 5, ':');
+	cmd->cmd_path = arr;
+	if (access(cmd->cmd_path, X_OK) != -1)
+		if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
+			p_error(pipex, CMD_NOT_FOUND, NULL, 1);
+	i = 0;
+	while (matrix[i])
+	{
+		cmd->cmd_path = ft_strjoin(matrix[i++], arr, '/');
+		if (access(cmd->cmd_path, X_OK) != -1)
+			break ;
+	}
+	if (access(cmd->cmd_path, X_OK) != 0)
+		p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
+	if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
+		p_error(pipex, EXECVE_ERR, NULL, 1);
+}
+
+
+
+
+
+
+
+
 
 void create_proceces(t_pipex *pipex)
 {
@@ -172,15 +173,11 @@ void	wait_processes(t_pipex *pipex)
 	pid_t	pid;
 
 	i = 0;
-	//esi areci sksec sxal ashxtel shat baner//arden che)))))
 	if (pipex->cmd_count == 1 && check_is_built_in(pipex->cmds) == 1)
-	{
 		return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
-	}
 	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
-		// printf("%d\n", pid);
 		if (WIFEXITED(exit_status))
 			g_exit_status = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
@@ -195,12 +192,8 @@ void	run_cmds(t_shell *shell)
 
 	pipex_init(&pipex, shell);
 	
-	// printf("tiv ---- %d\n", pipex.cmd_count);
 	if (pipex.cmd_count > 1)
-	{
 		init_pipes(&pipex);
-	}
-	// printf("heysav\n");
 	create_proceces(&pipex);
 	close_pipes(&pipex);
 	wait_processes(&pipex);
@@ -209,15 +202,6 @@ void	run_cmds(t_shell *shell)
 	pipex.pipes = NULL;
 	free(pipex.pids);
 	//return (EXIT_SUCCESS);
-	// export(&pipex, shell->cmds);
-	// unset(&pipex, shell->cmds);
-	// cd(pipex.cmds->cmd_args[1], &pipex);
-	// print_env(shell->envr);
-	// create_proceces(&pipex);
-
-	//printf("cmds count ----> %d\n", pipex.cmd_count);
-	// export(&pipex, shell->cmds, int *is_builtin);
-	// print_env(shell->envr, int *is_builtin);
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)

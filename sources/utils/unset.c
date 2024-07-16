@@ -23,12 +23,6 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 		delete_node_with_that_key(&pipex->envp, cmd->cmd_args[i]);
 		i++;
 	}
-	// t_env_elem *temp = pipex->envp;
-	// while (temp)
-	// {
-	// 	printf("%s=%s\n", temp->key, temp->value);
-	// 	temp = temp->next;
-	// }
 	*is_builtin = 1;
 	return (error_exit);
 }
@@ -75,18 +69,18 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 	{
 		if (pos == 0)
 		{
+			printf("sax esem\n");
+			// del_first_node(env);
 			del_node = *env;
 			free(del_node->key);
 			free(del_node->value);
 			*env = (*env)->next;
-			(*env)->prev = NULL;
 			free(del_node);
+			(*env)->prev = NULL;
 			del_node = NULL;
 		}
 		else if (pos > 0 && pos < count_env_nodes_(*env) - 1)
-		{
 			delete_middle_node(env, pos);
-		}
 		else if (pos == count_env_nodes_(*env) - 1)
 		{
 			while (temp->next->next)
@@ -99,6 +93,19 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 		}
 	}
 
+}
+
+void	del_first_node(t_env_elem **env)
+{
+	t_env_elem	*del_node;
+
+	del_node = *env;
+	free(del_node->key);
+	free(del_node->value);
+	*env = (*env)->next;
+	(*env)->prev = NULL;
+	free(del_node);
+	del_node = NULL;
 }
 
 void     delete_middle_node(t_env_elem **env, int pos)

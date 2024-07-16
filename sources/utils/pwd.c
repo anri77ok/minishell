@@ -11,7 +11,7 @@ int    pwd(int fd, int *is_builtin)
 	*is_builtin = 1;
     if (getcwd(current_directory, PATH_MAX) == NULL)
 	{
-		//erroni hamar teqst
+		fd_put_string("minishell: can't read getcwd\n", fd);
 		return (1);//esi mer komica arvac bashi vaxt exit error-@ 1 chi//by Narek
 	}
 	fd_put_string(current_directory, fd);

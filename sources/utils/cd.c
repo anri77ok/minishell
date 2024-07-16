@@ -73,7 +73,7 @@ char	*home_kpcnel_pathin(t_env_elem *env, char *path)
 	char	*res;
 
 	HOME_VALUE = get_cmd_in_env(env, "HOME");
-	res = join(HOME_VALUE, path);
+	res = join(HOME_VALUE, path, 0, 0);
 	if (!res)
 		return (NULL);
 	return (res);

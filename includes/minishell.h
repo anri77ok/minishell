@@ -49,6 +49,10 @@ t_env_elem	*ft_merge_sorted_list(t_env_elem *left, t_env_elem *right, int (*cmp)
 t_env_elem	*ft_env_elem_at(t_env_elem *begin_list, unsigned int nbr);
 int	ft_env_elem_size( t_env_elem *begin_list);
 void	set_singals(void);
+void	*ft_memset(void *b, int c, size_t len);
+void	choose_signal(void (*f), int flag);
+void	ctrl_bckslash(void);
+void	disable_echoctl(void);
 
 int	error_helper1(char *s1, char *s2, char *s3, int exit_status);
 

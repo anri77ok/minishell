@@ -6,8 +6,7 @@
 t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds)
 {
 	t_cmd	*new_node;
-	// printf("input=%d\n", fds->infd);
-	// printf("output=%d\n", fds->outfd);
+
 	new_node = (t_cmd *) malloc(sizeof(t_cmd));
 	if (!new_node)
 		return (NULL);
@@ -52,11 +51,6 @@ int	open_file(t_token *cmd, int type)
 		error_helper1("minishell: ", NULL, ": ambiguous redirect\n", -20);
 		return (-20);//ambiguous redirect
 	}
-	// if (cmd->flag == 1)
-	// {
-	// 	printf("syntaxx error\n");
-	// 	return (-19);
-	// }//maqreci vortev vor check_syntax funkcian avelacreci pti dzvi es pahy//echo a >
 	if (type == INPUT)
 	{
 		fd = open(cmd->value, O_RDONLY);

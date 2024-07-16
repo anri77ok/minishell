@@ -16,7 +16,7 @@ int	ft_strcmp(char *s1, char *s2);
 void dolarni(t_token **tokens, char **env);
 void dolarni2(t_token **tokens, char **env);
 char	*ft_strjoin(char const *s1, char const *s2, char sep);
-char	*join(char *s1, char *s2);
+char	*join(char *s1, char *s2, size_t i, size_t j);
 char	*ft_strdup(char *src);
 char	*ft_strstr(char *str, char *to_find);
 

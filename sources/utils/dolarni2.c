@@ -5,10 +5,10 @@ void kp(char *begin, char *word, char *end, t_token **current)
 {
 	char *final;
 
-	final = join(begin, word);
+	final = join(begin, word, 0, 0);
 	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
 	free((*current)->value);
-	(*current)->value = join(final, end);
+	(*current)->value = join(final, end, 0, 0);
 	// printf("value -> %s\n", (*current)->value);
 	free(final);
 	free(word);
