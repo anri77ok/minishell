@@ -75,8 +75,8 @@ void    delete_node_with_that_key(t_env_elem **env, char *key)
 			free(del_node->key);
 			free(del_node->value);
 			*env = (*env)->next;
-			free(del_node);
 			(*env)->prev = NULL;
+			free(del_node);
 			del_node = NULL;
 		}
 		else if (pos > 0 && pos < count_env_nodes_(*env) - 1)

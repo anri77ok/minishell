@@ -34,12 +34,9 @@ tokenization/tok_utils.c utils/utils.c utils/dolarni2.c \
 utils/chakertni.c utils/redirect.c utils/envp.c utils/open_files.c \
 utils/run_commands.c utils/split.c utils/pipex_ut.c utils/echo.c utils/pwd.c \
 utils/agvanMerj.c utils/export.c utils/unset.c utils/cd.c utils/atol.c \
-<<<<<<< HEAD
 utils/exit.c utils/signals.c utils/cd2.c utils/envp2.c utils/signals2.c \
-utils/utils2.c utils/utils3.c
-=======
-utils/exit.c utils/signals.c utils/cd2.c utils/envp2.c utils/dolar_utils.c
->>>>>>> 0270ea7f29dbd0254d4c20130b8c66aabd1437b2
+utils/utils2.c utils/utils3.c utils/dolar_utils.c utils/exit.c utils/signals.c \
+utils/cd2.c utils/envp2.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
