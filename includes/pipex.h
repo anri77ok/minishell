@@ -43,6 +43,7 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env);
 void dupeing(t_pipex *pipex, t_cmd *cmd);
 void	close_pipes(t_pipex *pipex);
 void    init_pipes(t_pipex *pipex);
+int find_pathi_line(char **env, int i);
 
 void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int is_in_fork);
 int	check_is_built_in(t_cmd *cmd);

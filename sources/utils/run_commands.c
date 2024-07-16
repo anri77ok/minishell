@@ -70,13 +70,7 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 	char	**matrix;
 
 	env = env_list_to_array(pipex->envp);
-	
-	while (env[i])
-	{
-		if (ft_strstr(env[i], "PATH="))
-			break ;
-		i++;
-	}
+	i = find_pathi_line(env, i);
 	if (!env[i])
 		p_error(pipex, PATH_CHKA, cmd->cmd_path, 127);
 	arr = cmd->cmd_args[0];
@@ -98,13 +92,16 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 		p_error(pipex, EXECVE_ERR, NULL, 1);
 }
 
-
-
-
-
-
-
-
+int find_pathi_line(char **env, int i)
+{
+	while (env[i])
+	{
+		if (ft_strstr(env[i], "PATH="))
+			break ;
+		i++;
+	}
+	return (i);
+}
 
 void create_proceces(t_pipex *pipex)
 {
