@@ -137,7 +137,7 @@ int	main(int argc, char **argv, char **env)
 			{
 				if (check_syntax(token_list) != 2)
 				{
-					dolarni2(&token_list, env_list_to_array(shell->envr));
+					dolarni2(&token_list, env_list_to_array(shell->envr), false, false);
 					//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
 					//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
 					get_bez_empty_nodes(&token_list);

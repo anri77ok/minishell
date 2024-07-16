@@ -14,7 +14,7 @@ void	print_token_list(t_token *token_list);
 void	ft_token_list_clear(t_token **lst);
 int	ft_strcmp(char *s1, char *s2);
 void dolarni(t_token **tokens, char **env);
-void dolarni2(t_token **tokens, char **env);
+void dolarni2(t_token **tokens, char **env, bool flag, bool flag_a);
 char	*ft_strjoin(char const *s1, char const *s2, char sep);
 char	*join(char *s1, char *s2);
 char	*ft_strdup(char *src);
@@ -40,4 +40,8 @@ int control_operators(t_token *token);
 
 //freee
 void	free_list(t_env_elem *temp);
+void karch(char *value, int *i, int *j, bool *flag_a);
+void free_env(char **env);
+char **karch2(char *value, int start, int mid, int end);
+void karch3(char *p1, char **p, bool *flag);
 #endif
