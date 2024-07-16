@@ -80,7 +80,7 @@ t_env_elem	*init_env(t_env_elem *envr, char	**env)
 	envr = NULL;
 	while (env[i] != NULL)
 	{
-		temp_env_elem = ft_lstnew_dlya_env(find_key(env[i]), find_value(env[i]));
+		temp_env_elem = ft_lstnew_dlya_env(find_key(env[i]), find_value(env[i]), true);
 		ft_lstadd_back_env(&envr, temp_env_elem);
 		i++;
 	}
@@ -131,7 +131,7 @@ char	**env_list_to_array(t_env_elem *temp)
 
 //im hamar
 
-t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
+t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free)
 {
 	t_env_elem	*new;
 
@@ -142,8 +142,11 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value)
 	new -> value = ft_strdup(value);
 	// printf("key=%s\n",new->key);
 	// printf("value=%s\n",new->value);
-	free(key);
-	free(value);
+	if (will_free == true)
+	{
+		free(key);
+		free(value);
+	}
 	new -> next = NULL;
 	new->prev = NULL;
 	return (new);

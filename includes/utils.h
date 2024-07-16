@@ -25,7 +25,7 @@ char	*ft_strstr(char *str, char *to_find);
 char	**ft_split(char const *s, char c);
 
 //lst_func
-t_env_elem	*ft_lstnew_dlya_env(char *key, char *value);
+t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free);
 t_env_elem	*ft_lstlast(t_env_elem *lst);
 void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new);
 

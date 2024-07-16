@@ -44,6 +44,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 		key = get_word_before_equal(cmd->cmd_args[i]);
 		if (is_valid_identifer(key) == -1)
 		{
+			//
 			*error_exit = 1;
 			i++;
 			continue ;
@@ -54,7 +55,7 @@ void	ay_nor_export(t_pipex *pipex, t_cmd *cmd, int *error_exit)
 			i++;
 			continue ;
 		}
-		new_node = ft_lstnew_dlya_env(key ,value);
+		new_node = ft_lstnew_dlya_env(key ,value, true);
 		ft_lstadd_back_env(&pipex->envp, new_node);
 		i++;
 	}
@@ -73,16 +74,16 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 				return (-1);//esi arel enq vor export c  export c(erku hat node chsarqi nuyn c key-ov)
 			if(env_list->value == NULL && (value[0] == '\0' || value[0]))
 			{
-				free(env_list->value);
+				//free(env_list->value);
 				env_list->value = ft_strdup(value);
-				free(value);
+				//free(value);
 				return (-1);
 			}//ete unenq export f heto anum enq export f= kam export f=aa popoxutyuny lini
 			if (env_list->value && (value[0] == '\0' || value[0]))
 			{
-				free(env_list->value);
+				//free(env_list->value);
 				env_list->value = ft_strdup(value);
-				free(value);
+				//free(value);
 				return (-1);
 			}//ete lini export a=d heto export a=xx kam export export a=  poxi et node-i key-i value-n
 
@@ -142,26 +143,29 @@ char	*get_word_before_equal(char	*key)
 void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
-	t_env_elem	*copy;
 	t_env_elem	*temp2;
+	t_env_elem	*copy;
+
 	copy = get_copy_env(pipex->envp);
 	temp = merge_sort(copy, ft_strcmp);
 	temp2 = temp;
 	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
 	{
-		while (temp2)
+		while (temp)
 		{
-			if (temp2->value == NULL)
+			if (temp->value == NULL)
 			  	printf("declare -x %s\n", temp->key);
-			else if (temp2->value != NULL && temp2->value[0] == '\0')
-				printf("declare -x %s=\"%s\"\n", temp2->key, temp2->value);
-			else if (temp2->value[0])
-				printf("declare -x %s=\"%s\"\n", temp2->key, temp2->value);
-			temp2 = temp2->next;
+			else if (temp->value != NULL && temp->value[0] == '\0')
+				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
+			else if (temp->value[0])
+				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
+			temp = temp->next;
 		}
 	}
-	free_list(copy);//
-	copy = NULL;//
+	free_list(copy);
+	//free_list(temp2);
+	//copy = NULL;
+	//temp2 = NULL;
 }
 
 t_env_elem	*get_copy_env(t_env_elem *env)
@@ -175,7 +179,7 @@ t_env_elem	*get_copy_env(t_env_elem *env)
 	while (temp)
 	{
 		// printf("%s=%s\n", temp->key, temp->value);
-		node = ft_lstnew_dlya_env(temp->key, temp->value);
+		node = ft_lstnew_dlya_env(temp->key, temp->value, false);
 		ft_lstadd_back_env(&copy, node);
 		temp = temp->next;
 	}
@@ -191,11 +195,11 @@ void	free_list(t_env_elem *temp)
 	{
 		printf("mtaaaaa\n");
 		del = temp;
-		free(temp->key);
-		free(temp->value);
 		temp = temp->next;
-		if (temp)
-			temp->prev = NULL;
+		free(del->key);
+		free(del->value);
 		free(del);
+		// if (temp)
+		// 	temp->prev = NULL;
 	}
 }
