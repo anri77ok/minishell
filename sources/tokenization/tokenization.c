@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenization.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:09:23 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:09:24 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "tokenization.h"
 #include "utils.h"
 #include <stdlib.h>
 #include "pipex.h"
 #include "minishell.h"
 
-int skip_whitespaces(char *line, int i)
+int	skip_whitespaces(char *line, int i)
 {
 	if (line == NULL)
 		return (0);
@@ -12,7 +24,7 @@ int skip_whitespaces(char *line, int i)
 		i++;
 	return (i);
 }
-t_token *create_new_token(char *value)
+t_token	*create_new_token(char *value)
 {
 	t_token	*new_token;
 
@@ -45,7 +57,7 @@ void	add_to_list(t_token **list_of_tokens, t_token *new_token)
 	new_token->prev = ptr;
 }
 
-int is_quote(char *cmd_line, int i)
+int	is_quote(char *cmd_line, int i)
 {
 	if (cmd_line[i] == 34 || cmd_line[i] == 39)
 		i++;
@@ -68,12 +80,13 @@ int is_quote(char *cmd_line, int i)
 	return (i);
 }
 
-void spliting(t_token **token_list, char *str)
+void	spliting(t_token **token_list, char *str)
 {
 	t_token	*new_token;
+	char	*pice;
+
 	int i = 0;
 	int k = 0;
-	char *pice;
 	while (str[i])
 	{
 		while (str[i] && ft_is_operator(str, i) == 0)

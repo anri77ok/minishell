@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/16 18:08:56 by anrkhach         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "minishell.h"
 #include "tokenization.h"
@@ -60,7 +72,7 @@ int	error_helper1(char *s1, char *s2, char *s3, int exit_status)
 	return (exit_status);
 }
 
-void p_error(t_pipex *pipex, int error_code, char *message, int status)
+void	p_error(t_pipex *pipex, int error_code, char *message, int status)
 {
 	if (pipex && pipex->pipes != NULL)
 	{
@@ -91,10 +103,10 @@ void p_error(t_pipex *pipex, int error_code, char *message, int status)
 
 
 
-void ft_clear_shell(t_shell **shell)
+void	ft_clear_shell(t_shell **shell)
 {
 	t_cmd	*tmp;
-	int i;
+	int		i;
 
 	while ((*shell)->cmds)
 	{
@@ -172,7 +184,7 @@ int	main(int argc, char **argv, char **env)
 
 int	check_syntax(t_token *token)
 {
-	t_token *temp;
+	t_token	*temp;
 
 	temp = token;
 	while (temp)
@@ -199,13 +211,14 @@ int	check_syntax(t_token *token)
 	return (0);//pti poxvi
 }
 
-int permitted_operator(t_token *token)
+int	permitted_operator(t_token *token)
 {
 	if (token->type == D_PIPE || token->type == S_AND || token->type == D_AND)
 			return (1);
 		return (0);
 }
-int control_operators(t_token *token)
+
+int	control_operators(t_token *token)
 {
 	// if (!token->value)
 	// 	return (1);
@@ -216,10 +229,11 @@ int control_operators(t_token *token)
 
 void	get_bez_empty_nodes(t_token **token_list)
 {
-	t_token *temp = *token_list;
+	t_token	*temp;
 	int	pos;
 
 	pos = 0;
+	temp = *token_list;
 	while (temp)
 	{
 		if (temp->prev && ft_strcmp(temp->value,"\"\"") == 0 && (temp->prev->type == OUT_REDIR || temp->prev->type == IN_REDIR))
@@ -247,19 +261,19 @@ void	get_bez_empty_nodes(t_token **token_list)
 
 void	delete_this_node(t_token	**token_list, int pos)
 {
-	int	count_nodes;
+	int		count_nodes;
 	t_token	*del_node;
 	t_token	*temp;
 
 	temp = *token_list;
 	count_nodes = count_nodes_func(*token_list);
 	if (count_nodes == 1) // If there's only one node
-    {
+	{
 		free((*token_list)->value);
-        free(*token_list);
-        *token_list = NULL;
-        return ;
-    }
+		free(*token_list);
+		*token_list = NULL;
+		return ;
+	}
 	if (pos == 0)
 	{
 		del_node = *token_list;
@@ -300,11 +314,10 @@ void	middle_node(t_token **token_list, int pos)
 	free(del_node);
 }
 
-
 int	count_nodes_func(t_token	*token_list)
 {
 	t_token	*temp;
-	int	count_nodes;
+	int		count_nodes;
 
 	count_nodes = 0;
 	temp = token_list;
