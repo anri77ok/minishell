@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:19:07 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 21:28:43 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:54:00 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 {
 	int			pos;
 	t_env_elem	*temp;
-	// t_env_elem	*del_node;
+	t_env_elem	*del_node;
 
 	temp = pipex->envp;
 	pos = 0;
@@ -41,7 +41,7 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 	{
 		if (ft_strcmp(temp->key, key) == 0)
 		{
-			// del_node = temp;
+			del_node = temp;
 			free(temp->key);
 			temp->key = NULL;
 			if (temp->value && temp->value[0] != '\0')
@@ -49,7 +49,13 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 				free(temp->value);
 				temp->value = NULL;
 			}
-			temp = temp->next;
+			if (pos != 0)
+			{
+				temp->next->prev = temp->prev;
+				temp->prev->next = temp->next;
+				//free(del_node);
+			}
 		}
+		temp = temp->next;
 	}
 }

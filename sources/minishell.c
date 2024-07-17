@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 21:13:26 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:53:31 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void main_helper(t_token **token_list, t_shell *shell, char *cmd_line, t_pipex *
 		if (check_syntax(*token_list) != 2)
 		{
 			//if (*ppx == NULL)
-			// dolarni2(token_list, shell->envr, false, false);
+			dolarni2(token_list, env_list_to_array(shell->envr), false, false);
 			// else
 			// 	dolarni2(token_list, env_list_to_array((*ppx)->envp), false, false);
 			get_bez_empty_nodes(token_list);
