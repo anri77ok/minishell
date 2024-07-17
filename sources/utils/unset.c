@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:32 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 16:22:10 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:37:14 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,7 @@
 #include "env.h"
 #include "pipex.h"
 
-void	delete_node_with_that_key(t_pipex *pipex, char *key)
-{
-	int			pos;
-	t_env_elem	*temp;
-	t_env_elem	*del_node;
 
-	temp = pipex->envp;
-	pos = 0;
-	while (temp)
-	{
-		if (ft_strcmp(temp->key, key) == 0)
-		{
-			del_node = temp;
-			free(temp->key);
-			temp->key = NULL;
-			if (temp->value && temp->value[0] != '\0')
-			{
-				free(temp->value);
-				temp->value = NULL;
-			}
-			// if (temp->prev)
-			// 	del_node->prev->next = temp->next;
-			// if (temp->next)
-			// 	temp->next->prev = del_node->prev;
-			// del_node->prev = NULL;
-			// del_node->next = NULL;
-			//free(del_node);
-			temp = temp->next;
-		}
-		else
-			temp = temp->next;
-	}
-}
 
 int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
@@ -113,17 +81,4 @@ int check_this_key_in_env_list_unset(t_env_elem *env, char *key, int *pos)
 		env = env->next;
 	}
 	return (-1);
-}
-
-int count_env_nodes_(t_env_elem *env)
-{
-	int	count;
-
-	count = 0;
-	while (env)
-	{
-		count++;
-		env = env->next;
-	}
-	return (count);
 }
