@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals2.c                                         :+:      :+:    :+:   */
+/*   run_commands3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 18:10:28 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 20:18:03 by vbarsegh         ###   ########.fr       */
+/*   Created: 2024/07/17 20:07:03 by vbarsegh          #+#    #+#             */
+/*   Updated: 2024/07/17 20:16:27 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,32 @@
 #include "env.h"
 #include "pipex.h"
 
-void	choose_signal(void (*f), int flag)
+int	find_pathi_line(char **env, int i)
 {
-	struct sigaction	sa;
-
-	if (flag == 0)
-		ctrl_bckslash();
-	ft_memset(&sa, 0, sizeof(sa));
-	sa.sa_handler = f;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	if (flag == 0)
-		sigaction(SIGINT, &sa, NULL);
-	else if (flag == 1)
-		sigaction(SIGQUIT, &sa, NULL);
-	disable_echoctl();
+	while (env[i])
+	{
+		if (ft_strstr(env[i], "PATH="))
+			break ;
+		i++;
+	}
+	return (i);
 }
 
-void	*ft_memset(void *b, int c, size_t len)
+t_pipex	*run_cmds(t_shell *shell)
 {
-	unsigned char	*ptr;
+	t_pipex	pipex;
+	t_pipex	*link;
 
-	ptr = (unsigned char *)b;
-	while (len-- > 0)
-		*(ptr++) = (unsigned char)c;
-	return (b);
+	pipex_init(&pipex, shell);
+	if (pipex.cmd_count > 1)
+		init_pipes(&pipex);
+	create_proceces(&pipex);
+	close_pipes(&pipex);
+	wait_processes(&pipex);
+	if (pipex.pipes != NULL)
+		free(pipex.pipes);
+	pipex.pipes = NULL;
+	free(pipex.pids);
+	link = &pipex;
+	return (link);
 }

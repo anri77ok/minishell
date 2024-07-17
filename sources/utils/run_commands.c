@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:13:42 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 16:31:03 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:10:06 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,44 +18,9 @@
 
 extern int	g_exit_status;
 
-void	close_pipes(t_pipex *pipex)
-{
-	int	i;
-
-	i = 0;
-	while (i < pipex->cmd_count - 1)
-	{
-		if (pipex->pipes)
-		{
-			close(pipex->pipes[i][0]);
-			close(pipex->pipes[i][1]);
-		}
-		i++;
-	}
-}
-
-void	dupeing(t_pipex *pipex, t_cmd *cmd)
-{
-	if (cmd->input != 0)
-	{
-		if (dup2(cmd->input, 0) == -1)
-			p_error(pipex, DUP_ERR, NULL, 1);
-		close(cmd->input);
-	}
-	if (cmd->output != 1)
-	{
-		if (dup2(cmd->output, 1) == -1)
-			p_error(pipex, DUP_ERR, NULL, 1);
-		close(cmd->output);
-	}
-	close_pipes(pipex);
-}
-
 void	run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 {
 	pid_t	pid;
-	// char	*arr;
-	// char	**matrix;
 	char	**env;
 
 	env = NULL;
@@ -65,16 +30,15 @@ void	run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin)
 	if (pid == 0)
 	{
 		dupeing(pipex, cmd);
-		which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);//esi en depqna vor builtin-@ anum enq child procesum ev export,unset u cd built inner-@ chakertavor asvac chen arvum vortev et dranc shnorhiv katarvac popoxutyunner mnum en childum u henc prcav child-@ main-um et popoxutyunnery el chen linelu
+		which_built_in_will_be_runed(pipex, cmd, is_builtin, 1);
 		if (*is_builtin == 0)
-			run_cmd_with_execve(pipex, cmd, i ,env);
+			run_cmd_with_execve(pipex, cmd, i, env);
 	}
 	else
 		pipex->pids[i] = pid;
 	if (env != NULL)
 		free(env);
 }
-
 
 void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 {
@@ -104,17 +68,6 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 		p_error(pipex, EXECVE_ERR, NULL, 1);
 }
 
-int	find_pathi_line(char **env, int i)
-{
-	while (env[i])
-	{
-		if (ft_strstr(env[i], "PATH="))
-			break ;
-		i++;
-	}
-	return (i);
-}
-
 void	create_proceces(t_pipex *pipex)
 {
 	t_cmd	*cmd;
@@ -133,25 +86,16 @@ void	create_proceces(t_pipex *pipex)
 			continue ;
 		}
 		if (pipex->cmd_count == 1)
-			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);//ete mihat cmd-a pordzum enq ashxatacnel builinner@,bayc ete trbav hramany built in chi apa mtnum enq taki if-@ 
+			which_built_in_will_be_runed(pipex, cmd, &is_builtin, 0);
 		if (is_builtin == 0)
-			run_shell_cmd(pipex, cmd, i, &is_builtin);//stex nayum enq ete
+			run_shell_cmd(pipex, cmd, i, &is_builtin);
 		cmd = cmd->next;
 		i++;
 	}
 }
 
-int	check_is_built_in(t_cmd *cmd)
-{
-		if (ft_strcmp(cmd->cmd_path, "env") == 0 || ft_strcmp(cmd->cmd_path, "pwd") == 0
-			|| ft_strcmp(cmd->cmd_path, "echo") == 0 || ft_strcmp(cmd->cmd_path, "export") == 0
-			|| ft_strcmp(cmd->cmd_path, "unset") == 0 || ft_strcmp(cmd->cmd_path, "exit") == 0)
-			return (1);
-		return (-1);
-}
-
-
-void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, int is_in_fork)
+void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd,
+			int *is_builtin, int is_in_fork)
 {
 	if (ft_strcmp(cmd->cmd_path, "env") == 0)
 		g_exit_status = print_env(pipex->envp, is_builtin);
@@ -172,10 +116,9 @@ void	which_built_in_will_be_runed(t_pipex *pipex, t_cmd *cmd, int *is_builtin, i
 		g_exit_status = unset(pipex, cmd, is_builtin);
 	else if (ft_strcmp(cmd->cmd_path, "exit") == 0)
 		mini_exit(cmd, is_builtin, is_in_fork);
-	if (*is_builtin == 1 && is_in_fork == 1)//sa nra hamara vor ete builtinner-@ arvel en childum exit linenq ,vor childy prccnenq eli
+	if (*is_builtin == 1 && is_in_fork == 1)
 		exit(g_exit_status);
 }
-
 
 void	wait_processes(t_pipex *pipex)
 {
@@ -185,57 +128,14 @@ void	wait_processes(t_pipex *pipex)
 
 	i = 0;
 	if (pipex->cmd_count == 1 && check_is_built_in(pipex->cmds) == 1)
-		return ;//ete cmd-@ 1hata u built ina proces chenq bace dra hamare imast chka daje karelia asel sxala wait anel@(guce)
+		return ;
 	while (i < pipex->cmd_count)
 	{
 		pid = waitpid(pipex->pids[i], &exit_status, 0);
 		if (WIFEXITED(exit_status))
 			g_exit_status = WEXITSTATUS(exit_status);
 		else if (WIFSIGNALED(exit_status))
-			g_exit_status = TERM_CODE_SHIFT + WTERMSIG(exit_status);// TERM_CODE_SHIFT fiqsvac 128a
+			g_exit_status = TERM_CODE_SHIFT + WTERMSIG(exit_status);
 		i++;
 	}
-}
-
-t_pipex	*run_cmds(t_shell *shell)
-{
-	t_pipex	pipex;
-	t_pipex *link;
-
-	pipex_init(&pipex, shell);
-	if (pipex.cmd_count > 1)
-		init_pipes(&pipex);
-	create_proceces(&pipex);
-	close_pipes(&pipex);
-	wait_processes(&pipex);
-	if (pipex.pipes != NULL)
-		free(pipex.pipes);
-	pipex.pipes = NULL;
-	free(pipex.pids);
-	link = &pipex;
-	return (link);
-}
-
-void	pipex_init(t_pipex *pipex, t_shell *shell)
-{
-	pipex->pipes = NULL;
-	pipex->cmd_count = count_shell_cmds(shell->cmds);
-	pipex->cmds = shell->cmds;
-	pipex->envp = shell->envr;
-	pipex->pids = malloc(sizeof(pid_t) * (pipex->cmd_count + 1));
-}
-
-int	count_shell_cmds(t_cmd *shell_cmds)
-{
-	int	count_cmds;
-	t_cmd	*cur;
-
-	cur = shell_cmds;
-	count_cmds = 0;
-	while (cur)
-	{
-		count_cmds++;
-		cur = cur->next;
-	}
-	return (count_cmds);
 }

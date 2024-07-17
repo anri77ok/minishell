@@ -20,7 +20,6 @@ char	*join(char *s1, char *s2, size_t i, size_t j);
 char	*ft_strdup(char *src);
 char	*ft_strstr(char *str, char *to_find);
 
-
 //spliti hamar
 char	**ft_split(char const *s, char c);
 
@@ -48,4 +47,8 @@ void	clear_shell_envr(t_shell *shell);
 
 
 void free_shell_token(t_shell **shell, t_token **token_list, char *cmd_line);
+
+//error
+// int	er_hp1(char *s1, char *s2, char *s3, int exit_status);
+// int	er_hp2(char *s1, char s2, char *s3, int exit_status);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:11:58 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:11:59 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:18:00 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	cd_helper_1(char *path, t_pipex *pipex, char **modified_cmd)
 		}
 	}
 	else if ((path && path[0] == '~' && path[1] == '\0')
-				|| (path && path[0] == '~' && path[1] == '/'))
+		|| (path && path[0] == '~' && path[1] == '/'))
 		*modified_cmd = home_kpcnel_pathin(pipex->envp, path + 1);
 	else
 		*modified_cmd = path;
@@ -81,11 +81,11 @@ void	update_env(t_env_elem *env, char *old_path, char *new_path)
 
 char	*home_kpcnel_pathin(t_env_elem *env, char *path)
 {
-	char	*HOME_VALUE;
+	char	*home_value;
 	char	*res;
 
-	HOME_VALUE = get_cmd_in_env(env, "HOME");
-	res = join(HOME_VALUE, path, 0, 0);
+	home_value = get_cmd_in_env(env, "HOME");
+	res = join(home_value, path, 0, 0);
 	if (!res)
 		return (NULL);
 	return (res);

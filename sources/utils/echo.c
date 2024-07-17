@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:53 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:09:54 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:31:32 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	echo_run_helper(char **cmd_args, int i, int fd, int ind)
 	write_helper(cmd_args, ind, fd, flag);
 }
 
-
 void	write_helper(char **cmd_args, int ind, int fd, int flag)
 {
 	while (cmd_args[ind])
@@ -77,7 +76,3 @@ void	fd_put_string(char *str, int fd)
 	while (str[i])
 		write(fd, &str[i++], 1);
 }
-
-
-//echo a > "$a"  pti gri No such file or directory, byc mery anuma husam en chakertnery haneluc null-i texy vor datark tox dnes kdzvi
-///echo a >"$a"

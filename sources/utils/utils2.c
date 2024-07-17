@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:48 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:10:50 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:20:52 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len, bool is_op)
 	while (s[i])
 	{
 		if (i >= start && j < len)
-			str[j++] = s[i];//poxelem
+			str[j++] = s[i];
 		i++;
 	}
 	str[j] = '\0';
 	return (str);
 }
-

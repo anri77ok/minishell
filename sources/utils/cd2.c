@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:02 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:03 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:41:07 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@
 #include "pipex.h"
 #include <sys/stat.h>
 
-int	cd_helper_2(char *modified_cmd)
+int	cd_helper_2(char *mc)
 {
-	if (is_file_or_directory(modified_cmd) == 0)
+	if (is_file_or_directory(mc) == 0)
 	{
-		error_helper1("minishell: cd:", modified_cmd, ": No such file or directory\n", 1);
+		er_hp1("minishell: cd:", mc, ": No such file or directory\n", 1);
 		return (1);
 	}
-	if (is_directory(modified_cmd) == 0)
+	if (is_directory(mc) == 0)
 	{
-		error_helper1("minishell: cd:", modified_cmd, ": Not a directory\n", 1);
+		er_hp1("minishell: cd:", mc, ": Not a directory\n", 1);
 		return (1);
 	}
-	if (can_access(modified_cmd) == 0)
+	if (can_access(mc) == 0)
 	{
-		error_helper1("minishell: cd:", modified_cmd, ": Permission denied\n", 1);
+		er_hp1("minishell: cd:", mc, ": Permission denied\n", 1);
 		return (1);
 	}
-	if (chdir(modified_cmd) == -1)
+	if (chdir(mc) == -1)
 	{
-		error_helper1("minishell: cd:", modified_cmd, ": No such file or directory\n", 1);
+		er_hp1("minishell: cd:", mc, ": No such file or directory\n", 1);
 		return (1);
 	}
 	return (0);

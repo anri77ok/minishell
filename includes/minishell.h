@@ -54,7 +54,7 @@ void	choose_signal(void (*f), int flag);
 void	ctrl_bckslash(void);
 void	disable_echoctl(void);
 
-int	error_helper1(char *s1, char *s2, char *s3, int exit_status);
+int	er_hp1(char *s1, char *s2, char *s3, int exit_status);
 
 
 #endif

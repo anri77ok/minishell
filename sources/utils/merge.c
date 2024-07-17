@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   merge.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:11:45 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:11:46 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:48:39 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_env_elem	*merge_sort(t_env_elem *begin_list, int (*cmp)())
 	return (ft_merge_sorted_list(left, right, cmp));
 }
 
-t_env_elem	*ft_merge_sorted_list(t_env_elem *left, t_env_elem *right, int (*cmp)())
+t_env_elem	*ft_merge_sorted_list(t_env_elem *left,
+	t_env_elem *right, int (*cmp)())
 {
 	t_env_elem	dummy;
 	t_env_elem	*sorted_list;
@@ -88,4 +89,21 @@ int	ft_env_elem_size(t_env_elem *begin_list)
 		begin_list = begin_list->next;
 	}
 	return (count);
+}
+
+t_env_elem	*get_copy_env(t_env_elem *env)
+{
+	t_env_elem	*copy;
+	t_env_elem	*node;
+	t_env_elem	*temp;
+
+	copy = NULL;
+	temp = env;
+	while (temp)
+	{
+		node = ft_lstnew_dlya_env(temp->key, temp->value, false);
+		ft_lstadd_back_env(&copy, node);
+		temp = temp->next;
+	}
+	return (copy);
 }

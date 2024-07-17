@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 19:32:53 by vbarsegh          #+#    #+#             */
+/*   Updated: 2024/07/17 20:02:06 by vbarsegh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -37,7 +49,7 @@ void	multy_putstr_fd(char *start, char *mid, char *end, int fd)
 	}
 }
 
-int	error_helper2(char *s1, char s2, char *s3, int exit_status)
+int	e_2(char *s1, char s2, char *s3, int exit_status)
 {
 	// global(exit_status, 1);
 	g_exit_status = exit_status;
@@ -49,7 +61,7 @@ int	error_helper2(char *s1, char s2, char *s3, int exit_status)
 	return (exit_status);
 }
 
-int	error_helper1(char *s1, char *s2, char *s3, int exit_status)
+int	er_hp1(char *s1, char *s2, char *s3, int exit_status)
 {
 	//global(exit_status, 1);
 	g_exit_status = exit_status;
@@ -57,7 +69,7 @@ int	error_helper1(char *s1, char *s2, char *s3, int exit_status)
 	return (exit_status);
 }
 
-void	p_error(t_pipex *pipex, int error_code, char *message, int status)
+void	p_error(t_pipex *pipex, int error_code, char *m, int s)
 {
 	if (pipex && pipex->pipes != NULL)
 	{
@@ -65,13 +77,13 @@ void	p_error(t_pipex *pipex, int error_code, char *message, int status)
 		pipex->pipes = NULL;
 	}
 	if (error_code == ARGS_COUNT_ERR)
-		exit(error_helper1("Invalid count of arguments\n", NULL, NULL, 1));
+		exit(er_hp1("Invalid count of arguments\n", NULL, NULL, 1));
 	else if (error_code == SYNTAX_ERR)
-		error_helper1("minishell : syntax error near unexpected token `", message, "'\n", status);
+		er_hp1("minishell : syntax error near unexpected token `", m, "'\n", s);
 	else if (error_code == QUOT_ERR)
-		error_helper2("minishell : syntax error near unexpected token `", message[0], "'\n", status);
+		e_2("minishell : syntax error near unexpected token `", m[0], "'\n", s);
 	else if (error_code == MALLOC_ERR)
-		exit(error_helper1("minishell: ", NULL, ": malloc error\n", 1));
+		exit(er_hp1("minishell: ", NULL, ": malloc error\n", 1));
 	else if (error_code == PIPE_ERR)
 		perror("pipe failed");
 	else if (error_code == FORK_ERR)
@@ -79,9 +91,9 @@ void	p_error(t_pipex *pipex, int error_code, char *message, int status)
 	else if (error_code == DUP_ERR)
 		perror("dup failed");
 	else if (error_code == CMD_NOT_FOUND)
-		exit(error_helper1("minishell: ", message, ": command not found\n", status));
+		exit(er_hp1("minishell: ", m, ": command not found\n", s));
 	else if (error_code == EXECVE_ERR)
 		perror("execve failed");
 	else if (error_code == PATH_CHKA)
-		exit(error_helper1("minishell: ", message, ": No such file or directory\n", status));
+		exit(er_hp1("minishell: ", m, ": No such file or directory\n", s));
 }

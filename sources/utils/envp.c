@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:11:19 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:11:20 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:32:09 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ t_env_elem	*init_env(t_env_elem *envr, char	**env)
 	envr = NULL;
 	while (env[i] != NULL)
 	{
-		temp_env_elem = ft_lstnew_dlya_env(find_key(env[i]), find_value(env[i]), true);
+		temp_env_elem = ft_lstnew_dlya_env(find_key(env[i]),
+				find_value(env[i]), true);
 		ft_lstadd_back_env(&envr, temp_env_elem);
 		i++;
 	}
@@ -119,4 +120,3 @@ int	print_env(t_env_elem *env, int *is_builtin)
 	*is_builtin = 1;
 	return (0);
 }
-

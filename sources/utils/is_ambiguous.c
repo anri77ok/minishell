@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   is_ambiguous.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/17 19:50:59 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 19:51:12 by vbarsegh         ###   ########.fr       */
+/*   Created: 2024/07/17 19:57:35 by vbarsegh          #+#    #+#             */
+/*   Updated: 2024/07/17 20:01:18 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 #include "tokenization.h"
 #include "utils.h"
 #include "env.h"
-#include "pipex.h"
 
-int	pwd(int fd, int *is_builtin)
+int	check_is_ambiguous(t_token *cmd)
 {
-	char	current_directory[PATH_MAX];
-
-	*is_builtin = 1;
-	if (getcwd(current_directory, PATH_MAX) == NULL)
+	if (!cmd)
 	{
-		fd_put_string("minishell: can't read getcwd\n", fd);
-		return (1);
+		er_hp1("minishell: ", NULL, ": ambiguous redirect\n", -20);
+		return (-20);
 	}
-	fd_put_string(current_directory, fd);
-	write (fd, "\n", 1);
 	return (0);
 }

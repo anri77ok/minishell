@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:12 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:13:24 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:02:59 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_cmd	*ft_lstnew(char **cmd_args, t_fds *fds)
 		return (NULL);
 	new_node->cmd_args = cmd_args;
 	new_node->cmd_path = cmd_args[0];
-	if (fds->infd == -20 || fds->outfd == -20 )//|| fds->infd == -19 || fds->outfd == -19)
-		return (NULL);//nra hamar em are vor baci en vor asi ambiguous redirect ayl nayev tvyal built in-@ chani orinak echo-n,husam urish tex xndir chi ta
+	if (fds->infd == -20 || fds->outfd == -20)
+		return (NULL);
 	if (fds->infd > 2)
 		new_node->input = fds->infd;
 	else
@@ -58,11 +58,8 @@ int	open_file(t_token *cmd, int type)
 	int	fd;
 
 	fd = -1;
-	if (!cmd)
-	{
-		error_helper1("minishell: ", NULL, ": ambiguous redirect\n", -20);
-		return (-20);//ambiguous redirect
-	}
+	if (check_is_ambiguous(cmd) == -20)
+		return (-20);
 	if (type == INPUT)
 	{
 		fd = open(cmd->value, O_RDONLY);
@@ -76,9 +73,11 @@ int	open_file(t_token *cmd, int type)
 	if (fd > 2)
 		return (fd);
 	if (fd == -1)
-		return (error_helper1("minishell: ", cmd->value, ": Permission denied\n", 1), 1);
+		return (er_hp1("minishell: ", cmd->value,
+				": Permission denied\n", 1), 1);
 	if (fd == -2 && type != INPUT)
-		return (error_helper1("minishell: ", cmd->value, ": No such file or directory\n", 1), 1);
+		return (er_hp1("minishell: ", cmd->value,
+				": No such file or directory\n", 1), 1);
 	return (-1);
 }
 

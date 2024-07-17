@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_files.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:07 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:54 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:50:35 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
 	if (temp2->type == HERE_DOC)
 	{
 		fds->infd = here_doc_open(temp2->next->value);
-		del_here_doc_file();
+		unlink(HERE_DOC_FILE);
 	}
 	if (temp2->type == IN_REDIR)
 		fds->infd = open_file(temp2->next, INPUT);
@@ -45,11 +45,6 @@ void	token_to_cmds_helper(t_token *temp2, int *len, t_fds *fds)
 		fds->outfd = open_file(temp2->next, APPEND);
 	if (temp2->type == WORD)
 		(*len)++;
-}
-
-void	del_here_doc_file(void)
-{
-	unlink(HERE_DOC_FILE);
 }
 
 void	init_fds(t_fds *fds)
@@ -68,7 +63,6 @@ void	token_to_cmds(t_shell *shell, t_token *token_list)
 	t_fds	fds;
 
 	temp = token_list;
-	
 	while (temp != NULL)
 	{
 		init_fds(&fds);
@@ -84,15 +78,14 @@ void	token_to_cmds(t_shell *shell, t_token *token_list)
 			return ;
 		token_to_cmds_helper1(&len, temp, cmd_args);
 		ft_lstadd_back(shell, ft_lstnew(cmd_args, &fds));
-		token_to_cmds_helper2(temp2,&temp);
-		// token_to_cmds_helper1(&fds.second_case, temp2, NULL, &temp);
+		token_to_cmds_helper2(temp2, &temp);
 	}
 }
 
-void token_to_cmds_helper2(t_token	*temp2, t_token	**temp)
+void	token_to_cmds_helper2(t_token *temp2, t_token **temp)
 {
 	if (temp2 != NULL)
-			*temp = temp2->next;
-		else
-			*temp = temp2;
+		*temp = temp2->next;
+	else
+		*temp = temp2;
 }

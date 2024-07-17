@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   del_node.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/07/17 19:28:24 by vbarsegh          #+#    #+#             */
+/*   Updated: 2024/07/17 19:28:33 by vbarsegh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "tokenization.h"
 #include "utils.h"
@@ -64,4 +76,18 @@ void	middle_node(t_token **token_list, int pos)
 	temp->prev->next = temp->next;
 	temp->next->prev = temp->prev;
 	free(del_node);
+}
+
+void	free_list(t_env_elem *temp)
+{
+	t_env_elem	*del;
+
+	while (temp)
+	{
+		del = temp;
+		temp = temp->next;
+		free(del->key);
+		free(del->value);
+		free(del);
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:59 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:40 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:44:25 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 #include "utils.h"
 #include "env.h"
 #include "pipex.h"
-//exit aa 99 ,esi sxxala
-//exit a a,sxala
-//exit 99 aa(esi tochnia menak exit kody chem karum stugem vortev menq $? chunenq)
+
 void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork)
 {
 	long long	exit_num;
@@ -36,7 +34,8 @@ void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork)
 		else
 		{
 			exit_num = ft_atoll(cmd->cmd_args[1]);
-			if (exit_num > INT_MAX || exit_num < INT_MIN || ft_strlen(cmd->cmd_args[1]) > 11)
+			if (exit_num > INT_MAX || exit_num < INT_MIN
+				|| ft_strlen(cmd->cmd_args[1]) > 11)
 				in_this_condition(cmd);
 			check_exit_num_plus_or_minus(exit_num);
 		}
@@ -44,6 +43,7 @@ void	mini_exit(t_cmd *cmd, int *is_builtin, int is_in_fork)
 	else
 		just_exit_bez_argumentov(is_in_fork);
 }
+
 void	just_exit_bez_argumentov(int is_in_fork)
 {
 	g_exit_status = 0;
@@ -51,7 +51,6 @@ void	just_exit_bez_argumentov(int is_in_fork)
 		printf("exit\n");
 	exit(g_exit_status);
 }
-
 
 void	check_exit_num_plus_or_minus(long long exit_num)
 {
@@ -67,7 +66,8 @@ void	in_this_condition(t_cmd *cmd)
 {
 	printf("exit\n");
 	g_exit_status = 255;
-	error_helper1("minishell: exit: ", cmd->cmd_args[1], ": numeric argument required\n", g_exit_status);
+	er_hp1("minishell: exit: ", cmd->cmd_args[1],
+		": numeric argument required\n", g_exit_status);
 	exit(g_exit_status);
 }
 

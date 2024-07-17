@@ -96,4 +96,6 @@ void	write_helper(char **cmd_args, int ind, int fd, int flag);
 //pwd
 int    pwd(int fd, int *is_builtin);
 
+
+int	check_is_ambiguous(t_token *cmd);
 #endif

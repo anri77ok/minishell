@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:11:25 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:11:27 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:32:43 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include "env.h"
 
-int		ft_lstsize(t_env_elem *lst)
+int	ft_lstsize(t_env_elem *lst)
 {
 	int			count;
 	t_env_elem	*temp;
@@ -29,7 +29,6 @@ int		ft_lstsize(t_env_elem *lst)
 	}
 	return (count);
 }
-
 
 t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free)
 {
@@ -53,7 +52,6 @@ t_env_elem	*ft_lstnew_dlya_env(char *key, char *value, bool will_free)
 	return (new);
 }
 
-
 t_env_elem	*ft_lstlast(t_env_elem *lst)
 {
 	if (lst == NULL)
@@ -76,6 +74,7 @@ void	ft_lstadd_back_env(t_env_elem **lst, t_env_elem *new)
 	ptr -> next = new;
 	new->prev = ptr;
 }
+
 void	check_env(t_shell	*shell)
 {
 	t_env_elem	*temp;

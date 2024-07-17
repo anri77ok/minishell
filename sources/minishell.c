@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 17:30:02 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:31:01 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **env)
 			}
 		}
 		free_shell_token(&shell, &token_list, cmd_line);
-		system("leaks minishell");//
+		// system("leaks minishell");//
 	}
 	clear_shell_envr(shell);
 	printf("exit\n");
@@ -92,8 +92,3 @@ void	run_minianri(char *cmd_line, t_token **token_list, t_pipex **pipex, t_shell
 		// }
 		// free_shell_token(shell, token_list, cmd_line);
 }
-
-
-
-
-

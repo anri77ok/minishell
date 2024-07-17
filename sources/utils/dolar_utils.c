@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:11 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:13 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:30:48 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	karch(char *value, int *i, int *j, bool *flag_a)
 		free(value);
 		value = ft_itoa(g_exit_status);
 		*flag_a = true;
-	}		
+	}
 	*j = *i;
-	while (value[*j] && (ft_isspace(value[*j]) != 1 &&
-	value[*j] != 34 && value[*j] != 39))
+	while (value[*j] && (ft_isspace(value[*j]) != 1
+			&& value[*j] != 34 && value[*j] != 39))
 	{
 		*j = *j + 1;
 		if (value[*j] == '$' || value[*j] == '/' || value[*j] == '=')
