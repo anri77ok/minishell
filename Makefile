@@ -37,8 +37,12 @@ utils/merge.c utils/export.c utils/unset.c utils/cd.c utils/atol.c \
 utils/exit.c utils/signals.c utils/cd2.c utils/envp2.c utils/signals2.c \
 utils/utils2.c utils/utils3.c utils/dolar_utils.c utils/exit.c utils/signals.c \
 utils/cd2.c utils/envp2.c utils/check_syntax.c utils/error.c utils/del_node.c \
+<<<<<<< HEAD
 utils/clear.c utils/unset2.c utils/export2.c utils/is_ambiguous.c \
 utils/run_command2.c utils/run_commands3.c
+=======
+utils/clear.c utils/unset2.c
+>>>>>>> 80c784ce7e61b105081500e75cf329378cea1fe3
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
