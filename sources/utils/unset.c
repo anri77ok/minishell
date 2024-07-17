@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:32 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 15:30:21 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:22:10 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,40 @@
 #include "utils.h"
 #include "env.h"
 #include "pipex.h"
+
+void	delete_node_with_that_key(t_pipex *pipex, char *key)
+{
+	int			pos;
+	t_env_elem	*temp;
+	t_env_elem	*del_node;
+
+	temp = pipex->envp;
+	pos = 0;
+	while (temp)
+	{
+		if (ft_strcmp(temp->key, key) == 0)
+		{
+			del_node = temp;
+			free(temp->key);
+			temp->key = NULL;
+			if (temp->value && temp->value[0] != '\0')
+			{
+				free(temp->value);
+				temp->value = NULL;
+			}
+			// if (temp->prev)
+			// 	del_node->prev->next = temp->next;
+			// if (temp->next)
+			// 	temp->next->prev = del_node->prev;
+			// del_node->prev = NULL;
+			// del_node->next = NULL;
+			//free(del_node);
+			temp = temp->next;
+		}
+		else
+			temp = temp->next;
+	}
+}
 
 int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
@@ -67,62 +101,6 @@ int	is_digit_or_letter_or__(char c)
 	if (c == '_' || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9'))
 		return (1);
 	return (-1);
-}
-
-void	delete_node_with_that_key(t_pipex *pipex, char *key)
-{
-	int			pos;
-	t_env_elem	*temp;
-	// t_env_elem	*del_node;
-
-	temp = pipex->envp;
-	pos = 0;
-	while (temp)
-	{
-		if (ft_strcmp(temp->key, key) == 0)
-		{
-			free(temp->key);
-			temp->key = NULL;
-			if (temp->value && temp->value[0] != '\0')
-			{
-				free(temp->value);
-				temp->value = NULL;
-			}
-		}
-		temp = temp->next;
-	}
-}
-
-void	del_first_node(t_env_elem **env)
-{
-	t_env_elem	*del_node;
-
-	del_node = *env;
-	free(del_node->key);
-	free(del_node->value);
-	*env = (*env)->next;
-	(*env)->prev = NULL;
-	free(del_node);
-	del_node = NULL;
-}
-
-void	delete_middle_node(t_env_elem **env, int pos)
-{
-	t_env_elem	*temp;
-	t_env_elem	*del_node;
-
-	temp = *env;
-	while (pos > 0)
-	{
-		temp = temp->next;
-		pos--;
-	}
-	del_node = temp;
-	free(del_node->key);
-	free(del_node->value);
-	temp->prev->next = temp->next;
-	temp->next->prev = temp->prev;
-	free(del_node);
 }
 
 int check_this_key_in_env_list_unset(t_env_elem *env, char *key, int *pos)

@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 15:40:46 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:55:39 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,9 @@ int	main(int argc, char **argv, char **env)
 	t_token	*token_list;
 	char	*cmd_line;
 	t_shell	*shell;
+	t_pipex *pipex;
 
+	pipex = NULL;
 	if (argc > 1)
 		p_error(NULL, ARGS_COUNT_ERR, NULL, 1);
 	argv = NULL;
@@ -144,27 +146,60 @@ int	main(int argc, char **argv, char **env)
 		add_history(cmd_line);
 		if (cmd_line && *cmd_line)
 		{
+			// run_minianri(cmd_line, &token_list, &pipex, &shell);
 			if (tokenization(cmd_line, &token_list) == 0)
 			{
 				if (check_syntax(token_list) != 2)
 				{
-					dolarni2(&token_list, env_list_to_array(shell->envr), false, false);
-					//ete nodei mej exav datark tox hanum enq et node-@,bayc ete chakertneri meja et node-@ chenq hanum
-					//u ha chakertnery haneluc heto inqy vorpes datark tox listi mej node-@ mnaluya
+					if (pipex == NULL)
+						dolarni2(&token_list, env_list_to_array(shell->envr), false, false);
+					else
+						dolarni2(&token_list, env_list_to_array(pipex->envp), false, false);
 					get_bez_empty_nodes(&token_list);
 					chakertni(&token_list);
 					token_to_cmds(shell, token_list);
-					run_cmds(shell);
+					pipex = run_cmds(shell);
 					print_token_list(token_list);	
 				}
 			}
 		}
-		ft_clear_shell(&shell);
-		ft_token_list_clear(&token_list);
-		free(cmd_line);
-		// system("leaks minishell");
+		free_shell_token(&shell, &token_list, cmd_line);
+		system("leaks minishell");//
 	}
+	clear_shell_envr(shell);
+	printf("exit\n");
+}
 
+
+void	run_minianri(char *cmd_line, t_token **token_list, t_pipex **pipex, t_shell **shell)
+{
+		// set_singals();
+		// cmd_line = readline("\033[0;036m MINIVIBERSEIJ: \033[0m");
+		// add_history(cmd_line);
+		// if (cmd_line && *cmd_line)
+		// {
+			if (tokenization(cmd_line, token_list) == 0)
+			{
+				if (check_syntax(*token_list) != 2)
+				{
+					if (pipex == NULL)
+						dolarni2(token_list, env_list_to_array((*shell)->envr), false, false);
+					else
+						dolarni2(token_list, env_list_to_array((*pipex)->envp), false, false);
+					get_bez_empty_nodes(token_list);
+					chakertni(token_list);
+					token_to_cmds(*shell, *token_list);
+					*pipex = run_cmds(*shell);
+					print_token_list(*token_list);	
+				}
+			}
+		// }
+		// free_shell_token(shell, token_list, cmd_line);
+}
+
+
+void	clear_shell_envr(t_shell *shell)
+{
 	t_env_elem *temp;
 
 	while (shell->envr)
@@ -177,9 +212,15 @@ int	main(int argc, char **argv, char **env)
 		free(temp->value);
 		free(temp);
 	}
-	// free(shell);
-	printf("exit\n");
-	system("leaks minishell");
+	free(shell);
+}
+
+
+void free_shell_token(t_shell **shell, t_token **token_list, char *cmd_line)
+{
+	ft_clear_shell(shell);
+	ft_token_list_clear(token_list);
+	free(cmd_line);
 }
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:13:42 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:13:44 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 16:31:03 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,9 +197,10 @@ void	wait_processes(t_pipex *pipex)
 	}
 }
 
-void	run_cmds(t_shell *shell)
+t_pipex	*run_cmds(t_shell *shell)
 {
 	t_pipex	pipex;
+	t_pipex *link;
 
 	pipex_init(&pipex, shell);
 	if (pipex.cmd_count > 1)
@@ -211,7 +212,8 @@ void	run_cmds(t_shell *shell)
 		free(pipex.pipes);
 	pipex.pipes = NULL;
 	free(pipex.pids);
-	//return (EXIT_SUCCESS);
+	link = &pipex;
+	return (link);
 }
 
 void	pipex_init(t_pipex *pipex, t_shell *shell)

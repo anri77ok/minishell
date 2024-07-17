@@ -35,7 +35,7 @@ typedef struct s_pipex
 	pid_t		*pids;
 }	t_pipex;
 
-void	run_cmds(t_shell *shell);
+t_pipex	*run_cmds(t_shell *shell);
 int	count_shell_cmds(t_cmd *shell_cmds);
 void	pipex_init(t_pipex *pipex, t_shell *shell);
 void run_shell_cmd(t_pipex *pipex, t_cmd *cmd, int i, int *is_builtin);
@@ -97,4 +97,7 @@ void	in_this_condition(t_cmd *cmd);
 
 //errorneri hamar
 void p_error(t_pipex *pipex, int error_code, char *message, int status);
+
+
+void	run_minianri(char *cmd_line, t_token **token_list, t_pipex **pipex, t_shell **shell);
 #endif

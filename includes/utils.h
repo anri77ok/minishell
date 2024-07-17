@@ -44,4 +44,8 @@ void karch(char *value, int *i, int *j, bool *flag_a);
 void free_env(char **env);
 char **karch2(char *value, int start, int mid, int end);
 void karch3(char *p1, char **p, bool *flag);
+void	clear_shell_envr(t_shell *shell);
+
+
+void free_shell_token(t_shell **shell, t_token **token_list, char *cmd_line);
 #endif
