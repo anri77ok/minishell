@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:46 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:49 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 17:26:38 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 		}
 		env_list = env_list->next;
 	}
-	// if (key)
-	// 	free(key);//es frinery seg en talmmmmmmmm
 	return (1);
 }
 
@@ -212,7 +210,6 @@ void	free_list(t_env_elem *temp)
 
 	while (temp)
 	{
-		printf("mtaaaaa\n");
 		del = temp;
 		temp = temp->next;
 		free(del->key);
