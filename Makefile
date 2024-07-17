@@ -37,7 +37,7 @@ utils/merge.c utils/export.c utils/unset.c utils/cd.c utils/atol.c \
 utils/exit.c utils/signals.c utils/cd2.c utils/envp2.c utils/signals2.c \
 utils/utils2.c utils/utils3.c utils/dolar_utils.c utils/exit.c utils/signals.c \
 utils/cd2.c utils/envp2.c utils/check_syntax.c utils/error.c utils/del_node.c \
-utils/clear.c
+utils/clear.c utils/unset2.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))

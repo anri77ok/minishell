@@ -21,7 +21,7 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 {
 	int			pos;
 	t_env_elem	*temp;
-	t_env_elem	*del_node;
+	// t_env_elem	*del_node;
 
 	temp = pipex->envp;
 	pos = 0;
@@ -29,7 +29,7 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 	{
 		if (ft_strcmp(temp->key, key) == 0)
 		{
-			del_node = temp;
+			// del_node = temp;
 			free(temp->key);
 			temp->key = NULL;
 			if (temp->value && temp->value[0] != '\0')
@@ -44,9 +44,9 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 			// del_node->prev = NULL;
 			// del_node->next = NULL;
 			//free(del_node);
-			temp = temp->next;
+			// temp = temp->next;
 		}
-		else
+		// else
 			temp = temp->next;
 	}
 }
