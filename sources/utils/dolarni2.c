@@ -3,40 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   dolarni2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:12:32 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 21:16:58 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenization.h"
 #include "utils.h"
+#include "env.h"
 
-void	kp(char *begin, char *word, char *end, t_token **current)
+void	kp(t_dollar *dollar)
 {
 	char	*final;
 
-	final = join(begin, word, 0, 0);
+	final = join(dollar->parts[0], dollar->word, 0, 0);
 	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
-	free((*current)->value);
-	(*current)->value = join(final, end, 0, 0);
-	// printf("value -> %s\n", (*current)->value);
+	free(dollar->current->value);
+	dollar->current->value = join(final, dollar->parts[2], 0, 0);
+	printf("value -> %s\n", final);
+	printf("%s, %s, %s, %s\n", dollar->word, dollar->parts[0], dollar->parts[1], dollar->parts[2]);
 	free(final);
-	free(word);
-	if (begin != NULL)
+	free(dollar->word);
+	if (dollar->parts[0] != NULL)
 	{
-	free(begin);
-	begin = NULL;
+	free(dollar->parts[0]);
+	dollar->parts[0] = NULL;
 	}
-	if (end != NULL)
+	if (dollar->parts[2] != NULL)
 	{
-		free(end);
-		end = NULL;
+		free(dollar->parts[2]);
+		dollar->parts[2] = NULL;
 	}
+	free(dollar->parts[1]);
+	free(dollar->parts);
+	dollar->flag = false;
 }
 
-char	*open_dollar(char *dollar, char **env, bool flag, int *k)
+char	*open_dollar(t_dollar *dollar, char **env)
 {
 	char	*word;
 	char	*envp;
@@ -45,7 +50,7 @@ char	*open_dollar(char *dollar, char **env, bool flag, int *k)
 
 	word = NULL;
 	i = 0;
-	if (flag == true)
+	if (dollar->flag == true)
 		return (ft_strdup("$"));
 	while (env[i])
 	{
@@ -53,10 +58,9 @@ char	*open_dollar(char *dollar, char **env, bool flag, int *k)
 		while (env[i][j] && env[i][j] != '=')
 			j++;
 		envp = ft_substr(env[i], 0, j, false);
-		if (ft_strcmp(dollar, envp) == 0)
+		if (ft_strcmp(dollar->parts[1], envp) == 0)
 		{
 			word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-			*k += 0;
 			free(envp);
 			return (word);
 		}
@@ -74,63 +78,73 @@ void	veragrum(char **begin, char **word, char **end, char **dollar)
 	*dollar = NULL;
 }
 
-void	qt_check_for_dollar(bool *d_qt, bool *qt, char *value, int i)
+void	qt_check_for_dollar(t_dollar *dollar)
 {
-	if (value[i] == 34 && *qt == false)
-		*d_qt = !*d_qt;
-	if (value[i] == 39 && *d_qt == false)
-		*qt = !*qt;
+	if (dollar->current->value[dollar->i] == 34 && dollar->qt == false)
+		dollar->double_qt = !dollar->double_qt;
+	if (dollar->current->value[dollar->i] == 39 && dollar->double_qt == false)
+		dollar->qt = !dollar->qt;
+}
+
+void init_dollar(t_dollar *dollar, t_token **list)
+{
+	dollar->qt = false;
+	dollar->double_qt = false;
+	dollar->i = 0;
+	dollar->j = 0;
+	dollar->parts = NULL;
+	dollar->word = NULL;
+	dollar->word = NULL;
+	dollar->current = *list;
+	dollar->flag = false;
 }
 
 void	dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 {
-	t_token	*current;
-	int		i;
-	int		j;
-	char	*word;
-	char	**parts;
-	bool	qt;
-	bool	double_qt;
+	t_dollar d;
 
-	qt = false;
-	double_qt = false;
-	current = *token_list;
-	while(current)
+	init_dollar(&d, token_list);
+	// int i = 0;
+	// while (env[i])
+	// {
+	// 	printf("%s\n", env[i]);
+	// 	i++;
+	// }
+	while(d.current)
 	{
-		if ((current->type == WORD || (current->type >= 12 && current->type <= 16)) && current->type != LIMITER)
+		if ((d.current->type == WORD || (d.current->type >= 12 && d.current->type <= 16)) && d.current->type != LIMITER)
 		{
-			i = 0;
-			while(current->value && current->value[i])
+			d.i = 0;
+			while(d.current->value && d.current->value[d.i])
 			{
-				qt_check_for_dollar(&double_qt, &qt, current->value, i);
-				if (current->value[i] == '$' && qt == false)
+				qt_check_for_dollar(&d);
+				if (d.current->value[d.i] == '$' && d.qt == false)
 				{
-					if (current->value[i + 1] && current->value[i + 1] == '?')
+					if (d.current->value[d.i + 1] && d.current->value[d.i + 1] == '?')
 					{
-						free(current->value);
-						current->value = ft_itoa(g_exit_status);
+						free(d.current->value);
+						d.current->value = ft_itoa(g_exit_status);
 						break ;
 					}		
-					j = i;
-					while (current->value[j] && (ft_isspace(current->value[j]) != 1 &&
-					current->value[j] != 34 && current->value[j] != 39))
+					d.j = d.i;
+					while (d.current->value[d.j] && (ft_isspace(d.current->value[d.j]) != 1 &&
+					d.current->value[d.j] != 34 && d.current->value[d.j] != 39))
 					{
-						j = j + 1;
-						if (current->value[j] == '$' || current->value[j] == '/' || current->value[j] == '=')
+						d.j = d.j + 1;
+						if (d.current->value[d.j] == '$' || d.current->value[d.j] == '/' || d.current->value[d.j] == '=')
 							break ;
 					}
-					if (j == i + 1)
+					if (d.j == d.i + 1)
 						flag = true;
-					parts = karch2(current->value, i, j, strlen(current->value));
-					word = open_dollar(parts[1], env, flag, &i);
-					kp(parts[0], word, parts[2], &current);
-					karch3(parts[1], parts, &flag);
+					d.parts = karch2(d.current->value, d.i, d.j, my_strlen(d.current->value));
+					d.word = open_dollar(&d, env);
+					kp(&d);
 				}
-				if (current->value[0] != '\0')
-					i++;
+				if (d.current->value[0] != '\0')
+					d.i++;
 			}
 		}
-		current = current->next;
+		d.current = d.current->next;
 		flag_a = false;
 	}
 	free_env(env);

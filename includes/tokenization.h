@@ -2,6 +2,7 @@
 # define TOKENIZATION_H
 
 # include <unistd.h>
+# include <stdbool.h>
 
 typedef struct s_token	t_token;
 
@@ -63,6 +64,17 @@ typedef struct s_token
 	t_token			*prev;
 }	t_token;
 
+typedef struct s_dollar
+{
+	int		i;
+	int		j;
+	char	*word;
+	char	**parts;
+	bool	qt;
+	bool	double_qt;
+	bool	flag;
+	t_token *current;
+}	t_dollar;
 
 int tokenization(char *cmd_line, t_token **tokens);
 int skip_whitespaces(char *line, int i);
@@ -76,6 +88,7 @@ void chakertni(t_token **tokens);
 char	*foo(void);
 int	ft_len(int n);
 char	*ft_itoa(int n);
+int	my_strlen(const char *s);
 
 
 //datark nodery jnjelu hamar

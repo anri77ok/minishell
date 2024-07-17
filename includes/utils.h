@@ -47,6 +47,9 @@ void	clear_shell_envr(t_shell *shell);
 
 
 void free_shell_token(t_shell **shell, t_token **token_list, char *cmd_line);
+void	free_key_and_value(char *key, char *value);
+int	func_1(t_cmd *cmd, int *i, int *error_exit);
+int	func_2(char *key, int *i, int *error_exit);
 
 //error
 // int	er_hp1(char *s1, char *s2, char *s3, int exit_status);

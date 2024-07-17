@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/16 18:12:46 by anrkhach          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/07/17 19:45:32 by vbarsegh         ###   ########.fr       */
-=======
-/*   Updated: 2024/07/16 18:12:49 by anrkhach         ###   ########.fr       */
->>>>>>> 80c784ce7e61b105081500e75cf329378cea1fe3
+/*   Created: 2024/07/17 21:19:05 by anrkhach          #+#    #+#             */
+/*   Updated: 2024/07/17 21:43:00 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,71 +134,3 @@ char	*get_word_before_equal(char	*key)
 	res = ft_substr(key, 0, i, true);
 	return (res);
 }
-<<<<<<< HEAD
-=======
-
-void	ft_sort(t_env_elem **copy, int (*cmp)())
-{
-	*copy = merge_sort(*copy, cmp);
-}
-
-void	print_export(t_pipex *pipex)
-{
-	t_env_elem	*temp;
-	t_env_elem	*copy;
-
-	copy = pipex->envp;
-	copy = get_copy_env(pipex->envp);
-	ft_sort(&copy, ft_strcmp);
-	temp = copy;
-	if (ft_strcmp(pipex->cmds->cmd_args[0], "export") == 0 && !pipex->cmds->cmd_args[1])
-	{
-		while (temp)
-		{
-			if (temp->value == NULL)
-				printf("declare -x %s\n", temp->key);
-			else if (temp->value != NULL && temp->value[0] == '\0')
-				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			else if (temp->value[0])
-				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);
-			temp = temp->next;
-		}
-	}
-	free_list(copy);
-}
-
-t_env_elem	*get_copy_env(t_env_elem *env)
-{
-	t_env_elem	*copy;
-	t_env_elem	*node;
-	t_env_elem	*temp;
-
-	copy = NULL;
-	temp = env;
-	while (temp)
-	{
-		// printf("%s=%s\n", temp->key, temp->value);
-		node = ft_lstnew_dlya_env(temp->key, temp->value, false);
-		ft_lstadd_back_env(&copy, node);
-		temp = temp->next;
-	}
-	return (copy);
-}
-
-void	free_list(t_env_elem *temp)
-{
-	t_env_elem	*del;
-
-	while (temp)
-	{
-		printf("mtaaaaa\n");
-		del = temp;
-		temp = temp->next;
-		free(del->key);
-		free(del->value);
-		free(del);
-		// if (temp)
-		// 	temp->prev = NULL;
-	}
-}
->>>>>>> 80c784ce7e61b105081500e75cf329378cea1fe3

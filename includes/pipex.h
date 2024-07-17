@@ -62,7 +62,7 @@ int	have_equal_sign(char *str);
 t_env_elem	*get_copy_env(t_env_elem *env);
 int func_2(char *key, int *i, int *error_exit);
 int func_1(t_cmd *cmd, int *i, int *error_exit);
-
+void	ft_sort(t_env_elem **copy, int (*cmp)());
 
 //unset
 int    unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin);
