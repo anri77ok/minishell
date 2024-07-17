@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:08:56 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:40:46 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ int	main(int argc, char **argv, char **env)
 	shell = malloc(sizeof(t_shell));
 	shell->envr = init_env(shell->envr, env);
 	shell->cmds = NULL;
-	// check_env(shell);
 	cmd_line = "";
 	while (cmd_line)
 	{
@@ -163,19 +162,21 @@ int	main(int argc, char **argv, char **env)
 		ft_clear_shell(&shell);
 		ft_token_list_clear(&token_list);
 		free(cmd_line);
-		//system("leaks minishell");
+		// system("leaks minishell");
 	}
 
-	// t_env_elem *temp;
+	t_env_elem *temp;
 
-	// while (shell->envr)
-	// {
-	// 	temp = shell->envr;
-	// 	shell->envr = shell->envr->next;
-	// 	free(temp->key);
-	// 	free(temp->value);
-	// 	free(temp);
-	// }
+	while (shell->envr)
+	{
+		temp = shell->envr;
+		shell->envr = shell->envr->next;
+		// shell->envr->prev = NULL;
+		free(temp->key);
+		// temp->next = NULL;
+		free(temp->value);
+		free(temp);
+	}
 	// free(shell);
 	printf("exit\n");
 	system("leaks minishell");

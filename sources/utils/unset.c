@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:32 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:10:33 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/17 15:30:21 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 			i++;
 			continue ;
 		}
-		delete_node_with_that_key(&pipex->envp, cmd->cmd_args[i]);
+		delete_node_with_that_key(pipex, cmd->cmd_args[i]);
 		i++;
 	}
 	*is_builtin = 1;
@@ -69,44 +69,27 @@ int	is_digit_or_letter_or__(char c)
 	return (-1);
 }
 
-void	delete_node_with_that_key(t_env_elem **env, char *key)
+void	delete_node_with_that_key(t_pipex *pipex, char *key)
 {
 	int			pos;
 	t_env_elem	*temp;
-	t_env_elem	*del_node;
+	// t_env_elem	*del_node;
 
-	temp = *env;
+	temp = pipex->envp;
 	pos = 0;
-	if (check_this_key_in_env_list_unset(*env, key, &pos) == 1)
+	while (temp)
 	{
-		if (pos == 0)
+		if (ft_strcmp(temp->key, key) == 0)
 		{
-			// del_first_node(env);
-			// del_node = *env;
-			// if (del_node->key != NULL)
-			// {
-			// 	free(del_node->key);
-			// 	free(del_node->value);
-			// 	del_node->key = NULL;
-			// 	del_node->value = NULL;
-			// }
-			//env = (*env)->next;
-			//(*env)->prev = NULL;
-			//free(del_node);
-			//del_node = NULL;
+			free(temp->key);
+			temp->key = NULL;
+			if (temp->value && temp->value[0] != '\0')
+			{
+				free(temp->value);
+				temp->value = NULL;
+			}
 		}
-		else if (pos > 0 && pos < count_env_nodes_(*env) - 1)
-			delete_middle_node(env, pos);
-		else if (pos == count_env_nodes_(*env) - 1)
-		{
-			while (temp->next->next)
-				temp = temp->next;
-			del_node = temp->next;
-			free(del_node->key);
-			free(del_node->value);
-			free(del_node);
-			temp->next = NULL;
-		}
+		temp = temp->next;
 	}
 }
 

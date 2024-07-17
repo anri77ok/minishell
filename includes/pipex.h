@@ -66,7 +66,7 @@ t_env_elem	*get_copy_env(t_env_elem *env);
 
 //unset
 int    unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin);
-void    delete_node_with_that_key(t_env_elem **env, char *key);
+void    delete_node_with_that_key(t_pipex *pipex, char *key);
 void     delete_middle_node(t_env_elem **env, int pos);
 int check_this_key_in_env_list_unset(t_env_elem *env, char *key, int *pos);
 int count_env_nodes_(t_env_elem *env);
