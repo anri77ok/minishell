@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:06:53 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 20:16:10 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:26:25 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ int	check_is_built_in(t_cmd *cmd)
 		|| ft_strcmp(cmd->cmd_path, "echo") == 0
 		|| ft_strcmp(cmd->cmd_path, "export") == 0
 		|| ft_strcmp(cmd->cmd_path, "unset") == 0
-		|| ft_strcmp(cmd->cmd_path, "exit") == 0)
+		|| ft_strcmp(cmd->cmd_path, "exit") == 0
+		|| ft_strcmp(cmd->cmd_path, "cd") == 0)
 		return (1);
 	return (-1);
 }

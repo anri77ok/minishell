@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:26:56 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/18 16:01:27 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:28:20 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ int	check_syntax(t_token *token)
 	while (tm)
 	{
 		if (tm->type == S_PIPE && (!tm->prev || !tm->next))
-			return (p_error(NULL, SYNTAX_ERR, tm->value, 258), 2);
+			return (p_error(NULL, SYNTAX_ERR, tm->value, 2), 2);
 		if (tm->type == OUT_REDIR || tm->type == IN_REDIR
 			|| tm->type == APPEND_REDIR || tm->type == HERE_DOC)
 		{
 			if (!tm->next)
-				return (p_error(NULL, SYNTAX_ERR, "newline", 258), 2);
+				return (p_error(NULL, SYNTAX_ERR, "newline", 2), 2);
 			if (tm->next->type == APPEND_FILEOUT || tm->next->type == LIMITER
 				|| tm->next->type == FILEOUT || tm->next->type == FILEIN)
 				return (0);
-			return (p_error(NULL, SYNTAX_ERR, tm->next->value, 258), 2);
+			return (p_error(NULL, SYNTAX_ERR, tm->next->value, 2), 2);
 		}
 		if (tm->type == S_PIPE && control_operators(tm->next) == 1)
-			return (p_error(NULL, SYNTAX_ERR, tm->value, 258), 2);
+			return (p_error(NULL, SYNTAX_ERR, tm->value, 2), 2);
 		if (permitted_operator(tm))
-			return (p_error(NULL, SYNTAX_ERR, tm->value, 258), 2);
+			return (p_error(NULL, SYNTAX_ERR, tm->value, 2), 2);
 		tm = tm->next;
 	}
 	return (0);
