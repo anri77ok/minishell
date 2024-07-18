@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 19:31:26 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:05:34 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,7 @@ void	dollarni_helper(t_dollar *d, t_env_elem *env)
 		{
 			if (d->cur->value[d->i + 1]
 				&& d->cur->value[d->i + 1] == '?')
-			{
 				d->word = ft_itoa(g_exit_status);
-				d->harcakan = ft_substr(d->cur->value, d->i + 2,
-						my_strlen(d->cur->value), true);
-			}
 			d->j = d->i;
 			dollarni_helperi_axper(d);
 			if (d->j == d->i + 1)

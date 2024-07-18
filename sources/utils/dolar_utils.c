@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:11 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 18:12:29 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 21:04:31 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ char	**karch2(t_dollar *d, int start, int mid, int end)
 	arr = malloc(sizeof(char *) * 4);
 	arr[0] = ft_substr(d->cur->value, 0, start, true);
 	arr[1] = ft_substr(d->cur->value, start + 1, mid, true);
-	if (d->harcakan == NULL)
-		arr[2] = ft_substr(d->cur->value, mid, end - mid, false);
-	else
-		arr[2] = d->harcakan;
+	arr[2] = ft_substr(d->cur->value, mid, end - mid, false);
 	arr[3] = NULL;
 	return (arr);
 }
