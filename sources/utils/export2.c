@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:45:40 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 19:48:16 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:02:01 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
 	t_env_elem	*copy;
+	bool 		yel;
 
 	copy = pipex->envp;
 	copy = get_copy_env(pipex->envp);
@@ -67,7 +68,9 @@ void	print_export(t_pipex *pipex)
 	{
 		while (temp)
 		{
-			if (temp->value == NULL)
+			if (temp->value == NULL && temp->key == NULL)
+				yel = false;
+			else if (temp->value == NULL)
 				printf("declare -x %s\n", temp->key);
 			else if (temp->value != NULL && temp->value[0] == '\0')
 				printf("declare -x %s=\"%s\"\n", temp->key, temp->value);

@@ -6,35 +6,12 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:46 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 13:57:21 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:10:15 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokenization.h"
 #include "utils.h"
-
-int	my_strlen(const char *s)
-{
-	int	len;
-
-	len = 0;
-	if (!s)
-		return (0);
-	while (s[len])
-		len++;
-	return (len);
-}
-
-int	get_quote(char *str, int i, char c)
-{
-	while (str[i])
-	{
-		i++;
-		if (str[i] == c)
-			return (i);
-	}
-	return (-1);
-}
 
 void	chakertni(t_token **tokens)
 {
@@ -83,34 +60,10 @@ void	chakertni_helper(t_token *cur, int *i, int j)
 	free_func(cur->begin, cur->end, cur->final, cur->word);
 }
 
-
-char *begin_func(int j, char *value)
-{
-	if (j != 0)
-		return (ft_substr(value, 0, j, true));
-	else
-		return (ft_strdup(""));
-}
-
-char *word_func(int i, int j, char *value)
-{
-	if (j + 1 != i)
-		return (ft_substr(value, j + 1, i, true));
-	else
-		return (ft_strdup(""));
-}
-
-char *end_func(int i, char *value)
-{
-	if (i + 1 != my_strlen(value))
-		return (ft_substr(value, i + 1, ft_strlen(value), true));
-	else
-		return (ft_strdup(""));
-}
-
-int	i_func(char *begin ,char *word)
+int	i_func(char *begin, char *word)
 {
 	int	i;
+
 	if (word != '\0')
 	{
 		if (begin == '\0')
@@ -125,7 +78,7 @@ int	i_func(char *begin ,char *word)
 	return (i);
 }
 
-void free_func(char *begin, char *end, char *final, char *word)
+void	free_func(char *begin, char *end, char *final, char *word)
 {
 	free(begin);
 	free(end);

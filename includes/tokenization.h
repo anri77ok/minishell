@@ -90,6 +90,7 @@ void	tokens_types(t_token *tokens);
 void chakertni(t_token **tokens);
 void	chakertni_helper(t_token *cur, int *i, int j);
 void	foo2(char *valie, int *i, int *j);
+int	get_quote(char *str, int i, char c);
 //itoa
 char	*foo(void);
 int	ft_len(int n);
