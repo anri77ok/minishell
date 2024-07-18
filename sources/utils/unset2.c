@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 20:19:07 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 22:42:57 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:36:57 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ void	delete_node_with_that_key(t_pipex *pipex, char *key)
 			// 	temp->prev->next = temp->next;
 			// 	free(del_node);
 			// }
-				
+			if (pos > 0)
+				free (del_node);
+			printf("pos = %d\n", pos);
 		}
-		pos++;
+		if (temp->key != NULL)
+			pos++;
 		temp = temp->next;
 	}
 }

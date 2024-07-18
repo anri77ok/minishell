@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 21:16:58 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:51:32 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,31 +41,21 @@ void	kp(t_dollar *dollar)
 	dollar->flag = false;
 }
 
-char	*open_dollar(t_dollar *dollar, char **env)
+char	*open_dollar(t_dollar *dollar, t_env_elem *env)
 {
 	char	*word;
-	char	*envp;
-	int		i;
-	int		j;
-
+	
 	word = NULL;
-	i = 0;
 	if (dollar->flag == true)
 		return (ft_strdup("$"));
-	while (env[i])
+	while (env)
 	{
-		j = 0;
-		while (env[i][j] && env[i][j] != '=')
-			j++;
-		envp = ft_substr(env[i], 0, j, false);
-		if (ft_strcmp(dollar->parts[1], envp) == 0)
+		if (ft_strcmp(dollar->parts[1], env->key) == 0)
 		{
-			word = ft_substr(env[i], j + 1, ft_strlen(env[i]), true);
-			free(envp);
+			word = ft_strdup(env->value);
 			return (word);
 		}
-		free(envp);
-		i++;
+		env = env->next;
 	}
 	return(word);
 }
@@ -99,17 +89,11 @@ void init_dollar(t_dollar *dollar, t_token **list)
 	dollar->flag = false;
 }
 
-void	dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
+void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
 {
 	t_dollar d;
 
 	init_dollar(&d, token_list);
-	// int i = 0;
-	// while (env[i])
-	// {
-	// 	printf("%s\n", env[i]);
-	// 	i++;
-	// }
 	while(d.current)
 	{
 		if ((d.current->type == WORD || (d.current->type >= 12 && d.current->type <= 16)) && d.current->type != LIMITER)
@@ -147,7 +131,6 @@ void	dolarni2(t_token **token_list, char **env, bool flag, bool flag_a)
 		d.current = d.current->next;
 		flag_a = false;
 	}
-	free_env(env);
 }
 
 char	*foo(void)
