@@ -60,6 +60,10 @@ typedef struct s_token
 	t_token_type	type;
 	char			*value;
 	int				flag;
+	char			*begin;
+	char			*word;
+	char			*end;
+	char			*final;
 	t_token			*next;
 	t_token			*prev;
 }	t_token;
@@ -84,6 +88,8 @@ char	*str_type(int token_type);
 t_token_type set_token_type(char *value, int i);
 void	tokens_types(t_token *tokens);
 void chakertni(t_token **tokens);
+void	chakertni_helper(t_token *cur, int *i, int j);
+void	foo2(char *valie, int *i, int *j);
 //itoa
 char	*foo(void);
 int	ft_len(int n);

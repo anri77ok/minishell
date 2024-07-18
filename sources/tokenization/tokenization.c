@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:23 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:09:24 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 14:09:44 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,11 @@ int	is_quote(char *cmd_line, int i)
 	return (i);
 }
 
-void	spliting(t_token **token_list, char *str)
+void	spliting(t_token **token_list, char *str, int i, int k)
 {
 	t_token	*new_token;
 	char	*pice;
 
-	int i = 0;
-	int k = 0;
 	while (str[i])
 	{
 		while (str[i] && ft_is_operator(str, i) == 0)
@@ -95,6 +93,7 @@ void	spliting(t_token **token_list, char *str)
 			k = k + ft_is_operator(str, k);
 		if (i > k)
 		{
+			
 			pice = ft_substr(str, k, i, true);
 			new_token = create_new_token(pice);
 			add_to_list(token_list, new_token);
@@ -148,7 +147,7 @@ int tokenization(char *cmd_line, t_token **token_list)
 		else
 		{
 			line = ft_substr(cmd_line, i, j - i, false);
-			spliting(token_list, line);
+			spliting(token_list, line, 0, 0);
 		}
 		tokens_types(*token_list);
 		j = skip_whitespaces(cmd_line, j);

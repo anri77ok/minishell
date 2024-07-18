@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   chakertni.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:46 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/16 18:09:49 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 13:57:21 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,64 +38,97 @@ int	get_quote(char *str, int i, char c)
 
 void	chakertni(t_token **tokens)
 {
-	t_token	*current;
-	char	*begin;
-	char	*end;
-	char	*word;
-	char	*final;
+	t_token	*cur;
 	int		i;
 	int		j;
 
-	current = *tokens;
-	while (current)
+	cur = *tokens;
+	while (cur)
 	{
 		i = 0;
-		while (current->value[i])
+		while (cur->value[i])
 		{
-			if (current->value[i] == 34 || current->value[i] == 39)
+			if (cur->value[i] == 34 || cur->value[i] == 39)
 			{
-				j = i;
-				i = get_quote(current->value, i, current->value[i]);
+				foo2(cur->value, &i, &j);
 				if (i != -1)
 				{
-					if (j != 0)
-						begin = ft_substr(current->value, 0, j, true);
-					else
-						begin = ft_strdup("");
-					if (j + 1 != i)
-						word = ft_substr(current->value, j + 1, i, true);
-					else
-						word =ft_strdup("");
-					if (i + 1 != my_strlen(current->value))
-						end = ft_substr(current->value, i + 1, ft_strlen(current->value), true);
-					else
-						end = ft_strdup("");
-					free(current->value);
-					final = join(begin, word, 0, 0);
-					current->value = join(final, end, 0, 0);
-					if (word != '\0')
-					{
-						if (begin == '\0')
-							i = my_strlen(word);
-						else
-							i = my_strlen(begin) + my_strlen(word);
-					}
-					else if (begin != '\0')
-						i = (my_strlen(begin));
-					else
-						i = 0;
-					free(begin);
-					free(end);
-					free(final);
-					free(word);
-					if (current->value == '\0')
+					chakertni_helper(cur, &i, j);
+					if (cur->value == '\0')
 						break ;
 				}
 			}
 			else
 				i++;
 		}
-		current = current->next;
+		cur = cur->next;
 	}
 }
 
+void	foo2(char *value, int *i, int *j)
+{
+	*j = *i;
+	*i = get_quote(value, *i, value[*i]);
+}
+
+void	chakertni_helper(t_token *cur, int *i, int j)
+{
+	cur->begin = begin_func(j, cur->value);
+	cur->word = word_func(*i, j, cur->value);
+	cur->end = end_func(*i, cur->value);
+	free(cur->value);
+	cur->final = join(cur->begin, cur->word, 0, 0);
+	cur->value = join(cur->final, cur->end, 0, 0);
+	*i = i_func(cur->begin, cur->word);
+	free_func(cur->begin, cur->end, cur->final, cur->word);
+}
+
+
+char *begin_func(int j, char *value)
+{
+	if (j != 0)
+		return (ft_substr(value, 0, j, true));
+	else
+		return (ft_strdup(""));
+}
+
+char *word_func(int i, int j, char *value)
+{
+	if (j + 1 != i)
+		return (ft_substr(value, j + 1, i, true));
+	else
+		return (ft_strdup(""));
+}
+
+char *end_func(int i, char *value)
+{
+	if (i + 1 != my_strlen(value))
+		return (ft_substr(value, i + 1, ft_strlen(value), true));
+	else
+		return (ft_strdup(""));
+}
+
+int	i_func(char *begin ,char *word)
+{
+	int	i;
+	if (word != '\0')
+	{
+		if (begin == '\0')
+			i = my_strlen(word);
+		else
+			i = my_strlen(begin) + my_strlen(word);
+	}
+	else if (begin != '\0')
+		i = (my_strlen(begin));
+	else
+		i = 0;
+	return (i);
+}
+
+void free_func(char *begin, char *end, char *final, char *word)
+{
+	free(begin);
+	free(end);
+	free(final);
+	free(word);
+}

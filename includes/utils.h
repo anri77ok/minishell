@@ -54,4 +54,15 @@ int	func_2(char *key, int *i, int *error_exit);
 //error
 // int	er_hp1(char *s1, char *s2, char *s3, int exit_status);
 // int	er_hp2(char *s1, char s2, char *s3, int exit_status);
+
+
+
+//chakertni
+char *begin_func(int j, char *value);
+char *word_func(int i, int j, char *value);
+char *end_func(int i, char *value);
+int	i_func(char *begin ,char *word);
+void free_func(char *begin, char *end, char *final, char *word);
+
+
 #endif
