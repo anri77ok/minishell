@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 15:05:06 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 17:19:43 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	main_helper(t_token **token_list, t_shell *shell,
 			chakertni(token_list);
 			token_to_cmds(shell, *token_list);
 			*ppx = run_cmds(shell);
-			print_token_list(*token_list);
+			// print_token_list(*token_list);
 		}
 	}
 }
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 		if (cmd_line && *cmd_line)
 			main_helper(&token_list, shell, cmd_line, &pipex);
 		free_shell_token(&shell, &token_list, cmd_line);
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 	clear_shell_envr(shell);
 	printf("exit\n");
