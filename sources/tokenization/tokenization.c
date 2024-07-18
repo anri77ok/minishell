@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:23 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 14:09:44 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:16:15 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,143 +16,65 @@
 #include "pipex.h"
 #include "minishell.h"
 
-int	skip_whitespaces(char *line, int i)
+int tok_helper(char *cmd_line, t_tokvar *tok)
 {
-	if (line == NULL)
-		return (0);
-	while (line[i] && ft_isspace(line[i]) == 1)
-		i++;
-	return (i);
-}
-t_token	*create_new_token(char *value)
-{
-	t_token	*new_token;
-
-	new_token = malloc(sizeof(t_token));
-	if (new_token == NULL)
-		return (NULL);
-	new_token->value = value;
-	new_token->type = ERROR;
-	new_token->next = NULL;
-	new_token->prev = NULL;
-	new_token->flag = 0;
-	return (new_token);
-}
-
-void	add_to_list(t_token **list_of_tokens, t_token *new_token)
-{
-	t_token	*ptr;
-
-	if (list_of_tokens == NULL || new_token == NULL)
-		return ;
-	if (*list_of_tokens == NULL)
+	while (cmd_line[tok->j] && ft_isspace(cmd_line[tok->j]) == 0)
 	{
-		*list_of_tokens = new_token;
-		return ;
-	}
-	ptr = *list_of_tokens;
-	while (ptr && ptr->next)
-		ptr = ptr->next;
-	ptr->next = new_token;
-	new_token->prev = ptr;
-}
-
-int	is_quote(char *cmd_line, int i)
-{
-	if (cmd_line[i] == 34 || cmd_line[i] == 39)
-		i++;
-	else
-		return (-1);
-	if (cmd_line[i - 1] == 34)
-	{
-		while (cmd_line[i] && cmd_line[i] != 34)
-			i++;
-	}
-	else if (cmd_line[i - 1] == 39)
-	{
-		while (cmd_line[i] && cmd_line[i] != 39)
-			i++;
-	}
-	if (cmd_line[i] == '\0')
-		return (-1);
-	else
-		i++;
-	return (i);
-}
-
-void	spliting(t_token **token_list, char *str, int i, int k)
-{
-	t_token	*new_token;
-	char	*pice;
-
-	while (str[i])
-	{
-		while (str[i] && ft_is_operator(str, i) == 0)
-			i++;
-		while (str[k] && ft_is_operator(str, k) != 0)
-			k = k + ft_is_operator(str, k);
-		if (i > k)
+		if (cmd_line[tok->j] == 34 || cmd_line[tok->j] == 39)
 		{
-			
-			pice = ft_substr(str, k, i, true);
-			new_token = create_new_token(pice);
-			add_to_list(token_list, new_token);
-			k = i;
+			tok->k = tok->j;
+			tok->j = is_quote(cmd_line, tok->j);
+			if (tok->j == -1)
+			{
+				p_error(NULL, QUOT_ERR, &cmd_line[tok->k], 2);
+				return (-1);
+			}
+			tok->quote = true;
 		}
-		else if (i < k)
-		{
-			pice = ft_substr(str, i, k, true);
-			new_token = create_new_token(pice);
-			add_to_list(token_list, new_token);
-			i = k - ft_is_operator(str, k);;
-		}
+		else
+			tok->j = tok->j + 1;
 	}
+	return (0);
+}
+void init_tok(t_tokvar *tok, char *cmd_line)
+{
+	tok->i = skip_whitespaces(cmd_line, 0);
+	tok->j = tok->i;
+	tok->k = 0;
+	tok->quote = false;
+}
+
+void toks(t_tokvar *tok, t_token **token_list, char *cmd_line)
+{
+	tokens_types(*token_list);
+	tok->j = skip_whitespaces(cmd_line, tok->j);
+	tok->i = tok->j;
 }
 
 int tokenization(char *cmd_line, t_token **token_list)
 {
-	int i;
-	int j;
-	int k;
 	char *line;
 	t_token	*new_token;
-	bool quote = false;
+	t_tokvar tok;
 
-	i = skip_whitespaces(cmd_line, 0);
-	j = i;
-	while (cmd_line[j])
+	init_tok(&tok, cmd_line);
+	while (cmd_line[tok.j])
 	{
-		while (cmd_line[j] && ft_isspace(cmd_line[j]) == 0)
+		if (tok_helper(cmd_line, &tok) == -1)
+			return (-1);
+		if (tok.quote == true)
 		{
-			if (cmd_line[j] == 34 || cmd_line[j] == 39)
-			{
-				k = j;
-				j = is_quote(cmd_line, j);
-				if (j == -1)
-				{
-					p_error(NULL, QUOT_ERR, &cmd_line[k], 2);
-					return (-1);
-				}
-				quote = true;
-			}
-			else
-				j++;
-		}
-		if (quote == true)
-		{
-			line = ft_substr(cmd_line, i, j - i, false);
+			line = ft_substr(cmd_line, tok.i, tok.j - tok.i, false);
 			new_token = create_new_token(line);
 			add_to_list(token_list, new_token);
 		}
 		else
 		{
-			line = ft_substr(cmd_line, i, j - i, false);
+			line = ft_substr(cmd_line, tok.i, tok.j - tok.i, false);
 			spliting(token_list, line, 0, 0);
 		}
-		tokens_types(*token_list);
-		j = skip_whitespaces(cmd_line, j);
-		i = j;
-		if (quote == false)
+		toks(&tok, token_list, cmd_line);
+		if (tok.quote == false)
 			free(line);
 	}
 	return (0);

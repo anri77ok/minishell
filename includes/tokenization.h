@@ -80,6 +80,15 @@ typedef struct s_dollar
 	t_token *current;
 }	t_dollar;
 
+
+typedef struct s_tokvar
+{
+	int		i;
+	int		j;
+	int		k;
+	bool quote;
+}	t_tokvar;
+
 int tokenization(char *cmd_line, t_token **tokens);
 int skip_whitespaces(char *line, int i);
 t_token *create_new_token(char *value);
@@ -116,6 +125,7 @@ void	write_helper(char **cmd_args, int ind, int fd, int flag);
 //pwd
 int    pwd(int fd, int *is_builtin);
 
-
+void	add_to_list(t_token **list_of_tokens, t_token *new_token);
 int	check_is_ambiguous(t_token *cmd);
+void	spliting(t_token **token_list, char *str, int i, int k);
 #endif

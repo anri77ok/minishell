@@ -38,7 +38,8 @@ utils/exit.c utils/signals.c utils/cd2.c utils/envp2.c utils/signals2.c \
 utils/utils2.c utils/utils3.c utils/dolar_utils.c utils/exit.c utils/signals.c \
 utils/cd2.c utils/envp2.c utils/check_syntax.c utils/error.c utils/del_node.c \
 utils/clear.c utils/unset2.c utils/export2.c utils/is_ambiguous.c \
-utils/run_command2.c utils/run_commands3.c utils/dollarni1.c utils/chakertni2.c\
+utils/run_command2.c utils/run_commands3.c utils/dollarni1.c utils/chakertni2.c \
+tokenization/tok_helper.c
 
 # Objects file names
 OBJS = $(addprefix $(OBJS_DIR), $(OBJS_NAME))
