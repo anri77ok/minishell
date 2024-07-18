@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:13:42 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 19:27:57 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:07:04 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	run_cmd_with_execve(t_pipex *pipex, t_cmd *cmd, int i, char **env)
 			break ;
 	}
 	if (access(cmd->cmd_path, X_OK) != 0)
-		p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 1);
+		p_error(pipex, CMD_NOT_FOUND, cmd->cmd_args[0], 127);
 	if (execve(cmd->cmd_path, cmd->cmd_args, env) == -1)
 		p_error(pipex, EXECVE_ERR, NULL, 1);
 }

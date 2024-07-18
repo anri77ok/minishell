@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:10 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 16:03:04 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:59:24 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	tokens_types(t_token *token_list)
 	{
 		current->type = set_token_type(current->value, 0);
 		if (current->type == ERROR)
-			printf("hop\n");
+			er_hp1("minishell : syntax error near unexpected token `", current->value, "'\n", 2);
 		if (current->prev != NULL && current->type == WORD
 			&& ft_is_operator(current->prev->value, 0) > 0)
 		{
@@ -90,7 +90,6 @@ t_token_type	set_token_type(char *value, int i)
 			return (HERE_DOC);
 		if (syntx_err(value, i + 1) == 1)
 		{
-			//printf();
 			return (ERROR);
 		}
 		return (IN_REDIR);
