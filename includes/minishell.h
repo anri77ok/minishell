@@ -10,6 +10,7 @@
 # include <fcntl.h>
 # include "readline/readline.h"
 # include "readline/history.h"
+# include "tokenization.h"
 
 # define RM "rm"
 # define RF	"-rf"
@@ -55,6 +56,11 @@ void	ctrl_bckslash(void);
 void	disable_echoctl(void);
 
 int	er_hp1(char *s1, char *s2, char *s3, int exit_status);
-
+char	*open_dollar(t_dollar *dollar, t_env_elem *env);
+void	qt_check_for_dollar(t_dollar *dollar);
+void	veragrum(char **begin, char **word, char **end, char **dollar);
+void init_dollar(t_dollar *dollar, t_token **list);
+void	kp(t_dollar *dollar);
+char	*open_dollar(t_dollar *dollar, t_env_elem *env);
 
 #endif

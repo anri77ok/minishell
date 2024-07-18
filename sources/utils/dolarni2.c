@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 14:51:32 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:35:43 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,79 +14,41 @@
 #include "utils.h"
 #include "env.h"
 
-void	kp(t_dollar *dollar)
+void dollarni_helperi_axper(t_dollar *d)
 {
-	char	*final;
-
-	final = join(dollar->parts[0], dollar->word, 0, 0);
-	// printf("begin -> %s, word-> %s,end -> %s\n", begin, word, end);
-	free(dollar->current->value);
-	dollar->current->value = join(final, dollar->parts[2], 0, 0);
-	printf("value -> %s\n", final);
-	printf("%s, %s, %s, %s\n", dollar->word, dollar->parts[0], dollar->parts[1], dollar->parts[2]);
-	free(final);
-	free(dollar->word);
-	if (dollar->parts[0] != NULL)
+	while (d->current->value[d->j] && (ft_isspace(d->current->value[d->j]) != 1 &&
+	d->current->value[d->j] != 34 && d->current->value[d->j] != 39))
 	{
-	free(dollar->parts[0]);
-	dollar->parts[0] = NULL;
+		d->j = d->j + 1;
+		if (d->current->value[d->j] == '$' || d->current->value[d->j] == '/' || d->current->value[d->j] == '=')
+			break ;
 	}
-	if (dollar->parts[2] != NULL)
-	{
-		free(dollar->parts[2]);
-		dollar->parts[2] = NULL;
-	}
-	free(dollar->parts[1]);
-	free(dollar->parts);
-	dollar->flag = false;
 }
 
-char	*open_dollar(t_dollar *dollar, t_env_elem *env)
+void dollarni_helper(t_dollar *d, t_env_elem *env, bool flag)
 {
-	char	*word;
-	
-	word = NULL;
-	if (dollar->flag == true)
-		return (ft_strdup("$"));
-	while (env)
+	while(d->current->value && d->current->value[d->i])
 	{
-		if (ft_strcmp(dollar->parts[1], env->key) == 0)
+		qt_check_for_dollar(d);
+		if (d->current->value[d->i] == '$' && d->qt == false)
 		{
-			word = ft_strdup(env->value);
-			return (word);
+			if (d->current->value[d->i + 1] && d->current->value[d->i + 1] == '?')
+			{
+				free(d->current->value);
+				d->current->value = ft_itoa(g_exit_status);
+				break ;
+			}
+			d->j = d->i;
+			dollarni_helperi_axper(d);
+			if (d->j == d->i + 1)
+				flag = true;
+			d->parts = karch2(d->current->value, d->i, d->j, my_strlen(d->current->value));
+			d->word = open_dollar(d, env);
+			kp(d);
 		}
-		env = env->next;
+		if (d->current->value[0] != '\0')
+			d->i++;
 	}
-	return(word);
-}
-
-void	veragrum(char **begin, char **word, char **end, char **dollar)
-{
-	*begin = NULL;
-	*word = NULL;
-	*end = NULL;
-	*dollar = NULL;
-}
-
-void	qt_check_for_dollar(t_dollar *dollar)
-{
-	if (dollar->current->value[dollar->i] == 34 && dollar->qt == false)
-		dollar->double_qt = !dollar->double_qt;
-	if (dollar->current->value[dollar->i] == 39 && dollar->double_qt == false)
-		dollar->qt = !dollar->qt;
-}
-
-void init_dollar(t_dollar *dollar, t_token **list)
-{
-	dollar->qt = false;
-	dollar->double_qt = false;
-	dollar->i = 0;
-	dollar->j = 0;
-	dollar->parts = NULL;
-	dollar->word = NULL;
-	dollar->word = NULL;
-	dollar->current = *list;
-	dollar->flag = false;
 }
 
 void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
@@ -99,34 +61,7 @@ void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
 		if ((d.current->type == WORD || (d.current->type >= 12 && d.current->type <= 16)) && d.current->type != LIMITER)
 		{
 			d.i = 0;
-			while(d.current->value && d.current->value[d.i])
-			{
-				qt_check_for_dollar(&d);
-				if (d.current->value[d.i] == '$' && d.qt == false)
-				{
-					if (d.current->value[d.i + 1] && d.current->value[d.i + 1] == '?')
-					{
-						free(d.current->value);
-						d.current->value = ft_itoa(g_exit_status);
-						break ;
-					}		
-					d.j = d.i;
-					while (d.current->value[d.j] && (ft_isspace(d.current->value[d.j]) != 1 &&
-					d.current->value[d.j] != 34 && d.current->value[d.j] != 39))
-					{
-						d.j = d.j + 1;
-						if (d.current->value[d.j] == '$' || d.current->value[d.j] == '/' || d.current->value[d.j] == '=')
-							break ;
-					}
-					if (d.j == d.i + 1)
-						flag = true;
-					d.parts = karch2(d.current->value, d.i, d.j, my_strlen(d.current->value));
-					d.word = open_dollar(&d, env);
-					kp(&d);
-				}
-				if (d.current->value[0] != '\0')
-					d.i++;
-			}
+			dollarni_helper(&d, env, flag);
 		}
 		d.current = d.current->next;
 		flag_a = false;
@@ -158,30 +93,3 @@ int	ft_len(int n)
 	return (len);
 }
 
-char	*ft_itoa(int n)
-{
-	char	*arr;
-	int		len;
-	long	long_n;
-
-	if (n == 0)
-		return (foo());
-	len = ft_len(n);
-	arr = malloc(sizeof(char) *(len + 1));
-	if (!arr)
-		return (NULL);
-	long_n = (long)n;
-	arr[len] = '\0';
-	len--;
-	if (n < 0)
-	{
-		arr[0] = '-';
-		long_n = -long_n;
-	}
-	while (long_n != 0)
-	{
-		arr[len--] = ((long_n % 10) + 48);
-		long_n /= 10;
-	}
-	return (arr);
-}

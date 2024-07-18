@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolar_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:11 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 19:30:48 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:35:41 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,32 @@ void	karch3(char *p1, char **p, bool *flag)
 	free(p1);
 	free(p);
 	*flag = false;
+}
+
+char	*ft_itoa(int n)
+{
+	char	*arr;
+	int		len;
+	long	long_n;
+
+	if (n == 0)
+		return (foo());
+	len = ft_len(n);
+	arr = malloc(sizeof(char) *(len + 1));
+	if (!arr)
+		return (NULL);
+	long_n = (long)n;
+	arr[len] = '\0';
+	len--;
+	if (n < 0)
+	{
+		arr[0] = '-';
+		long_n = -long_n;
+	}
+	while (long_n != 0)
+	{
+		arr[len--] = ((long_n % 10) + 48);
+		long_n /= 10;
+	}
+	return (arr);
 }
