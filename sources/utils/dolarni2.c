@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolarni2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 19:29:08 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:31:26 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	dollarni_helper(t_dollar *d, t_env_elem *env)
 				&& d->cur->value[d->i + 1] == '?')
 			{
 				d->word = ft_itoa(g_exit_status);
-				d->harcakan = ft_substr(d->cur->value, d->i + 1,
+				d->harcakan = ft_substr(d->cur->value, d->i + 2,
 						my_strlen(d->cur->value), true);
 			}
 			d->j = d->i;
@@ -50,7 +50,7 @@ void	dollarni_helper(t_dollar *d, t_env_elem *env)
 				d->word = open_dollar(d, env);
 			kp(d);
 		}
-		if (d->cur->value[d->i] != '\0')
+		if (d->cur->value[0] != '\0' && d->cur->value[d->i] != '\0')
 			d->i++;
 	}
 }

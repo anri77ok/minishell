@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:49 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 18:47:18 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:31:41 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	qt_check_for_dollar(t_dollar *dollar)
 		dollar->double_qt = !dollar->double_qt;
 	if (dollar->cur->value[dollar->i] == 39 && dollar->double_qt == false)
 		dollar->qt = !dollar->qt;
+	dollar->word = NULL;
 }
 
 void	init_dollar(t_dollar *dollar, t_token **list)
