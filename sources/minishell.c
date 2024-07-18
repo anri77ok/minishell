@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 18:36:35 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:59:50 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	main(int argc, char **argv, char **env)
 		if (cmd_line && *cmd_line)
 			main_helper(&token_list, shell, cmd_line, &pipex);
 		free_shell_token(&shell, &token_list, cmd_line);
-		// system("leaks minishell");
+		//system("leaks minishell");
 	}
 	clear_shell_envr(shell);
 	printf("exit\n");
