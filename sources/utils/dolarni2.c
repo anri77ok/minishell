@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolarni2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 17:34:34 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:37:16 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	dollarni_helperi_axper(t_dollar *d)
 	}
 }
 
-void	dollarni_helper(t_dollar *d, t_env_elem *env, bool flag)
+void	dollarni_helper(t_dollar *d, t_env_elem *env)
 {
 	while (d->cur->value && d->cur->value[d->i])
 	{
@@ -36,25 +36,26 @@ void	dollarni_helper(t_dollar *d, t_env_elem *env, bool flag)
 			if (d->cur->value[d->i + 1]
 				&& d->cur->value[d->i + 1] == '?')
 			{
-				free(d->cur->value);
-				d->cur->value = ft_itoa(g_exit_status);
-				break ;
+				d->word = ft_itoa(g_exit_status);
+				d->harcakan = ft_substr(d->cur->value, d->i + 1,
+						my_strlen(d->cur->value), true);
 			}
 			d->j = d->i;
 			dollarni_helperi_axper(d);
 			if (d->j == d->i + 1)
-				flag = true;
-			d->parts = karch2(d->cur->value, d->i, d->j,
+				d->flag = true;
+			d->parts = karch2(d, d->i, d->j,
 					my_strlen(d->cur->value));
-			d->word = open_dollar(d, env);
+			if (d->word == NULL)
+				d->word = open_dollar(d, env);
 			kp(d);
 		}
-		if (d->cur->value[0] != '\0')
+		if (d->cur->value[d->i] != '\0')
 			d->i++;
 	}
 }
 
-void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
+void	dolarni2(t_token **token_list, t_env_elem *env, bool flag_a)
 {
 	t_dollar	d;
 
@@ -65,7 +66,7 @@ void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
 			&& d.cur->type != LIMITER)
 		{
 			d.i = 0;
-			dollarni_helper(&d, env, flag);
+			dollarni_helper(&d, env);
 		}
 		d.cur = d.cur->next;
 		flag_a = false;

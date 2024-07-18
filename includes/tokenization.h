@@ -77,6 +77,7 @@ typedef struct s_dollar
 	bool	qt;
 	bool	double_qt;
 	bool	flag;
+	char	*harcakan;
 	t_token *cur;
 }	t_dollar;
 

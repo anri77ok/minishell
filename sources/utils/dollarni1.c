@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollarni1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:49 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 16:16:21 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:47:18 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,17 @@ void	kp(t_dollar *dollar)
 char	*open_dollar(t_dollar *dollar, t_env_elem *env)
 {
 	char	*word;
+	int		i;
 
+	i = dollar->i;
 	word = NULL;
 	if (dollar->flag == true)
+	{
+		while (dollar->cur->value[i] && dollar->cur->value[i] == '$')
+			i++;
+		dollar->i = i;
 		return (ft_strdup("$"));
+	}
 	while (env)
 	{
 		if (ft_strcmp(dollar->parts[1], env->key) == 0)
@@ -84,4 +91,5 @@ void	init_dollar(t_dollar *dollar, t_token **list)
 	dollar->word = NULL;
 	dollar->cur = *list;
 	dollar->flag = false;
+	dollar->harcakan = NULL;
 }

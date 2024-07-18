@@ -6,7 +6,7 @@
 /*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:23 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 16:16:15 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:25:25 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "pipex.h"
 #include "minishell.h"
 
-int tok_helper(char *cmd_line, t_tokvar *tok)
+int	tok_helper(char *cmd_line, t_tokvar *tok)
 {
 	while (cmd_line[tok->j] && ft_isspace(cmd_line[tok->j]) == 0)
 	{
@@ -36,7 +36,8 @@ int tok_helper(char *cmd_line, t_tokvar *tok)
 	}
 	return (0);
 }
-void init_tok(t_tokvar *tok, char *cmd_line)
+
+void	init_tok(t_tokvar *tok, char *cmd_line)
 {
 	tok->i = skip_whitespaces(cmd_line, 0);
 	tok->j = tok->i;
@@ -44,18 +45,18 @@ void init_tok(t_tokvar *tok, char *cmd_line)
 	tok->quote = false;
 }
 
-void toks(t_tokvar *tok, t_token **token_list, char *cmd_line)
+void	toks(t_tokvar *tok, t_token **token_list, char *cmd_line)
 {
 	tokens_types(*token_list);
 	tok->j = skip_whitespaces(cmd_line, tok->j);
 	tok->i = tok->j;
 }
 
-int tokenization(char *cmd_line, t_token **token_list)
+int	tokenization(char *cmd_line, t_token **token_list)
 {
-	char *line;
-	t_token	*new_token;
-	t_tokvar tok;
+	char		*line;
+	t_token		*new_token;
+	t_tokvar	tok;
 
 	init_tok(&tok, cmd_line);
 	while (cmd_line[tok.j])

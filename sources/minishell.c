@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:08:54 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 17:19:43 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:36:35 by anrkhach         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	main_helper(t_token **token_list, t_shell *shell,
 	{
 		if (check_syntax(*token_list) != 2)
 		{
-			dolarni2(token_list, shell->envr, false, false);
+			dolarni2(token_list, shell->envr, false);
 			get_bez_empty_nodes(token_list);
 			chakertni(token_list);
 			token_to_cmds(shell, *token_list);
