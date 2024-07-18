@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:09:10 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 15:23:55 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:03:04 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,20 @@ void	tokens_types(t_token *token_list)
 	}
 }
 
-int	syntx_err(char *value, int i)
-{
-	if (value[i] != '\0')
-		return(1);
-	return(0);
-}
-
 int	is_pipe_or_dpipe(char *value, int i)
 {
-	if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+	if (value[i + 1] && value[i] == value[i + 1]
+		&& syntx_err(value, i + 2) != 1)
 		return (D_PIPE);
 	if (syntx_err(value, i + 1) == 1)
 		return (ERROR);
 	return (S_PIPE);
 }
 
-int is_and_or_dand(char *value, int i)
+int	is_and_or_dand(char *value, int i)
 {
-	if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+	if (value[i + 1] && value[i] == value[i + 1]
+		&& syntx_err(value, i + 2) != 1)
 		return (D_AND);
 	if (syntx_err(value, i + 1) == 1)
 		return (ERROR);
@@ -70,13 +65,13 @@ int is_and_or_dand(char *value, int i)
 
 int	is_append_or_out_redir(char *value, int i)
 {
-	if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+	if (value[i + 1] && value[i] == value[i + 1]
+		&& syntx_err(value, i + 2) != 1)
 		return (APPEND_REDIR);
 	if (syntx_err(value, i + 1) == 1)
 		return (ERROR);
 	return (OUT_REDIR);
 }
-
 
 t_token_type	set_token_type(char *value, int i)
 {
@@ -90,7 +85,8 @@ t_token_type	set_token_type(char *value, int i)
 		return (is_append_or_out_redir(value, i));
 	else if (value[i] == '<')
 	{
-		if (value[i + 1] && value[i] == value[i + 1] && syntx_err(value, i + 2) != 1)
+		if (value[i + 1] && value[i] == value[i + 1]
+			&& syntx_err(value, i + 2) != 1)
 			return (HERE_DOC);
 		if (syntx_err(value, i + 1) == 1)
 		{

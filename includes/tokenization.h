@@ -77,7 +77,7 @@ typedef struct s_dollar
 	bool	qt;
 	bool	double_qt;
 	bool	flag;
-	t_token *current;
+	t_token *cur;
 }	t_dollar;
 
 

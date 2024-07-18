@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:26:56 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/17 19:26:57 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:01:27 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,11 @@ int	check_value_is_empty(char	*value)
 	if (value[0] == '\0')
 		return (1);
 	return (-1);
+}
+
+int	syntx_err(char *value, int i)
+{
+	if (value[i] != '\0')
+		return (1);
+	return (0);
 }

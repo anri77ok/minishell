@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dolarni2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:12:31 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 15:35:43 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:15:41 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,56 +14,60 @@
 #include "utils.h"
 #include "env.h"
 
-void dollarni_helperi_axper(t_dollar *d)
+void	dollarni_helperi_axper(t_dollar *d)
 {
-	while (d->current->value[d->j] && (ft_isspace(d->current->value[d->j]) != 1 &&
-	d->current->value[d->j] != 34 && d->current->value[d->j] != 39))
+	while (d->cur->value[d->j] && (ft_isspace(d->cur->value[d->j]) != 1
+			&& d->cur->value[d->j] != 34 && d->cur->value[d->j] != 39))
 	{
 		d->j = d->j + 1;
-		if (d->current->value[d->j] == '$' || d->current->value[d->j] == '/' || d->current->value[d->j] == '=')
+		if (d->cur->value[d->j] == '$' || d->cur->value[d->j] == '/'
+			|| d->cur->value[d->j] == '=')
 			break ;
 	}
 }
 
-void dollarni_helper(t_dollar *d, t_env_elem *env, bool flag)
+void	dollarni_helper(t_dollar *d, t_env_elem *env, bool flag)
 {
-	while(d->current->value && d->current->value[d->i])
+	while (d->cur->value && d->cur->value[d->i])
 	{
 		qt_check_for_dollar(d);
-		if (d->current->value[d->i] == '$' && d->qt == false)
+		if (d->cur->value[d->i] == '$' && d->qt == false)
 		{
-			if (d->current->value[d->i + 1] && d->current->value[d->i + 1] == '?')
+			if (d->cur->value[d->i + 1]
+				&& d->cur->value[d->i + 1] == '?')
 			{
-				free(d->current->value);
-				d->current->value = ft_itoa(g_exit_status);
+				free(d->cur->value);
+				d->cur->value = ft_itoa(g_exit_status);
 				break ;
 			}
 			d->j = d->i;
 			dollarni_helperi_axper(d);
 			if (d->j == d->i + 1)
 				flag = true;
-			d->parts = karch2(d->current->value, d->i, d->j, my_strlen(d->current->value));
+			d->parts = karch2(d->cur->value, d->i, d->j,
+					my_strlen(d->cur->value));
 			d->word = open_dollar(d, env);
 			kp(d);
 		}
-		if (d->current->value[0] != '\0')
+		if (d->cur->value[0] != '\0')
 			d->i++;
 	}
 }
 
 void	dolarni2(t_token **token_list, t_env_elem *env, bool flag, bool flag_a)
 {
-	t_dollar d;
+	t_dollar	d;
 
 	init_dollar(&d, token_list);
-	while(d.current)
+	while (d.cur)
 	{
-		if ((d.current->type == WORD || (d.current->type >= 12 && d.current->type <= 16)) && d.current->type != LIMITER)
+		if ((d.cur->type == WORD || (d.cur->type >= 12 && d.cur->type <= 16))
+			&& d.cur->type != LIMITER)
 		{
 			d.i = 0;
 			dollarni_helper(&d, env, flag);
 		}
-		d.current = d.current->next;
+		d.cur = d.cur->next;
 		flag_a = false;
 	}
 }
@@ -92,4 +96,3 @@ int	ft_len(int n)
 	}
 	return (len);
 }
-

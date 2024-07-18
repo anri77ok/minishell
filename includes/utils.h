@@ -34,7 +34,7 @@ int print_env(t_env_elem *env, int *is_builtin);
 int	check_syntax(t_token *token);
 int permitted_operator(t_token *token);
 int control_operators(t_token *token);
-
+int	syntx_err(char *value, int i);
 
 //freee
 void	free_list(t_env_elem *temp);
@@ -43,7 +43,7 @@ void free_env(char **env);
 char **karch2(char *value, int start, int mid, int end);
 void karch3(char *p1, char **p, bool *flag);
 void	clear_shell_envr(t_shell *shell);
-
+void	free_temp_value(t_env_elem *temp);
 
 void free_shell_token(t_shell **shell, t_token **token_list, char *cmd_line);
 void	free_key_and_value(char *key, char *value);

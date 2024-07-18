@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 18:10:32 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 20:18:58 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 15:41:20 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 {
 	int	i;
 	int	error_exit;
+	int	pos;
 
+	pos = 0;
 	error_exit = 0;
 	i = 1;
 	while (cmd->cmd_args[i])
@@ -33,7 +35,7 @@ int	unset(t_pipex *pipex, t_cmd *cmd, int *is_builtin)
 			i++;
 			continue ;
 		}
-		delete_node_with_that_key(pipex, cmd->cmd_args[i]);
+		delete_node_with_that_key(pipex, cmd->cmd_args[i], pos);
 		i++;
 	}
 	*is_builtin = 1;

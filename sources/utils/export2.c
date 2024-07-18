@@ -6,7 +6,7 @@
 /*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 19:45:40 by vbarsegh          #+#    #+#             */
-/*   Updated: 2024/07/18 15:02:01 by vbarsegh         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:00:24 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	print_export(t_pipex *pipex)
 {
 	t_env_elem	*temp;
 	t_env_elem	*copy;
-	bool 		yel;
+	bool		yel;
 
 	copy = pipex->envp;
 	copy = get_copy_env(pipex->envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 21:19:05 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/17 21:43:00 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:00:39 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,6 @@ int	check_this_key_in_env_list(t_env_elem *env_list, char *key, char *value)
 		}
 		env_list = env_list->next;
 	}
-	// if (key)
-	// 	free(key);//es frinery seg en talmmmmmmmm
 	return (1);
 }
 

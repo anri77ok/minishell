@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollarni1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrkhach <anrkhach@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vbarsegh <vbarsegh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 15:22:49 by anrkhach          #+#    #+#             */
-/*   Updated: 2024/07/18 15:24:12 by anrkhach         ###   ########.fr       */
+/*   Updated: 2024/07/18 16:16:21 by vbarsegh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	kp(t_dollar *dollar)
 	char	*final;
 
 	final = join(dollar->parts[0], dollar->word, 0, 0);
-	free(dollar->current->value);
-	dollar->current->value = join(final, dollar->parts[2], 0, 0);
+	free(dollar->cur->value);
+	dollar->cur->value = join(final, dollar->parts[2], 0, 0);
 	free(final);
 	free(dollar->word);
 	if (dollar->parts[0] != NULL)
 	{
-	free(dollar->parts[0]);
-	dollar->parts[0] = NULL;
+		free(dollar->parts[0]);
+		dollar->parts[0] = NULL;
 	}
 	if (dollar->parts[2] != NULL)
 	{
@@ -41,7 +41,7 @@ void	kp(t_dollar *dollar)
 char	*open_dollar(t_dollar *dollar, t_env_elem *env)
 {
 	char	*word;
-	
+
 	word = NULL;
 	if (dollar->flag == true)
 		return (ft_strdup("$"));
@@ -54,7 +54,7 @@ char	*open_dollar(t_dollar *dollar, t_env_elem *env)
 		}
 		env = env->next;
 	}
-	return(word);
+	return (word);
 }
 
 void	veragrum(char **begin, char **word, char **end, char **dollar)
@@ -67,13 +67,13 @@ void	veragrum(char **begin, char **word, char **end, char **dollar)
 
 void	qt_check_for_dollar(t_dollar *dollar)
 {
-	if (dollar->current->value[dollar->i] == 34 && dollar->qt == false)
+	if (dollar->cur->value[dollar->i] == 34 && dollar->qt == false)
 		dollar->double_qt = !dollar->double_qt;
-	if (dollar->current->value[dollar->i] == 39 && dollar->double_qt == false)
+	if (dollar->cur->value[dollar->i] == 39 && dollar->double_qt == false)
 		dollar->qt = !dollar->qt;
 }
 
-void init_dollar(t_dollar *dollar, t_token **list)
+void	init_dollar(t_dollar *dollar, t_token **list)
 {
 	dollar->qt = false;
 	dollar->double_qt = false;
@@ -82,6 +82,6 @@ void init_dollar(t_dollar *dollar, t_token **list)
 	dollar->parts = NULL;
 	dollar->word = NULL;
 	dollar->word = NULL;
-	dollar->current = *list;
+	dollar->cur = *list;
 	dollar->flag = false;
 }
